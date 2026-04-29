@@ -1,44 +1,46 @@
-import logo from "@/assets/jusmulher-logo.png";
+import mark from "@/assets/jusmulher-mark.png";
+import full from "@/assets/jusmulher-full.png";
 import { cn } from "@/lib/utils";
-
-interface LogoProps {
-  className?: string;
-  showTagline?: boolean;
-  size?: "sm" | "md" | "lg";
-}
-
-const sizes = {
-  sm: "h-9",
-  md: "h-12",
-  lg: "h-20",
-};
-
-export function Logo({ className, showTagline = false, size = "sm" }: LogoProps) {
-  return (
-    <div className={cn("flex items-center gap-2", className)}>
-      <img
-        src={logo}
-        alt="JusMulher"
-        className={cn(sizes[size], "w-auto object-contain")}
-        width={1408}
-        height={768}
-      />
-      {showTagline && (
-        <span className="sr-only">JusMulher — Desvende a vida pregressa do seu parceiro</span>
-      )}
-    </div>
-  );
-}
 
 export function LogoMark({ className }: { className?: string }) {
   return (
     <img
-      src={logo}
+      src={mark}
       alt="JusMulher"
-      className={cn("h-9 w-9 rounded-full object-cover object-center", className)}
-      style={{ objectPosition: "center 30%" }}
-      width={1408}
-      height={768}
+      className={cn("h-10 w-10 object-contain", className)}
+      width={380}
+      height={380}
     />
+  );
+}
+
+export function LogoLockup({
+  className,
+  size = "md",
+}: {
+  className?: string;
+  size?: "sm" | "md" | "lg";
+}) {
+  const sizes = { sm: "h-12", md: "h-16", lg: "h-28" };
+  return (
+    <img
+      src={full}
+      alt="JusMulher — Desvende a vida pregressa do seu parceiro"
+      className={cn(sizes[size], "w-auto object-contain", className)}
+      width={900}
+      height={650}
+    />
+  );
+}
+
+export function LogoInline({ className }: { className?: string }) {
+  return (
+    <div className={cn("flex items-center gap-2.5", className)}>
+      <LogoMark className="h-9 w-9" />
+      <span className="font-display text-xl font-semibold tracking-tight">
+        <span className="text-primary">Jus</span>
+        <span className="text-rose">Mulher</span>
+      </span>
+    </div>
   );
 }
