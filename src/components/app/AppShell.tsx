@@ -2,9 +2,10 @@ import { ReactNode } from "react";
 import { Link, NavLink, Navigate, useLocation } from "react-router-dom";
 import { useApp } from "@/store/app-store";
 import { Button } from "@/components/ui/button";
-import { Sparkles, History, ShieldCheck, Wallet, LogOut, Menu } from "lucide-react";
+import { Sparkles, History, Wallet, LogOut, Menu } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
+import { LogoInline } from "./Logo";
 
 const nav = [
   { to: "/app", label: "Nova consulta", icon: Sparkles, end: true },
@@ -50,11 +51,8 @@ export function AppShell({ children }: { children: ReactNode }) {
     <div className="min-h-screen bg-warm">
       <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-xl">
         <div className="container flex h-16 items-center justify-between gap-4">
-          <Link to="/app" className="flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary-gradient shadow-soft">
-              <ShieldCheck className="h-5 w-5 text-primary-foreground" />
-            </div>
-            <span className="font-display text-xl font-semibold tracking-tight">Amparo</span>
+          <Link to="/app" aria-label="JusMulher">
+            <LogoInline />
           </Link>
 
           <nav className="hidden items-center gap-1 md:flex">
@@ -99,7 +97,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       <main className="container py-8 md:py-12">{children}</main>
 
       <footer className="container pb-10 pt-6 text-center text-xs text-muted-foreground">
-        Amparo · feito com cuidado para a sua segurança.
+        JusMulher · feito com cuidado para a sua segurança.
       </footer>
     </div>
   );

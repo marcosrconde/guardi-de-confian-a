@@ -25,6 +25,11 @@ export default {
           soft: "hsl(var(--primary-soft))",
           glow: "hsl(var(--primary-glow))",
         },
+        rose: {
+          DEFAULT: "hsl(var(--rose))",
+          foreground: "hsl(var(--rose-foreground))",
+          soft: "hsl(var(--rose-soft))",
+        },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",

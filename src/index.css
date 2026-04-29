@@ -8,30 +8,35 @@
   :root {
     /* Rosé & nude elegante — tons suaves, acolhedores, confiáveis */
     --background: 30 40% 98%;
-    --foreground: 345 25% 18%;
+    --foreground: 200 35% 18%;
 
     --card: 0 0% 100%;
-    --card-foreground: 345 25% 18%;
+    --card-foreground: 200 35% 18%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 345 25% 18%;
+    --popover-foreground: 200 35% 18%;
 
-    /* Rosé profundo — confiança feminina */
-    --primary: 348 45% 42%;
+    /* Azul-petróleo do logo — confiança e seriedade */
+    --primary: 200 45% 28%;
     --primary-foreground: 30 40% 98%;
-    --primary-soft: 348 60% 92%;
-    --primary-glow: 348 70% 75%;
+    --primary-soft: 200 35% 92%;
+    --primary-glow: 200 50% 65%;
+
+    /* Rosé acolhedor — secundário feminino do logo */
+    --rose: 8 45% 72%;
+    --rose-foreground: 200 45% 22%;
+    --rose-soft: 8 60% 94%;
 
     /* Champanhe / nude */
     --secondary: 28 35% 92%;
-    --secondary-foreground: 345 25% 22%;
+    --secondary-foreground: 200 35% 22%;
 
     --muted: 25 25% 94%;
-    --muted-foreground: 345 10% 45%;
+    --muted-foreground: 200 12% 45%;
 
-    /* Dourado discreto */
-    --accent: 32 55% 78%;
-    --accent-foreground: 345 30% 20%;
+    /* Acento rosé */
+    --accent: 8 45% 80%;
+    --accent-foreground: 200 45% 22%;
 
     --destructive: 358 65% 52%;
     --destructive-foreground: 30 40% 98%;
@@ -41,31 +46,32 @@
     --warning: 32 80% 50%;
     --warning-foreground: 30 40% 98%;
 
-    --border: 25 25% 88%;
-    --input: 25 25% 90%;
-    --ring: 348 45% 42%;
+    --border: 25 20% 88%;
+    --input: 25 20% 90%;
+    --ring: 200 45% 28%;
 
     --radius: 1rem;
 
     /* Gradientes & sombras assinadas */
-    --gradient-warm: linear-gradient(135deg, hsl(348 60% 95%) 0%, hsl(28 50% 94%) 50%, hsl(32 55% 90%) 100%);
-    --gradient-primary: linear-gradient(135deg, hsl(348 45% 42%) 0%, hsl(348 55% 52%) 100%);
-    --gradient-glow: radial-gradient(ellipse at top, hsl(348 70% 88% / 0.6), transparent 60%);
+    --gradient-warm: linear-gradient(135deg, hsl(8 60% 95%) 0%, hsl(28 45% 95%) 50%, hsl(200 30% 94%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(200 45% 28%) 0%, hsl(200 50% 38%) 100%);
+    --gradient-rose: linear-gradient(135deg, hsl(8 55% 78%) 0%, hsl(8 45% 70%) 100%);
+    --gradient-glow: radial-gradient(ellipse at top, hsl(8 60% 88% / 0.55), transparent 60%);
 
-    --shadow-soft: 0 4px 20px -4px hsl(348 30% 60% / 0.15);
-    --shadow-elegant: 0 20px 60px -20px hsl(348 40% 40% / 0.25);
-    --shadow-glow: 0 0 40px hsl(348 70% 75% / 0.35);
+    --shadow-soft: 0 4px 20px -4px hsl(200 30% 40% / 0.12);
+    --shadow-elegant: 0 20px 60px -20px hsl(200 45% 25% / 0.25);
+    --shadow-glow: 0 0 40px hsl(8 55% 78% / 0.35);
 
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
     --sidebar-background: 30 40% 98%;
-    --sidebar-foreground: 345 25% 18%;
-    --sidebar-primary: 348 45% 42%;
+    --sidebar-foreground: 200 35% 18%;
+    --sidebar-primary: 200 45% 28%;
     --sidebar-primary-foreground: 30 40% 98%;
     --sidebar-accent: 28 35% 94%;
-    --sidebar-accent-foreground: 345 25% 22%;
-    --sidebar-border: 25 25% 88%;
-    --sidebar-ring: 348 45% 42%;
+    --sidebar-accent-foreground: 200 35% 22%;
+    --sidebar-border: 25 20% 88%;
+    --sidebar-ring: 200 45% 28%;
   }
 
   .dark {
@@ -109,6 +115,7 @@
 @layer utilities {
   .bg-warm { background: var(--gradient-warm); }
   .bg-primary-gradient { background: var(--gradient-primary); }
+  .bg-rose-gradient { background: var(--gradient-rose); }
   .shadow-soft { box-shadow: var(--shadow-soft); }
   .shadow-elegant { box-shadow: var(--shadow-elegant); }
   .shadow-glow { box-shadow: var(--shadow-glow); }

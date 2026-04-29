@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { ShieldCheck, HeartHandshake, Lock, Sparkles } from "lucide-react";
 import heroImg from "@/assets/hero-bloom.jpg";
 import { useApp } from "@/store/app-store";
+import { LogoInline } from "@/components/app/Logo";
 
 const Index = () => {
   const { user } = useApp();
@@ -10,12 +11,9 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-warm">
       <header className="container flex items-center justify-between py-6">
-        <div className="flex items-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary-gradient shadow-soft">
-            <ShieldCheck className="h-5 w-5 text-primary-foreground" />
-          </div>
-          <span className="font-display text-xl font-semibold tracking-tight">Amparo</span>
-        </div>
+        <Link to="/" aria-label="JusMulher">
+          <LogoInline />
+        </Link>
         <div className="flex items-center gap-2">
           <Button asChild variant="ghost">
             <Link to="/auth">Entrar</Link>
@@ -32,9 +30,9 @@ const Index = () => {
             <Sparkles className="h-3.5 w-3.5" /> Para sua tranquilidade
           </span>
           <h1 className="mt-5 font-display text-4xl font-semibold leading-[1.05] tracking-tight text-balance sm:text-5xl md:text-6xl">
-            Conheça antes de
+            Desvende a vida
             <br />
-            <span className="text-primary italic">se entregar.</span>
+            <span className="italic"><span className="text-primary">pregressa</span> <span className="text-rose">do seu parceiro.</span></span>
           </h1>
           <p className="mt-6 max-w-lg text-lg text-foreground/70 text-balance">
             Consulte o histórico judicial de quem entra na sua vida.
