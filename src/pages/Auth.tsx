@@ -31,7 +31,7 @@ export default function AuthPage() {
       return;
     }
     signIn(form.email, form.nome || undefined);
-    toast.success(mode === "signup" ? "Bem-vinda ao Amparo 💗" : "Que bom te ver de novo.");
+    toast.success(mode === "signup" ? "Bem-vinda ao JusMulher 💗" : "Que bom te ver de novo.");
     navigate("/app");
   };
 
@@ -44,12 +44,9 @@ export default function AuthPage() {
       </div>
 
       <div className="container flex flex-col items-center justify-center pb-12">
-        <div className="mb-8 flex items-center gap-2">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-gradient shadow-soft">
-            <ShieldCheck className="h-5 w-5 text-primary-foreground" />
-          </div>
-          <span className="font-display text-2xl font-semibold tracking-tight">Amparo</span>
-        </div>
+        <Link to="/" className="mb-6">
+          <LogoLockup size="md" />
+        </Link>
 
         <Card className="w-full max-w-md border-border/60 p-8 shadow-elegant animate-fade-in-up">
           <h1 className="font-display text-2xl font-semibold">
