@@ -71,13 +71,28 @@ export default function NovaConsulta() {
     }
     setLoading(true);
     try {
-      const webhookUrl = "https://n8n-n8n.apuc7z.easypanel.host/webhook/e178c476-d7c3-46ee-a557-b95845491073";
-      const body = {
-        user_id: user.id,
-        user_email: user.email,
-        cpf: input.kind === "cpf" ? input.cpf : "",
-        data_consulta: new Date().toISOString(),
-      };
+      let webhookUrl = "";
+      let body: Record<string, unknown> = {};
+
+      if (input.kind === "cpf") {
+        webhookUrl = "https://n8n-n8n.apuc7z.easypanel.host/webhook/e178c476-d7c3-46ee-a557-b95845491073";
+        body = {
+          user_id: user.id,
+          user_email: user.email,
+          cpf: input.cpf,
+          data_consulta: new Date().toISOString(),
+        };
+      } else {
+        webhookUrl = "https://n8n-n8n.apuc7z.easypanel.host/webhook/f0b92db3-81fa-4900-89ff-c7e5f108a0d2";
+        body = {
+          user_id: user.id,
+          user_email: user.email,
+          nome: input.nome,
+          nascimento: input.nascimento,
+          cidade: input.cidade,
+          nomeMae: input.nomeMae,
+        };
+      }
 
       const response = await fetch(webhookUrl, {
         method: "POST",
