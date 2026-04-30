@@ -1,39 +1,91 @@
 import { useState } from "react";
 import { Link, Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import { useApp } from "@/store/app-store";
+import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
-import { Mail, Lock, User2, ArrowLeft } from "lucide-react";
+import { Mail, Lock, User2, ArrowLeft, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { LogoLockup } from "@/components/app/Logo";
 
 export default function AuthPage() {
-  const { user, signIn } = useApp();
+  const { user, loading } = useApp();
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const [mode, setMode] = useState<"login" | "signup" | "reset">(
     params.get("mode") === "signup" ? "signup" : "login"
   );
+  const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({ nome: "", email: "", senha: "" });
 
-  if (user) return <Navigate to="/app" replace />;
+  if (!loading && user) return <Navigate to="/app" replace />;
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (submitting) return;
+
     if (mode === "reset") {
+      if (!form.email) {
+        toast.error("Informe o e-mail.");
+        return;
+      }
+      setSubmitting(true);
+      const { error } = await supabase.auth.resetPasswordForEmail(form.email, {
+        redirectTo: `${window.location.origin}/reset-password`,
+      });
+      setSubmitting(false);
+      if (error) {
+        toast.error(error.message);
+        return;
+      }
       toast.success("Se este e-mail existir, enviaremos instruções de recuperação.");
       setMode("login");
       return;
     }
+
     if (!form.email || !form.senha || (mode === "signup" && !form.nome)) {
       toast.error("Por favor, preencha todos os campos.");
       return;
     }
-    signIn(form.email, form.nome || undefined);
-    toast.success(mode === "signup" ? "Bem-vinda ao JusMulher 💗" : "Que bom te ver de novo.");
-    navigate("/app");
+
+    setSubmitting(true);
+    try {
+      if (mode === "signup") {
+        const { error } = await supabase.auth.signUp({
+          email: form.email,
+          password: form.senha,
+          options: {
+            emailRedirectTo: `${window.location.origin}/app`,
+            data: { full_name: form.nome },
+          },
+        });
+        if (error) {
+          if (error.message.toLowerCase().includes("already")) {
+            toast.error("Este e-mail já está cadastrado. Tente entrar.");
+          } else {
+            toast.error(error.message);
+          }
+          return;
+        }
+        toast.success("Bem-vinda ao JusMulher 💗");
+        navigate("/app");
+      } else {
+        const { error } = await supabase.auth.signInWithPassword({
+          email: form.email,
+          password: form.senha,
+        });
+        if (error) {
+          toast.error("E-mail ou senha incorretos.");
+          return;
+        }
+        toast.success("Que bom te ver de novo.");
+        navigate("/app");
+      }
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -69,7 +121,7 @@ export default function AuthPage() {
                 icon={User2}
                 value={form.nome}
                 onChange={(v) => setForm({ ...form, nome: v })}
-                placeholder="Seu primeiro nome"
+                placeholder="Seu nome completo"
               />
             )}
             <Field
@@ -93,10 +145,16 @@ export default function AuthPage() {
               />
             )}
 
-            <Button type="submit" className="mt-2 w-full rounded-full shadow-soft" size="lg">
-              {mode === "login" && "Entrar"}
-              {mode === "signup" && "Criar minha conta"}
-              {mode === "reset" && "Enviar link de recuperação"}
+            <Button type="submit" disabled={submitting} className="mt-2 w-full rounded-full shadow-soft" size="lg">
+              {submitting ? (
+                <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Aguarde...</>
+              ) : (
+                <>
+                  {mode === "login" && "Entrar"}
+                  {mode === "signup" && "Criar minha conta"}
+                  {mode === "reset" && "Enviar link de recuperação"}
+                </>
+              )}
             </Button>
           </form>
 
@@ -104,6 +162,7 @@ export default function AuthPage() {
             {mode === "login" && (
               <>
                 <button
+                  type="button"
                   className="text-primary underline-offset-4 hover:underline"
                   onClick={() => setMode("reset")}
                 >
@@ -112,6 +171,7 @@ export default function AuthPage() {
                 <p className="text-muted-foreground">
                   Ainda não tem conta?{" "}
                   <button
+                    type="button"
                     className="font-medium text-primary underline-offset-4 hover:underline"
                     onClick={() => setMode("signup")}
                   >
@@ -124,6 +184,7 @@ export default function AuthPage() {
               <p className="text-muted-foreground">
                 Já tem conta?{" "}
                 <button
+                  type="button"
                   className="font-medium text-primary underline-offset-4 hover:underline"
                   onClick={() => setMode("login")}
                 >
@@ -133,6 +194,7 @@ export default function AuthPage() {
             )}
             {mode === "reset" && (
               <button
+                type="button"
                 className="text-primary underline-offset-4 hover:underline"
                 onClick={() => setMode("login")}
               >
