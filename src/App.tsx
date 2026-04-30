@@ -7,6 +7,7 @@ import { AppProvider } from "@/store/app-store";
 import { AppShell } from "@/components/app/AppShell";
 import Index from "./pages/Index";
 import AuthPage from "./pages/Auth";
+import ResetPassword from "./pages/ResetPassword";
 import NovaConsulta from "./pages/app/NovaConsulta";
 import Historico from "./pages/app/Historico";
 import ConsultaDetalhe from "./pages/app/ConsultaDetalhe";
@@ -25,6 +26,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<AuthPage />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/app" element={<AppShell><NovaConsulta /></AppShell>} />
             <Route path="/app/historico" element={<AppShell><Historico /></AppShell>} />
             <Route path="/app/consulta/:id" element={<AppShell><ConsultaDetalhe /></AppShell>} />

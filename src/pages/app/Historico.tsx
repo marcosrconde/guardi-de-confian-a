@@ -1,12 +1,56 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useApp } from "@/store/app-store";
+import { supabase } from "@/integrations/supabase/client";
+import { mapQueryToConsulta } from "@/lib/consulta-mapper";
+import type { ConsultaResultado } from "@/store/app-store";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RiskBadge } from "@/components/app/RiskBadge";
-import { FileSearch, Sparkles } from "lucide-react";
+import { FileSearch, Sparkles, Loader2 } from "lucide-react";
 
 export default function Historico() {
-  const { consultas } = useApp();
+  const { user } = useApp();
+  const [consultas, setConsultas] = useState<ConsultaResultado[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!user) return;
+
+    const load = async () => {
+      const { data, error } = await supabase
+        .from("queries")
+        .select("*")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false });
+      if (!error && data) {
+        setConsultas(data.map((r) => mapQueryToConsulta(r as any)));
+      }
+      setLoading(false);
+    };
+    load();
+
+    const channel = supabase
+      .channel("queries-list")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "queries", filter: `user_id=eq.${user.id}` },
+        () => load()
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [user]);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center py-20">
+        <Loader2 className="h-6 w-6 animate-spin text-primary" />
+      </div>
+    );
+  }
 
   if (consultas.length === 0) {
     return (
@@ -49,7 +93,7 @@ export default function Historico() {
                 {new Date(c.criadoEm).toLocaleString("pt-BR")} ·{" "}
                 {c.processos.length} {c.processos.length === 1 ? "processo" : "processos"}
               </p>
-              <p className="mt-2 line-clamp-1 text-sm text-foreground/70">{c.resumo}</p>
+              {c.resumo && <p className="mt-2 line-clamp-1 text-sm text-foreground/70">{c.resumo}</p>}
             </div>
             <Button asChild variant="outline" className="rounded-full">
               <Link to={`/app/consulta/${c.id}`}>Ver relatório</Link>

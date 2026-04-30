@@ -1,4 +1,6 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import type { Session, User as SupaUser } from "@supabase/supabase-js";
+import { supabase } from "@/integrations/supabase/client";
 
 export type RiskLevel = "baixo" | "medio" | "alto";
 
@@ -28,74 +30,61 @@ export interface ConsultaResultado {
   destaques: string[];
 }
 
-export interface User {
+export interface Profile {
   id: string;
   nome: string;
   email: string;
 }
 
 interface AppState {
-  user: User | null;
-  creditos: number;
-  consultas: ConsultaResultado[];
-  signIn: (email: string, nome?: string) => void;
-  signOut: () => void;
-  addCreditos: (n: number) => void;
-  consumirCredito: () => boolean;
-  registrarConsulta: (c: ConsultaResultado) => void;
+  user: Profile | null;
+  session: Session | null;
+  loading: boolean;
+  signOut: () => Promise<void>;
 }
 
-const STORAGE_KEY = "amparo:state:v1";
 const Ctx = createContext<AppState | null>(null);
 
-interface Persisted {
-  user: User | null;
-  creditos: number;
-  consultas: ConsultaResultado[];
+function toProfile(u: SupaUser | null | undefined): Profile | null {
+  if (!u) return null;
+  const fullName =
+    (u.user_metadata?.full_name as string | undefined) ||
+    (u.email ? u.email.split("@")[0] : "Usuária");
+  return {
+    id: u.id,
+    email: u.email ?? "",
+    nome: fullName,
+  };
 }
 
-const loadInitial = (): Persisted => {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) return JSON.parse(raw);
-  } catch {}
-  return { user: null, creditos: 0, consultas: [] };
-};
-
 export function AppProvider({ children }: { children: ReactNode }) {
-  const [state, setState] = useState<Persisted>(() => loadInitial());
+  const [session, setSession] = useState<Session | null>(null);
+  const [user, setUser] = useState<Profile | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  }, [state]);
+    // Set up listener FIRST
+    const { data: sub } = supabase.auth.onAuthStateChange((_event, newSession) => {
+      setSession(newSession);
+      setUser(toProfile(newSession?.user));
+    });
+
+    supabase.auth.getSession().then(({ data }) => {
+      setSession(data.session);
+      setUser(toProfile(data.session?.user));
+      setLoading(false);
+    });
+
+    return () => sub.subscription.unsubscribe();
+  }, []);
 
   const value: AppState = {
-    user: state.user,
-    creditos: state.creditos,
-    consultas: state.consultas,
-    signIn: (email, nome) =>
-      setState((s) => ({
-        ...s,
-        user: {
-          id: crypto.randomUUID(),
-          email,
-          nome: nome ?? email.split("@")[0],
-        },
-        creditos: s.creditos === 0 && s.consultas.length === 0 ? 1 : s.creditos,
-      })),
-    signOut: () => setState({ user: null, creditos: 0, consultas: [] }),
-    addCreditos: (n) => setState((s) => ({ ...s, creditos: s.creditos + n })),
-    consumirCredito: () => {
-      let ok = false;
-      setState((s) => {
-        if (s.creditos <= 0) return s;
-        ok = true;
-        return { ...s, creditos: s.creditos - 1 };
-      });
-      return ok;
+    user,
+    session,
+    loading,
+    signOut: async () => {
+      await supabase.auth.signOut();
     },
-    registrarConsulta: (c) =>
-      setState((s) => ({ ...s, consultas: [c, ...s.consultas] })),
   };
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
