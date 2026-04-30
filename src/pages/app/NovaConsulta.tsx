@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useApp } from "@/store/app-store";
-import { gerarConsultaMock } from "@/lib/mock-consulta";
+import { supabase } from "@/integrations/supabase/client";
+import { useShell } from "@/components/app/AppShell";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -10,21 +11,47 @@ import { Label } from "@/components/ui/label";
 import { Sparkles, Loader2, Wallet, ShieldCheck, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
 
+type Input =
+  | { kind: "cpf"; cpf: string }
+  | { kind: "form"; nome: string; nascimento: string; cidade: string; nomeMae: string };
+
 export default function NovaConsulta() {
-  const { user, creditos, consumirCredito, registrarConsulta } = useApp();
+  const { user } = useApp();
+  const { saldo, refreshSaldo } = useShell();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [cpf, setCpf] = useState("");
   const [form, setForm] = useState({ nome: "", nascimento: "", cidade: "", nomeMae: "" });
 
-  const semCreditos = creditos <= 0;
+  // Redirect to histórico if user already has consultas (per spec)
+  useEffect(() => {
+    let cancelled = false;
+    if (!user) return;
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("redirected") === "1") return;
+    supabase
+      .from("queries")
+      .select("id", { count: "exact", head: true })
+      .eq("user_id", user.id)
+      .then(({ count }) => {
+        if (cancelled) return;
+        if ((count ?? 0) > 0 && window.history.length <= 2) {
+          navigate("/app/historico", { replace: true });
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [user, navigate]);
+
+  const semCreditos = saldo <= 0;
 
   const submitCpf = async () => {
     if (!cpf.trim() || cpf.replace(/\D/g, "").length < 11) {
       toast.error("Informe um CPF válido (11 dígitos).");
       return;
     }
-    await executar({ cpf });
+    await executar({ kind: "cpf", cpf });
   };
 
   const submitForm = async () => {
@@ -32,10 +59,11 @@ export default function NovaConsulta() {
       toast.error("Preencha todos os campos para a consulta.");
       return;
     }
-    await executar(form);
+    await executar({ kind: "form", ...form });
   };
 
-  const executar = async (input: Parameters<typeof gerarConsultaMock>[0]) => {
+  const executar = async (input: Input) => {
+    if (!user) return;
     if (semCreditos) {
       toast.error("Você não tem créditos suficientes.");
       navigate("/app/creditos");
@@ -43,18 +71,32 @@ export default function NovaConsulta() {
     }
     setLoading(true);
     try {
-      // Simulação do webhook n8n — substitua por fetch real depois.
-      await new Promise((r) => setTimeout(r, 1600));
-      if (!consumirCredito()) {
-        toast.error("Sem créditos disponíveis.");
+      const inputData =
+        input.kind === "cpf"
+          ? { cpf: input.cpf }
+          : { nome: input.nome, nascimento: input.nascimento, cidade: input.cidade, nomeMae: input.nomeMae };
+
+      const { data, error } = await supabase
+        .from("queries")
+        .insert({
+          user_id: user.id,
+          email: user.email,
+          query_type: input.kind,
+          input_data: inputData,
+          status: "pending",
+        })
+        .select("id")
+        .single();
+
+      if (error) {
+        console.error(error);
+        toast.error("Não conseguimos registrar a consulta. Tente novamente.");
         return;
       }
-      const result = gerarConsultaMock(input);
-      registrarConsulta(result);
-      toast.success("Relatório pronto.");
-      navigate(`/app/consulta/${result.id}`);
-    } catch (e) {
-      toast.error("Não conseguimos completar a consulta. Tente novamente.");
+
+      await refreshSaldo();
+      toast.success("Consulta enviada. Em instantes seu relatório estará pronto.");
+      navigate(`/app/consulta/${data.id}`);
     } finally {
       setLoading(false);
     }
@@ -199,7 +241,7 @@ function BtnConsultar({
     >
       {loading ? (
         <>
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Consultando com cuidado...
+          <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Enviando consulta...
         </>
       ) : (
         <>
