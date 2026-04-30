@@ -71,32 +71,36 @@ export default function NovaConsulta() {
     }
     setLoading(true);
     try {
-      const inputData =
-        input.kind === "cpf"
-          ? { cpf: input.cpf }
-          : { nome: input.nome, nascimento: input.nascimento, cidade: input.cidade, nomeMae: input.nomeMae };
+      const webhookUrl = "https://n8n-n8n.apuc7z.easypanel.host/webhook/e178c476-d7c3-46ee-a557-b95845491073";
+      const body = {
+        user_id: user.id,
+        user_email: user.email,
+        cpf: input.kind === "cpf" ? input.cpf : "",
+        data_consulta: new Date().toISOString(),
+      };
 
-      const { data, error } = await supabase
-        .from("queries")
-        .insert({
-          user_id: user.id,
-          email: user.email,
-          query_type: input.kind,
-          input_data: inputData,
-          status: "pending",
-        })
-        .select("id")
-        .single();
+      const response = await fetch(webhookUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
 
-      if (error) {
-        console.error(error);
-        toast.error("Não conseguimos registrar a consulta. Tente novamente.");
-        return;
+      if (!response.ok) {
+        throw new Error("Erro ao enviar a consulta.");
       }
 
       await refreshSaldo();
       toast.success("Consulta enviada. Em instantes seu relatório estará pronto.");
-      navigate(`/app/consulta/${data.id}`);
+      
+      // I am not sure where to navigate the user to after the consultation is sent.
+      // For now, I will navigate to the history page.
+      navigate("/app/historico");
+
+    } catch (error) {
+      console.error(error);
+      toast.error("Não conseguimos registrar a consulta. Tente novamente.");
     } finally {
       setLoading(false);
     }
