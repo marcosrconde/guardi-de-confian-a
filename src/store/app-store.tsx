@@ -4,14 +4,24 @@ import { supabase } from "@/integrations/supabase/client";
 
 export type RiskLevel = "baixo" | "medio" | "alto";
 
-export interface ProcessoItem {
-  numero: string;
-  area: string;
-  classe: string;
-  status: "ativo" | "arquivado";
-  resumo: string;
-  alerta?: boolean;
-  data: string;
+export interface ProcessoInteresse {
+  numero_cnj: string;
+  tribunal: string;
+  polo_ativo: string;
+  polo_passivo: string;
+  assunto_geral: string;
+  fase_processual: string;
+  data_ultima_movimentacao: string;
+}
+
+export interface ProcessoOutro {
+  numero_cnj: string;
+  tribunal: string;
+  assunto_principal: string;
+  polo_ativo: string;
+  polo_passivo: string;
+  data_ultima_movimentacao: string;
+  motivo_descarte: string;
 }
 
 export interface ConsultaResultado {
@@ -26,8 +36,8 @@ export interface ConsultaResultado {
   };
   risco: RiskLevel;
   resumo: string;
-  processos: ProcessoItem[];
-  destaques: string[];
+  processos_interesse: ProcessoInteresse[];
+  processos_outros: ProcessoOutro[];
 }
 
 export interface Profile {

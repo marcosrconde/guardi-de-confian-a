@@ -1,4 +1,4 @@
-import type { ConsultaResultado, RiskLevel, ProcessoItem } from "@/store/app-store";
+import type { ConsultaResultado, RiskLevel, ProcessoInteresse, ProcessoOutro } from "@/store/app-store";
 
 interface QueryRow {
   id: string;
@@ -13,6 +13,9 @@ interface QueryRow {
 }
 
 const riskMap: Record<string, RiskLevel> = {
+  Baixo: "baixo",
+  Médio: "medio",
+  Alto: "alto",
   low: "baixo",
   medium: "medio",
   high: "alto",
@@ -23,16 +26,14 @@ export function mapQueryToConsulta(row: QueryRow): ConsultaResultado {
   const input = (row.input_data ?? {}) as Record<string, any>;
   const output = (row.output_data ?? {}) as Record<string, any>;
 
-  const risco: RiskLevel = riskMap[row.risk_level ?? "unknown"] ?? "baixo";
+  const risco: RiskLevel = riskMap[output.risk_level ?? "unknown"] ?? "baixo";
 
-  const processos: ProcessoItem[] = Array.isArray(output.processos)
-    ? output.processos
+  const processos_interesse: ProcessoInteresse[] = Array.isArray(output.processos_interesse)
+    ? output.processos_interesse
     : [];
 
-  const destaques: string[] = Array.isArray(output.destaques)
-    ? output.destaques
-    : output.resumo
-    ? [String(output.resumo)]
+  const processos_outros: ProcessoOutro[] = Array.isArray(output.processos_outros)
+    ? output.processos_outros
     : [];
 
   return {
@@ -47,7 +48,7 @@ export function mapQueryToConsulta(row: QueryRow): ConsultaResultado {
     },
     risco,
     resumo: output.resumo || (row.status === "completed" ? "Consulta concluída." : "Consulta em processamento."),
-    processos,
-    destaques,
+    processos_interesse,
+    processos_outros,
   };
 }

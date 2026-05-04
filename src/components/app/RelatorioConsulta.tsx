@@ -1,12 +1,12 @@
-import { ConsultaResultado } from "@/store/app-store";
+import { ConsultaResultado, ProcessoInteresse, ProcessoOutro } from "@/store/app-store";
 import { RiskBadge } from "./RiskBadge";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { AlertTriangle, FileText, Calendar, User2, MapPin } from "lucide-react";
+import { AlertTriangle, FileText, Calendar, User2, MapPin, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function RelatorioConsulta({ consulta }: { consulta: ConsultaResultado }) {
-  const { alvo, processos, destaques, resumo, risco, criadoEm } = consulta;
+  const { alvo, processos_interesse, processos_outros, resumo, risco, criadoEm } = consulta;
   return (
     <div className="space-y-6 animate-fade-in-up">
       <Card className="overflow-hidden border-border/60 shadow-elegant">
@@ -35,78 +35,85 @@ export function RelatorioConsulta({ consulta }: { consulta: ConsultaResultado })
       </Card>
 
       <Card className="border-border/60 p-6 sm:p-8">
-        <h3 className="font-display text-lg font-semibold">O que você precisa saber</h3>
-        <ul className="mt-4 space-y-3">
-          {destaques.map((d, i) => (
-            <li key={i} className="flex items-start gap-3 text-sm leading-relaxed">
-              <span
-                className={cn(
-                  "mt-1 h-2 w-2 shrink-0 rounded-full",
-                  risco === "alto"
-                    ? "bg-destructive"
-                    : risco === "medio"
-                    ? "bg-warning"
-                    : "bg-success"
-                )}
-              />
-              <span className="text-foreground/80">{d}</span>
-            </li>
-          ))}
-        </ul>
+        <div className="flex items-center justify-between">
+          <h3 className="font-display text-lg font-semibold">Processos de Interesse</h3>
+          <span className="text-sm text-muted-foreground">
+            {processos_interesse.length} {processos_interesse.length === 1 ? "registro" : "registros"}
+          </span>
+        </div>
+        <Separator className="my-5" />
+        {processos_interesse.length === 0 ? (
+          <p className="text-sm text-muted-foreground">Nenhum processo de interesse encontrado.</p>
+        ) : (
+          <ul className="space-y-4">
+            {processos_interesse.map((p) => (
+              <li
+                key={p.numero_cnj}
+                className="rounded-2xl border border-border bg-secondary/40 p-4 transition-smooth hover:shadow-soft sm:p-5"
+              >
+                <div className="flex flex-wrap items-start justify-between gap-3">
+                  <div className="flex items-start gap-3">
+                    <div className="mt-0.5 flex h-9 w-9 items-center justify-center rounded-full bg-primary-soft text-primary">
+                      <FileText className="h-4 w-4" />
+                    </div>
+                    <div>
+                      <p className="font-medium text-foreground">{p.assunto_geral}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {p.tribunal} · {p.data_ultima_movimentacao} ·{" "}
+                        <span className="font-mono">{p.numero_cnj}</span>
+                      </p>
+                    </div>
+                  </div>
+                  <span className="rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium capitalize text-muted-foreground">
+                    {p.fase_processual}
+                  </span>
+                </div>
+                <div className="mt-3 space-y-1 text-sm text-foreground/75">
+                  <p><b>Polo Ativo:</b> {p.polo_ativo}</p>
+                  <p><b>Polo Passivo:</b> {p.polo_passivo}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
       </Card>
 
       <Card className="border-border/60 p-6 sm:p-8">
         <div className="flex items-center justify-between">
-          <h3 className="font-display text-lg font-semibold">Processos encontrados</h3>
+          <h3 className="font-display text-lg font-semibold">Outros Processos</h3>
           <span className="text-sm text-muted-foreground">
-            {processos.length} {processos.length === 1 ? "registro" : "registros"}
+            {processos_outros.length} {processos_outros.length === 1 ? "registro" : "registros"}
           </span>
         </div>
         <Separator className="my-5" />
-        {processos.length === 0 ? (
-          <p className="text-sm text-muted-foreground">Nenhum processo encontrado.</p>
+        {processos_outros.length === 0 ? (
+          <p className="text-sm text-muted-foreground">Nenhum outro processo encontrado.</p>
         ) : (
           <ul className="space-y-4">
-            {processos.map((p) => (
+            {processos_outros.map((p) => (
               <li
-                key={p.numero}
-                className={cn(
-                  "rounded-2xl border p-4 transition-smooth hover:shadow-soft sm:p-5",
-                  p.alerta
-                    ? "border-destructive/30 bg-destructive/5"
-                    : "border-border bg-secondary/40"
-                )}
+                key={p.numero_cnj}
+                className="rounded-2xl border border-border bg-secondary/40 p-4 transition-smooth hover:shadow-soft sm:p-5"
               >
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div className="flex items-start gap-3">
-                    <div
-                      className={cn(
-                        "mt-0.5 flex h-9 w-9 items-center justify-center rounded-full",
-                        p.alerta ? "bg-destructive/15 text-destructive" : "bg-primary-soft text-primary"
-                      )}
-                    >
-                      {p.alerta ? <AlertTriangle className="h-4 w-4" /> : <FileText className="h-4 w-4" />}
+                    <div className="mt-0.5 flex h-9 w-9 items-center justify-center rounded-full bg-primary-soft text-primary">
+                      <Trash2 className="h-4 w-4" />
                     </div>
                     <div>
-                      <p className="font-medium text-foreground">{p.classe}</p>
+                      <p className="font-medium text-foreground">{p.assunto_principal}</p>
                       <p className="text-xs text-muted-foreground">
-                        {p.area} · {new Date(p.data).toLocaleDateString("pt-BR")} ·{" "}
-                        <span className="font-mono">{p.numero}</span>
+                        {p.tribunal} · {p.data_ultima_movimentacao} ·{" "}
+                        <span className="font-mono">{p.numero_cnj}</span>
                       </p>
                     </div>
                   </div>
-                  <span
-                    className={cn(
-                      "rounded-full px-2.5 py-0.5 text-xs font-medium capitalize",
-                      p.status === "ativo"
-                        ? "bg-warning/15 text-warning"
-                        : "bg-muted text-muted-foreground"
-                    )}
-                  >
-                    {p.status}
-                  </span>
                 </div>
-                <p className="mt-3 text-sm text-foreground/75">{p.resumo}</p>
+                <div className="mt-3 space-y-1 text-sm text-foreground/75">
+                  <p><b>Polo Ativo:</b> {p.polo_ativo}</p>
+                  <p><b>Polo Passivo:</b> {p.polo_passivo}</p>
+                  <p className="mt-2 text-xs text-muted-foreground">{p.motivo_descarte}</p>
+                </div>
               </li>
             ))}
           </ul>
