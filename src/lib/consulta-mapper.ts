@@ -23,6 +23,13 @@ const riskMap: Record<string, RiskLevel> = {
   unknown: "baixo",
 };
 
+function formatCPF(cpf: string | null | undefined): string | undefined {
+  if (!cpf) return undefined;
+  const cleaned = cpf.replace(/\D/g, "");
+  if (cleaned.length !== 11) return cpf;
+  return cleaned.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+}
+
 export function mapQueryToConsulta(row: QueryRow): ConsultaResultado {
   const input = (row.input_data ?? {}) as Record<string, any>;
   const output = (row.output_data ?? {}) as Record<string, any>;
@@ -41,8 +48,8 @@ export function mapQueryToConsulta(row: QueryRow): ConsultaResultado {
     id: row.id,
     criadoEm: row.created_at,
     alvo: {
-      nome: output.nome || input.nome || (input.cpf ? `CPF ${input.cpf}` : "Pessoa consultada"),
-      cpf: input.cpf,
+      nome: output.nome_pesquisado || output.nome || input.nome || (input.cpf ? `CPF ${input.cpf}` : "Pessoa consultada"),
+      cpf: formatCPF(output.cpf_pesquisado || input.cpf),
       nascimento: input.nascimento,
       cidade: input.cidade,
       nomeMae: input.nomeMae,
