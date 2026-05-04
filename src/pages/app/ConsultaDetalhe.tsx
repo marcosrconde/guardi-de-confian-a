@@ -13,7 +13,7 @@ export default function ConsultaDetalhe() {
   const { id } = useParams();
   const { user } = useApp();
   const [consulta, setConsulta] = useState<ConsultaResultado | null>(null);
-  const [status, setStatus] = useState<string>("pending");
+  const [status, setStatus] = useState<string>("pendente");
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
 
@@ -81,7 +81,7 @@ export default function ConsultaDetalhe() {
         <Link to="/app/historico"><ArrowLeft className="mr-2 h-4 w-4" /> Voltar ao histórico</Link>
       </Button>
 
-      {(status === "pending" || status === "processing") && (
+      {(status === "pendente" || status === "processando") && (
         <Card className="flex items-center gap-3 border-primary/20 bg-primary-soft/40 p-5 animate-fade-in-up">
           <Hourglass className="h-5 w-5 animate-pulse text-primary" />
           <div className="text-sm">
@@ -93,7 +93,7 @@ export default function ConsultaDetalhe() {
         </Card>
       )}
 
-      {status === "error" && (
+      {status === "erro" && (
         <Card className="border-destructive/30 bg-destructive/5 p-5">
           <p className="font-medium text-destructive">Não foi possível concluir a consulta.</p>
           <p className="text-sm text-muted-foreground">
@@ -102,7 +102,7 @@ export default function ConsultaDetalhe() {
         </Card>
       )}
 
-      {status === "completed" && <RelatorioConsulta consulta={consulta} />}
+      {status === "concluído" && <RelatorioConsulta consulta={consulta} />}
     </div>
   );
 }

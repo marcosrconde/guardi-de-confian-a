@@ -5,9 +5,9 @@ interface QueryRow {
   email: string;
   query_type: "cpf" | "form";
   input_data: any;
-  status: "pending" | "processing" | "completed" | "error";
+  status: "pendente" | "processando" | "concluído" | "erro";
   output_data: any;
-  risk_level: "low" | "medium" | "high" | "unknown" | null;
+  risk_level: "Baixo" | "Médio" | "Alto" | "Desconhecido" | null;
   created_at: string;
   completed_at: string | null;
 }
@@ -16,6 +16,7 @@ const riskMap: Record<string, RiskLevel> = {
   Baixo: "baixo",
   Médio: "medio",
   Alto: "alto",
+  Desconhecido: "baixo",
   low: "baixo",
   medium: "medio",
   high: "alto",
@@ -26,7 +27,7 @@ export function mapQueryToConsulta(row: QueryRow): ConsultaResultado {
   const input = (row.input_data ?? {}) as Record<string, any>;
   const output = (row.output_data ?? {}) as Record<string, any>;
 
-  const risco: RiskLevel = riskMap[output.risk_level ?? "unknown"] ?? "baixo";
+  const risco: RiskLevel = riskMap[row.risk_level ?? "Desconhecido"] ?? "baixo";
 
   const processos_interesse: ProcessoInteresse[] = Array.isArray(output.processos_interesse)
     ? output.processos_interesse
@@ -47,7 +48,7 @@ export function mapQueryToConsulta(row: QueryRow): ConsultaResultado {
       nomeMae: input.nomeMae,
     },
     risco,
-    resumo: output.resumo || (row.status === "completed" ? "Consulta concluída." : "Consulta em processamento."),
+    resumo: output.resumo || (row.status === "concluído" ? "Consulta concluída." : "Consulta em processamento."),
     processos_interesse,
     processos_outros,
   };
