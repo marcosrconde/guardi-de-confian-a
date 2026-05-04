@@ -167,8 +167,8 @@ export default function NovaConsulta() {
               <TabsTrigger value="cpf" className="rounded-full data-[state=active]:bg-card data-[state=active]:shadow-soft">
                 Por CPF
               </TabsTrigger>
-              <TabsTrigger value="dados" className="rounded-full data-[state=active]:bg-card data-[state=active]:shadow-soft">
-                Por dados pessoais
+              <TabsTrigger value="dados" disabled className="rounded-full data-[state=active]:bg-card data-[state=active]:shadow-soft">
+                Por dados pessoais (em breve)
               </TabsTrigger>
             </TabsList>
           </div>
@@ -194,42 +194,9 @@ export default function NovaConsulta() {
           </TabsContent>
 
           <TabsContent value="dados" className="p-6 sm:p-8">
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <FieldRow label="Nome completo" full>
-                <Input
-                  value={form.nome}
-                  onChange={(e) => setForm({ ...form, nome: e.target.value })}
-                  placeholder="Como está no documento"
-                  className="h-12 rounded-2xl"
-                />
-              </FieldRow>
-              <FieldRow label="Data de nascimento">
-                <Input
-                  type="date"
-                  value={form.nascimento}
-                  onChange={(e) => setForm({ ...form, nascimento: e.target.value })}
-                  className="h-12 rounded-2xl"
-                />
-              </FieldRow>
-              <FieldRow label="Cidade de nascimento">
-                <Input
-                  value={form.cidade}
-                  onChange={(e) => setForm({ ...form, cidade: e.target.value })}
-                  placeholder="Ex.: São Paulo / SP"
-                  className="h-12 rounded-2xl"
-                />
-              </FieldRow>
-              <FieldRow label="Nome da mãe" full>
-                <Input
-                  value={form.nomeMae}
-                  onChange={(e) => setForm({ ...form, nomeMae: e.target.value })}
-                  placeholder="Nome completo"
-                  className="h-12 rounded-2xl"
-                />
-              </FieldRow>
-            </div>
-            <div className="mt-6">
-              <BtnConsultar onClick={submitForm} loading={loading} disabled={semCreditos} />
+            <div className="text-center text-muted-foreground">
+              <p className="font-medium">Em breve</p>
+              <p className="text-sm">A consulta por dados pessoais estará disponível em breve.</p>
             </div>
           </TabsContent>
         </Tabs>
