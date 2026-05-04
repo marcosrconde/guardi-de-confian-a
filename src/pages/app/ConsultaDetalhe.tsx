@@ -25,6 +25,7 @@ export default function ConsultaDetalhe() {
         .from("queries")
         .select("*")
         .eq("id", id)
+        .eq("user_id", user.id)
         .maybeSingle();
       if (error || !data) {
         setNotFound(true);
