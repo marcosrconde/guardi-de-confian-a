@@ -75,11 +75,6 @@ export function AppShell({ children }: { children: ReactNode }) {
         { event: "*", schema: "public", table: "credit_transactions", filter: `user_id=eq.${user.id}` },
         () => refreshSaldo()
       )
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "queries", filter: `user_id=eq.${user.id}` },
-        () => refreshSaldo()
-      )
       .subscribe();
 
     return () => {

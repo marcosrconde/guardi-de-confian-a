@@ -8,18 +8,18 @@ import { supabase } from "@/integrations/supabase/client";
  * mas enquanto isso usamos o banco diretamente (apenas leitura, autorizada por RLS).
  */
 export async function getSaldoCreditos(userId: string): Promise<number> {
-  const [{ data: tx }, { count: usedCount }] = await Promise.all([
-    supabase
-      .from("credit_transactions")
-      .select("amount")
-      .eq("user_id", userId),
-    supabase
-      .from("queries")
-      .select("id", { count: "exact", head: true })
-      .eq("user_id", userId),
-  ]);
+  const { data, error } = await supabase
+    .from("credit_transactions")
+    .select("balance")
+    .eq("user_id", userId)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .single();
 
-  const credited = (tx ?? []).reduce((acc, r: any) => acc + (r.amount ?? 0), 0);
-  const used = usedCount ?? 0;
-  return Math.max(0, credited - used);
+  if (error) {
+    console.error("Error fetching credit balance:", error);
+    return 0;
+  }
+
+  return data?.balance ?? 0;
 }
