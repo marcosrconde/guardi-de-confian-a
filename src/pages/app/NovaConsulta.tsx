@@ -194,9 +194,53 @@ export default function NovaConsulta() {
           </TabsContent>
 
           <TabsContent value="dados" className="p-6 sm:p-8">
-            <div className="text-center text-muted-foreground">
-              <p className="font-medium">Em breve</p>
-              <p className="text-sm">A consulta por dados pessoais estará disponível em breve.</p>
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <FieldRow label="Nome completo" full>
+                  <Input
+                    disabled
+                    value={form.nome}
+                    onChange={(e) => setForm({ ...form, nome: e.target.value })}
+                    placeholder="Nome completo da pessoa"
+                    className="h-12 rounded-2xl text-base"
+                  />
+                </FieldRow>
+                <FieldRow label="Data de nascimento">
+                  <Input
+                    disabled
+                    value={form.nascimento}
+                    onChange={(e) => setForm({ ...form, nascimento: e.target.value })}
+                    placeholder="00/00/0000"
+                    className="h-12 rounded-2xl text-base"
+                  />
+                </FieldRow>
+                <FieldRow label="Cidade">
+                  <Input
+                    disabled
+                    value={form.cidade}
+                    onChange={(e) => setForm({ ...form, cidade: e.target.value })}
+                    placeholder="Cidade de nascimento"
+                    className="h-12 rounded-2xl text-base"
+                  />
+                </FieldRow>
+                <FieldRow label="Nome da mãe" full>
+                  <Input
+                    disabled
+                    value={form.nomeMae}
+                    onChange={(e) => setForm({ ...form, nomeMae: e.target.value })}
+                    placeholder="Nome completo da mãe"
+                    className="h-12 rounded-2xl text-base"
+                  />
+                </FieldRow>
+              </div>
+              <Button
+                onClick={submitForm}
+                disabled={true}
+                size="lg"
+                className="w-full rounded-full shadow-elegant sm:w-auto"
+              >
+                <Sparkles className="mr-2 h-4 w-4" /> Em breve
+              </Button>
             </div>
           </TabsContent>
         </Tabs>
