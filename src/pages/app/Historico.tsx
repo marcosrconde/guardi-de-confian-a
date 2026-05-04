@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useApp } from "@/store/app-store";
 import { supabase } from "@/integrations/supabase/client";
 import { mapQueryToConsulta } from "@/lib/consulta-mapper";
@@ -11,6 +11,7 @@ import { FileSearch, Sparkles, Loader2 } from "lucide-react";
 
 export default function Historico() {
   const { user } = useApp();
+  const navigate = useNavigate();
   const [consultas, setConsultas] = useState<ConsultaResultado[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -95,8 +96,8 @@ export default function Historico() {
               </p>
               {c.resumo && <p className="mt-2 line-clamp-1 text-sm text-foreground/70">{c.resumo}</p>}
             </div>
-            <Button asChild variant="outline" className="rounded-full">
-              <Link to={`/app/consulta/${c.id}`}>Ver relatório</Link>
+            <Button variant="outline" className="rounded-full" onClick={() => navigate(`/app/consulta/${c.id}`)}>
+              Ver relatório
             </Button>
           </Card>
         ))}

@@ -108,11 +108,20 @@ export default function NovaConsulta() {
 
       await refreshSaldo();
       toast.success("Consulta enviada. Em instantes seu relatório estará pronto.");
-      
-      // I am not sure where to navigate the user to after the consultation is sent.
-      // For now, I will navigate to the history page.
-      navigate("/app/historico");
 
+      const { data, error } = await supabase
+        .from("queries")
+        .select("id")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .single();
+
+      if (error || !data) {
+        navigate("/app/historico");
+      } else {
+        navigate(`/app/consulta/${data.id}`);
+      }
     } catch (error) {
       console.error(error);
       toast.error("Não conseguimos registrar a consulta. Tente novamente.");
