@@ -135,7 +135,7 @@ export default function NovaConsulta() {
       <header>
         <p className="text-sm text-muted-foreground">Olá, {user?.nome} 💗</p>
         <h1 className="mt-1 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
-          Vamos consultar com calma? (teste)
+          Vamos consultar tudo no detalhe?
         </h1>
         <p className="mt-2 max-w-xl text-foreground/70">
           Escolha uma das opções abaixo. Em poucos segundos, você terá um relatório
