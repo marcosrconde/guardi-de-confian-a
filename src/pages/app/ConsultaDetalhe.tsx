@@ -102,7 +102,7 @@ export default function ConsultaDetalhe() {
         </Card>
       )}
 
-      {status === "concluído" && <RelatorioConsulta consulta={consulta} />}
+      {consulta && <RelatorioConsulta consulta={consulta} />}
     </div>
   );
 }
