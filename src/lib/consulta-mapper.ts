@@ -6,7 +6,15 @@ interface QueryRow {
   query_type: "cpf" | "form";
   input_data: any;
   status: "pendente" | "processando" | "concluído" | "erro";
-  output_data: any;
+  output_data: {
+    nome_pesquisado?: string;
+    cpf_pesquisado?: string;
+    resumo?: string;
+    risk_level?: "Baixo" | "Médio" | "Alto" | "Desconhecido";
+    processos_interesse?: any[];
+    processos_outros?: any[];
+    [key: string]: any;
+  } | null;
   risk_level: "Baixo" | "Médio" | "Alto" | "Desconhecido" | null;
   created_at: string;
   completed_at: string | null;
@@ -34,7 +42,7 @@ export function mapQueryToConsulta(row: QueryRow): ConsultaResultado {
   const input = (row.input_data ?? {}) as Record<string, any>;
   const output = (row.output_data ?? {}) as Record<string, any>;
 
-  const risco: RiskLevel = riskMap[row.risk_level ?? "Desconhecido"] ?? "baixo";
+  const risco: RiskLevel = riskMap[output.risk_level ?? row.risk_level ?? "Desconhecido"] ?? "baixo";
 
   const processos_interesse: ProcessoInteresse[] = Array.isArray(output.processos_interesse)
     ? output.processos_interesse
