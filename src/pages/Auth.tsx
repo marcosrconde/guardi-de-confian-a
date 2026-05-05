@@ -10,34 +10,33 @@ import { Mail, Lock, User2, ArrowLeft, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { LogoLockup } from "@/components/app/Logo";
 
-let lastRequestTime = 0;
-const requestCooldown = 1000; // 1 second
-
-const withErrorHandling = (fn) => async (...args) => {
-  const now = Date.now();
-  if (now - lastRequestTime < requestCooldown) {
-    await new Promise(resolve => setTimeout(resolve, requestCooldown - (now - lastRequestTime)));
-  }
-  lastRequestTime = now;
-
-  const { error, ...result } = await fn(...args);
-
-  if (error) {
-    console.error("Supabase error:", error);
-    toast.error(error.message);
-    return { error, ...result };
-  }
-
-  return { error, ...result };
-};
-
-const auth = {
-  signUp: withErrorHandling(supabase.auth.signUp),
-  signInWithPassword: withErrorHandling(supabase.auth.signInWithPassword),
-  resetPasswordForEmail: withErrorHandling(supabase.auth.resetPasswordForEmail),
-};
-
 export default function AuthPage() {
+  let lastRequestTime = 0;
+  const requestCooldown = 1000; // 1 second
+
+  const withErrorHandling = (fn) => async (...args) => {
+    const now = Date.now();
+    if (now - lastRequestTime < requestCooldown) {
+      await new Promise(resolve => setTimeout(resolve, requestCooldown - (now - lastRequestTime)));
+    }
+    lastRequestTime = now;
+
+    const { error, ...result } = await fn(...args);
+
+    if (error) {
+      console.error("Supabase error:", error);
+      toast.error(error.message);
+      return { error, data: { user: null, session: null } };
+    }
+
+    return { error, ...result };
+  };
+
+  const auth = {
+    signUp: withErrorHandling(supabase.auth.signUp.bind(supabase.auth)),
+    signInWithPassword: withErrorHandling(supabase.auth.signInWithPassword.bind(supabase.auth)),
+    resetPasswordForEmail: withErrorHandling(supabase.auth.resetPasswordForEmail.bind(supabase.auth)),
+  };
   const { user, loading } = useApp();
   const navigate = useNavigate();
   const [params] = useSearchParams();
@@ -90,9 +89,9 @@ export default function AuthPage() {
           },
         });
         if (error) {
-          if (error.message.toLowerCase().includes("already")) {
+          if (error.message && error.message.toLowerCase().includes("already")) {
             toast.error("Este e-mail já está cadastrado. Tente entrar.");
-          } else {
+          } else if (error.message) {
             toast.error(error.message);
           }
           return;
