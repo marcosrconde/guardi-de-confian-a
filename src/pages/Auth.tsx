@@ -25,7 +25,6 @@ export default function AuthPage() {
 
     if (error) {
       console.error("Supabase error:", error);
-      toast.error(error.message);
       return { error, data: { user: null, session: null } };
     }
 
@@ -33,7 +32,7 @@ export default function AuthPage() {
   };
 
   const auth = {
-    signUp: withErrorHandling(supabase.auth.signUp.bind(supabase.auth)),
+    signUp: supabase.auth.signUp.bind(supabase.auth),
     signInWithPassword: withErrorHandling(supabase.auth.signInWithPassword.bind(supabase.auth)),
     resetPasswordForEmail: withErrorHandling(supabase.auth.resetPasswordForEmail.bind(supabase.auth)),
   };
