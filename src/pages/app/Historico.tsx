@@ -75,7 +75,7 @@ export default function Historico() {
       <header>
         <h1 className="font-display text-3xl font-semibold tracking-tight sm:text-4xl">Suas consultas</h1>
         <p className="mt-2 text-muted-foreground">
-          Todos os relatórios ficam guardados aqui para você acessar com calma.
+          Todos os relatórios ficam guardados aqui para você acessar sempre que precisar a partir de qualquer dispositivo com internet.
         </p>
       </header>
 

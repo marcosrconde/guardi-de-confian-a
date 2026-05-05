@@ -7,10 +7,23 @@ import type { ConsultaResultado } from "@/store/app-store";
 import { RelatorioConsulta } from "@/components/app/RelatorioConsulta";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ArrowLeft, Loader2, Hourglass } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { ArrowLeft, Loader2, Hourglass, Trash2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export default function ConsultaDetalhe() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { user } = useApp();
   const [consulta, setConsulta] = useState<ConsultaResultado | null>(null);
   const [status, setStatus] = useState<string>("pendente");
@@ -56,6 +69,16 @@ export default function ConsultaDetalhe() {
     };
   }, [id, user]);
 
+  const excluirConsulta = async () => {
+    if (!user || !id) return;
+
+    const { error } = await supabase.from("queries").delete().eq("id", id).eq("user_id", user.id);
+
+    if (!error) {
+      navigate("/app/historico");
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center py-20">
@@ -77,9 +100,32 @@ export default function ConsultaDetalhe() {
 
   return (
     <div className="mx-auto max-w-3xl space-y-4">
-      <Button asChild variant="ghost" size="sm">
-        <Link to="/app/historico"><ArrowLeft className="mr-2 h-4 w-4" /> Voltar ao histórico</Link>
-      </Button>
+      <div className="flex justify-between">
+        <Button asChild variant="ghost" size="sm">
+          <Link to="/app/historico">
+            <ArrowLeft className="mr-2 h-4 w-4" /> Voltar ao histórico
+          </Link>
+        </Button>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button variant="destructive" size="sm">
+              <Trash2 className="mr-2 h-4 w-4" /> Excluir
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Excluir consulta</AlertDialogTitle>
+              <AlertDialogDescription>
+                A consulta será excluída permanentemente e não poderá ser recuperada.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancelar</AlertDialogCancel>
+              <AlertDialogAction onClick={excluirConsulta}>Confirmar</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      </div>
 
       {(status === "pendente" || status === "processando") && (
         <Card className="flex items-center gap-3 border-primary/20 bg-primary-soft/40 p-5 animate-fade-in-up">
