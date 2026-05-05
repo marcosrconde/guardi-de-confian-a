@@ -74,7 +74,9 @@ export default function ConsultaDetalhe() {
 
     const { error } = await supabase.from("queries").delete().eq("id", id).eq("user_id", user.id);
 
-    if (!error) {
+    if (error) {
+      console.error("Error deleting consultation:", error);
+    } else {
       navigate("/app/historico");
     }
   };

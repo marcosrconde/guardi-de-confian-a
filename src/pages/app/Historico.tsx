@@ -7,7 +7,18 @@ import type { ConsultaResultado } from "@/store/app-store";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RiskBadge } from "@/components/app/RiskBadge";
-import { FileSearch, Sparkles, Loader2 } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { FileSearch, Sparkles, Loader2, Trash2 } from "lucide-react";
 
 export default function Historico() {
   const { user } = useApp();
@@ -44,6 +55,16 @@ export default function Historico() {
       supabase.removeChannel(channel);
     };
   }, [user]);
+
+  const excluirConsulta = async (id: string) => {
+    if (!user) return;
+
+    const { error } = await supabase.from("queries").delete().eq("id", id).eq("user_id", user.id);
+
+    if (error) {
+      console.error("Error deleting consultation:", error);
+    }
+  };
 
   if (loading) {
     return (
@@ -97,9 +118,30 @@ export default function Historico() {
               </p>
               {c.resumo && <p className="mt-2 line-clamp-1 text-sm text-foreground/70">{c.resumo}</p>}
             </div>
-            <Button variant="outline" className="rounded-full" onClick={() => navigate(`/app/consulta/${c.id}`)}>
-              Ver relatório
-            </Button>
+            <div className="flex gap-2">
+              <Button variant="outline" className="rounded-full" onClick={() => navigate(`/app/consulta/${c.id}`)}>
+                Ver relatório
+              </Button>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="destructive" size="icon">
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Excluir consulta</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      A consulta será excluída permanentemente e não poderá ser recuperada.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                    <AlertDialogAction onClick={() => excluirConsulta(c.id)}>Confirmar</AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </div>
           </Card>
         ))}
       </div>
