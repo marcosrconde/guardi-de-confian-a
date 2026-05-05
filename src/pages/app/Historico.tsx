@@ -92,7 +92,8 @@ export default function Historico() {
               </div>
               <p className="mt-1 text-sm text-muted-foreground">
                 {new Date(c.criadoEm).toLocaleString("pt-BR")} ·{" "}
-                {c.processos_interesse.length} {c.processos_interesse.length === 1 ? "processo" : "processos"}
+                {c.processos_interesse.length + c.processos_outros.length}{" "}
+                {c.processos_interesse.length + c.processos_outros.length === 1 ? "processo" : "processos"}
               </p>
               {c.resumo && <p className="mt-2 line-clamp-1 text-sm text-foreground/70">{c.resumo}</p>}
             </div>
