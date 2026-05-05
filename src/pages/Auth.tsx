@@ -26,6 +26,7 @@ export default function AuthPage() {
     e.preventDefault();
     if (submitting) return;
 
+    setSubmitting(true);
     if (mode === "reset") {
       if (!form.email) {
         toast.error("Informe o e-mail.");
