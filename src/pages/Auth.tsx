@@ -10,6 +10,33 @@ import { Mail, Lock, User2, ArrowLeft, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { LogoLockup } from "@/components/app/Logo";
 
+let lastRequestTime = 0;
+const requestCooldown = 1000; // 1 second
+
+const withErrorHandling = (fn) => async (...args) => {
+  const now = Date.now();
+  if (now - lastRequestTime < requestCooldown) {
+    await new Promise(resolve => setTimeout(resolve, requestCooldown - (now - lastRequestTime)));
+  }
+  lastRequestTime = now;
+
+  const { error, ...result } = await fn(...args);
+
+  if (error) {
+    console.error("Supabase error:", error);
+    toast.error(error.message);
+    return { error, ...result };
+  }
+
+  return { error, ...result };
+};
+
+const auth = {
+  signUp: withErrorHandling(supabase.auth.signUp),
+  signInWithPassword: withErrorHandling(supabase.auth.signInWithPassword),
+  resetPasswordForEmail: withErrorHandling(supabase.auth.resetPasswordForEmail),
+};
+
 export default function AuthPage() {
   const { user, loading } = useApp();
   const navigate = useNavigate();
@@ -33,7 +60,7 @@ export default function AuthPage() {
         return;
       }
       setSubmitting(true);
-      const { error } = await supabase.auth.resetPasswordForEmail(form.email, {
+      const { error } = await auth.resetPasswordForEmail(form.email, {
         redirectTo: `${window.location.origin}/reset-password`,
       });
       setSubmitting(false);
@@ -54,7 +81,7 @@ export default function AuthPage() {
     setSubmitting(true);
     try {
       if (mode === "signup") {
-        const { error } = await supabase.auth.signUp({
+        const { error } = await auth.signUp({
           email: form.email,
           password: form.senha,
           options: {
@@ -73,7 +100,7 @@ export default function AuthPage() {
         toast.success("Bem-vinda ao JusMulher 💗");
         navigate("/app");
       } else {
-        const { error } = await supabase.auth.signInWithPassword({
+        const { error } = await auth.signInWithPassword({
           email: form.email,
           password: form.senha,
         });
