@@ -124,7 +124,7 @@ export default function Historico() {
               </Button>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <Button variant="destructive" size="icon">
+                  <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-destructive">
                     <Trash2 className="h-4 w-4" />
                   </Button>
                 </AlertDialogTrigger>
