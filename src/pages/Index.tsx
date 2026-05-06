@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ShieldCheck, HeartHandshake, Lock, Sparkles } from "lucide-react";
-import heroImg from "@/assets/hero-bloom.jpg";
+import heroImg from "@/assets/hero.png";
 import { useApp } from "@/store/app-store";
 import { LogoInline } from "@/components/app/Logo";
 
