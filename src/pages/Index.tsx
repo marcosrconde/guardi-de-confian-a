@@ -35,7 +35,7 @@ const Index = () => {
             <span className="italic"><span className="text-primary">pregressa</span> <span className="text-rose">de quem entra na sua vida.</span></span>
           </h1>
           <p className="mt-6 max-w-lg text-lg text-foreground/70 text-balance">
-            Consulte o histórico judicial de quem entra na sua vida.
+            Consulte o histórico judicial das pessoas com quem você se relaciona.
             Informação clara, acolhedora e discreta — porque você merece relacionamentos seguros.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
