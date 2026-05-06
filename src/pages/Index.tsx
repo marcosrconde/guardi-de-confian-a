@@ -32,7 +32,7 @@ const Index = () => {
           <h1 className="mt-5 font-display text-4xl font-semibold leading-[1.05] tracking-tight text-balance sm:text-5xl md:text-6xl">
             Desvende a vida
             <br />
-            <span className="italic"><span className="text-primary">pregressa</span> <span className="text-rose">de quem entra na sua vida.</span></span>
+            <span className="italic"><span className="text-primary">pregressa</span> <span className="text-rose">das pessoas com quem você se relaciona</span></span>
           </h1>
           <p className="mt-6 max-w-lg text-lg text-foreground/70 text-balance">
             Consulte o histórico judicial das pessoas com quem você se relaciona.
