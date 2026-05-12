@@ -50,8 +50,8 @@ const Index = () => {
           </div>
           <div className="mt-10 grid grid-cols-3 gap-4 max-w-md">
             <Feature icon={Lock} title="Sigiloso" />
-            <Feature icon={HeartHandshake} title="Acolhedor" />
-            <Feature icon={ShieldCheck} title="Confiável" />
+            <Feature icon={HeartHandshake} title="Amigável" />
+            <Feature icon={ShieldCheck} title="Seguro" />
           </div>
         </div>
 
