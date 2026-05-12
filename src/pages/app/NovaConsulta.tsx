@@ -195,6 +195,8 @@ export default function NovaConsulta() {
                   Por favor, não feche esta janela. A consulta demora em média de 1 a 2 minutos.
                   <br />
                   Após a conclusão, todas as consultas ficam disponíveis na área de Histórico.
+                  <br />
+                  Fique tranquila, o crédito só é consumido em caso de sucesso na consulta.
                 </p>
               )}
             </div>
