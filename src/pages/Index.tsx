@@ -37,7 +37,7 @@ const Index = () => {
           <p className="mt-6 max-w-lg text-lg text-foreground/70 text-balance">
             Consulte o histórico judicial das pessoas que entram  na sua vida (ou que já fazem parte dela...)
           </p>
-          <p className="mt-4 max-w-md text-sm text-foreground/70">  
+          <p className="mt-6 max-w-lg text-lg text-foreground/70 text-balance"> 
             Informação essencial para sua segurança de forma rápida e confiável. Porque cuidar de você é o que mais importa. 
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
