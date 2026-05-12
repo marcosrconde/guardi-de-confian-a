@@ -45,7 +45,10 @@ export function mapQueryToConsulta(row: QueryRow): ConsultaResultado {
   const risco: RiskLevel = riskMap[output.risk_level ?? row.risk_level ?? "Desconhecido"] ?? "baixo";
 
   const processos_interesse: ProcessoInteresse[] = Array.isArray(output.processos_interesse)
-    ? output.processos_interesse
+    ? output.processos_interesse.map((p: any) => ({
+        ...p,
+        valor_causa: typeof p.valor_causa === "string" ? parseFloat(p.valor_causa.replace(",", ".")) : p.valor_causa,
+      }))
     : [];
 
   const processos_outros: ProcessoOutro[] = Array.isArray(output.processos_outros)

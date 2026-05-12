@@ -12,6 +12,7 @@ export interface ProcessoInteresse {
   assunto_geral: string;
   fase_processual: string;
   data_ultima_movimentacao: string;
+  valor_causa?: number;
 }
 
 export interface ProcessoOutro {

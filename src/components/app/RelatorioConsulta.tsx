@@ -71,6 +71,7 @@ export function RelatorioConsulta({ consulta }: { consulta: ConsultaResultado })
                 <div className="mt-3 space-y-1 text-sm text-foreground/75">
                   <p><b>Polo Ativo:</b> {p.polo_ativo}</p>
                   <p><b>Polo Passivo:</b> {p.polo_passivo}</p>
+                  {p.valor_causa && <p><b>Valor da Causa:</b> {new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(p.valor_causa)}</p>}
                 </div>
               </li>
             ))}
