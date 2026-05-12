@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ShieldCheck, HeartHandshake, Lock, Sparkles, LifeBuoy } from "lucide-react";
+import { Sparkles, Fingerprint, Zap, BadgeCheck, HandCoins, ShieldCheck } from "lucide-react";
 import heroImg from "@/assets/hero.png";
 import { useApp } from "@/store/app-store";
 import { LogoInline } from "@/components/app/Logo";
@@ -49,10 +49,10 @@ const Index = () => {
             </Button>
           </div>
           <div className="mt-10 grid grid-cols-4 gap-4 max-w-md">
-            <Feature icon={Lock} title="Sigiloso" />
-            <Feature icon={HeartHandshake} title="Prático" />
-            <Feature icon={ShieldCheck} title="Seguro" />
-            <Feature icon={LifeBuoy} title="Acessível" />
+            <Feature icon={Fingerprint} title="Sigiloso" />
+            <Feature icon={Zap} title="Prático" />
+            <Feature icon={BadgeCheck} title="Seguro" />
+            <Feature icon={HandCoins} title="Acessível" />
           </div>
         </div>
 
@@ -86,7 +86,7 @@ const Index = () => {
   );
 };
 
-function Feature({ icon: Icon, title }: { icon: typeof Lock; title: string }) {
+function Feature({ icon: Icon, title }: { icon: typeof Fingerprint; title: string }) {
   return (
     <div className="flex flex-col items-center gap-2 rounded-2xl border border-border/60 bg-card/60 p-3 text-center backdrop-blur">
       <Icon className="h-4 w-4 text-primary" />
