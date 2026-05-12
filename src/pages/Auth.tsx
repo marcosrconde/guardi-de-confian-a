@@ -95,8 +95,10 @@ export default function AuthPage() {
           }
           return;
         }
-        toast.success("Bem-vinda ao JusMulher 💗");
-        navigate("/app");
+        toast.success(
+          "Cadastro quase concluído! Enviamos um e-mail de confirmação para você. Por favor, verifique sua caixa de entrada."
+        );
+        setMode("login");
       } else {
         const { error } = await auth.signInWithPassword({
           email: form.email,
