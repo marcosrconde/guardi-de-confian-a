@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ShieldCheck, HeartHandshake, Lock, Sparkles } from "lucide-react";
+import { ShieldCheck, HeartHandshake, Lock, Sparkles, UniversalCircle } from "lucide-react";
 import heroImg from "@/assets/hero.png";
 import { useApp } from "@/store/app-store";
 import { LogoInline } from "@/components/app/Logo";
@@ -48,10 +48,11 @@ const Index = () => {
               <Link to="/auth">Já tenho conta</Link>
             </Button>
           </div>
-          <div className="mt-10 grid grid-cols-3 gap-4 max-w-md">
+          <div className="mt-10 grid grid-cols-4 gap-4 max-w-md">
             <Feature icon={Lock} title="Sigiloso" />
-            <Feature icon={HeartHandshake} title="Amigável" />
+            <Feature icon={HeartHandshake} title="Prático" />
             <Feature icon={ShieldCheck} title="Seguro" />
+            <Feature icon={UniversalCircle} title="Acessível" />
           </div>
         </div>
 
