@@ -190,6 +190,13 @@ export default function NovaConsulta() {
                 </p>
               </div>
               <BtnConsultar onClick={submitCpf} loading={loading} disabled={semCreditos} />
+              {loading && (
+                <p className="pt-4 text-center text-sm text-muted-foreground">
+                  Por favor, não feche esta janela. A consulta demora em média de 1 a 2 minutos.
+                  <br />
+                  Após a conclusão, todas as consultas ficam disponíveis na área de Histórico.
+                </p>
+              )}
             </div>
           </TabsContent>
 
