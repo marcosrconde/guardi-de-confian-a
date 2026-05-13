@@ -19,6 +19,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { FileSearch, Sparkles, Loader2, Trash2 } from "lucide-react";
+import { toast } from "sonner";
 
 export default function Historico() {
   const { user } = useApp();
@@ -35,7 +36,10 @@ export default function Historico() {
         .select("*")
         .eq("user_id", user.id)
         .order("created_at", { ascending: false });
-      if (!error && data) {
+      if (error) {
+        toast.error("Erro ao carregar o histórico. Tente novamente.");
+        console.error("Error loading history:", error);
+      } else if (data) {
         setConsultas(data.map((r) => mapQueryToConsulta(r as any)));
       }
       setLoading(false);
@@ -62,6 +66,7 @@ export default function Historico() {
     const { error } = await supabase.from("queries").delete().eq("id", id).eq("user_id", user.id);
 
     if (error) {
+      toast.error("Erro ao excluir a consulta. Tente novamente.");
       console.error("Error deleting consultation:", error);
     }
   };

@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { ArrowLeft, Loader2, Hourglass, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 export default function ConsultaDetalhe() {
   const { id } = useParams();
@@ -75,6 +76,7 @@ export default function ConsultaDetalhe() {
     const { error } = await supabase.from("queries").delete().eq("id", id).eq("user_id", user.id);
 
     if (error) {
+      toast.error("Erro ao excluir a consulta. Tente novamente.");
       console.error("Error deleting consultation:", error);
     } else {
       navigate("/app/historico");

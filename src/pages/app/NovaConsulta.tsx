@@ -103,7 +103,8 @@ export default function NovaConsulta() {
       });
 
       if (!response.ok) {
-        throw new Error("Erro ao enviar a consulta.");
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData?.error || "Erro ao processar a consulta.");
       }
 
       await refreshSaldo();
@@ -124,7 +125,11 @@ export default function NovaConsulta() {
       }
     } catch (error) {
       console.error(error);
-      toast.error("Não conseguimos registrar a consulta. Tente novamente.");
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("Não conseguimos registrar a consulta. Tente novamente.");
+      }
     } finally {
       setLoading(false);
     }
@@ -268,7 +273,7 @@ export default function NovaConsulta() {
 
 function FieldRow({
   label, children, full,
-}: { label: string; children: React.ReactNode; full?: boolean }) {
+}: { label: string; children: import("react").ReactNode; full?: boolean }) {
   return (
     <div className={`space-y-1.5 ${full ? "sm:col-span-2" : ""}`}>
       <Label className="text-sm">{label}</Label>
