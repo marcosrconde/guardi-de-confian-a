@@ -13,7 +13,7 @@ const nav = [
   { to: "/app", label: "Nova consulta", icon: Sparkles, end: true },
   { to: "/app/historico", label: "Histórico", icon: History },
   { to: "/app/creditos", label: "Créditos", icon: Wallet },
-  { to: "/app/faq", label: "F.A.Q", icon: HelpCircle },
+  { to: "/faq", label: "F.A.Q", icon: HelpCircle },
 ];
 
 function NavItems({ onNavigate }: { onNavigate?: () => void }) {
