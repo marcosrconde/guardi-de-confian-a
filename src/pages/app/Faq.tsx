@@ -36,16 +36,22 @@ export function Faq() {
             Sim. Embora a IA esteja treinada para identificação de riscos para mulheres, o sistema permite a consulta de qualquer pessoa e retornará todos os processos encontrados no CPF consultado.
           </AccordionContent>
         </AccordionItem>
-        <AccordionItem value="item-6">
+        <AccordionItem value="item-7">
           <AccordionTrigger>E se ocorrer um erro durante a consulta?</AccordionTrigger>
           <AccordionContent>
             Embora façamos o possível para garantir a precisão, erros podem ocorrer. Mas fique tranquila, seu crédito só é consumido em caso de sucesso na consulta. Se um erro ocorrer, você pode tentar novamente em alguns instantes. Se o problema persistir, entre em contato com nosso suporte para assistência.
           </AccordionContent>
         </AccordionItem>
-        <AccordionItem value="item-7">
+        <AccordionItem value="item-8">
           <AccordionTrigger>Comprei créditos, mas não alterou o saldo</AccordionTrigger>
           <AccordionContent>
             O mais provável é que você tenha utilizado um email diferente do que usou para criar sua conta no JusMulher. Para resolver isso, entre em contato com nosso suporte e informe o email usado na compra e o email da sua conta JusMulher para que possamos corrigir seu saldo.
+          </AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="item-6">
+          <AccordionTrigger>Posso confiar nas informações fornecidas?</AccordionTrigger>
+          <AccordionContent>
+            Sim. As informações fornecidas pelo JusMulher são baseadas em dados públicos dos tribunais e diários oficiais e análises são realizadas por inteligência artificial. Contamos com auditoria de resultados por equipe de advogados especializados para garantir a qualidade e confiabilidade das informações. No entanto, é importante lembrar que a análise da IA é uma ferramenta de apoio e não substitui a consulta a um profissional de direito para casos mais complexos.
           </AccordionContent>
         </AccordionItem>
       </Accordion>
