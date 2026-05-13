@@ -16,19 +16,27 @@ interface Pacote {
   checkout_url: string;
 }
 
-interface Transacao {
+interface GatewayTransaction {
   id: string;
-  type: string;
   amount: number;
-  description: string | null;
+  status: string;
   created_at: string;
+  transaction_type: string;
+  payer: {
+    name: string;
+  };
+}
+
+interface CreditTransaction {
+  id: string;
+  transactions: GatewayTransaction[];
 }
 
 export default function Creditos() {
   const { user } = useApp();
   const { saldo } = useShell();
   const [pacotes, setPacotes] = useState<Pacote[]>([]);
-  const [transacoes, setTransacoes] = useState<Transacao[]>([]);
+  const [transacoes, setTransacoes] = useState<GatewayTransaction[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -41,13 +49,18 @@ export default function Creditos() {
         .order("credits", { ascending: true }),
       supabase
         .from("credit_transactions")
-        .select("*")
+        .select("id, transactions")
         .eq("user_id", user.id)
         .order("created_at", { ascending: false })
-        .limit(10),
+        .limit(5),
     ]).then(([pkgRes, txRes]) => {
       if (pkgRes.data) setPacotes(pkgRes.data as any);
-      if (txRes.data) setTransacoes(txRes.data as any);
+      if (txRes.data) {
+        const allTransactions = txRes.data
+          .flatMap((tx: CreditTransaction) => tx.transactions)
+          .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+        setTransacoes(allTransactions);
+      }
       setLoading(false);
     });
   }, [user]);
@@ -132,15 +145,11 @@ export default function Creditos() {
             {transacoes.map((t) => (
               <li key={t.id} className="flex items-center justify-between gap-4 py-3 text-sm">
                 <div className="min-w-0">
-                  <p className="font-medium">
-                    {t.description || (t.type === "purchase" ? "Compra de créditos" : t.type === "bonus" ? "Bônus" : "Ajuste")}
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    {new Date(t.created_at).toLocaleString("pt-BR")}
-                  </p>
+                  <p className="font-medium capitalize">{t.transaction_type} - {t.status}</p>
+                  <p className="text-xs text-muted-foreground">{new Date(t.created_at).toLocaleString("pt-BR")}</p>
                 </div>
-                <span className={cn("font-semibold", t.amount >= 0 ? "text-success" : "text-destructive")}>
-                  {t.amount >= 0 ? "+" : ""}{t.amount}
+                <span className="font-semibold text-success">
+                  {(t.amount / 100).toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}
                 </span>
               </li>
             ))}
