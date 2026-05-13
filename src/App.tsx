@@ -15,6 +15,7 @@ import Creditos from "./pages/app/Creditos";
 import { Faq } from "./pages/app/Faq";
 import NotFound from "./pages/NotFound";
 import Precos from "./pages/Precos";
+import FaqPage from "./pages/Faq";
 
 const queryClient = new QueryClient();
 
@@ -27,13 +28,13 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/precos" element={<Precos />} />
+            <Route path="/faq" element={<FaqPage />} />
             <Route path="/auth" element={<AuthPage />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/app" element={<AppShell><NovaConsulta /></AppShell>} />
             <Route path="/app/historico" element={<AppShell><Historico /></AppShell>} />
             <Route path="/app/consulta/:id" element={<AppShell><ConsultaDetalhe /></AppShell>} />
             <Route path="/app/creditos" element={<AppShell><Creditos /></AppShell>} />
-            <Route path="/app/faq" element={<AppShell><Faq /></AppShell>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

@@ -1,0 +1,87 @@
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { LogoInline } from "@/components/app/Logo";
+import { useApp } from "@/store/app-store";
+
+export default function Faq() {
+  const { user } = useApp();
+
+  return (
+    <div className="min-h-screen bg-warm">
+      <header className="container flex items-center justify-between py-6">
+        <Link to="/" aria-label="JusMulher">
+          <LogoInline />
+        </Link>
+        <div className="flex items-center gap-2">
+          <Button asChild variant="ghost">
+            <Link to="/auth">Entrar</Link>
+          </Button>
+          <Button asChild className="rounded-full">
+            <Link to={user ? "/app" : "/auth?mode=signup"}>Começar agora</Link>
+          </Button>
+        </div>
+      </header>
+
+      <section className="container py-12 md:py-20">
+        <header className="text-center">
+            <h1 className="mt-4 font-display text-3xl font-semibold tracking-tight sm:text-5xl">
+                Perguntas Frequentes (FAQ)
+            </h1>
+        </header>
+        <div className="mx-auto max-w-5xl space-y-12 animate-fade-in-up mt-8">
+            <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="item-1">
+                <AccordionTrigger>O que é o JusMulher?</AccordionTrigger>
+                <AccordionContent>
+                    JusMulher é uma aplicação que utiliza inteligência artificial para encontrar e analisar processos jurídicos e identificar possíveis riscos relacionados a condutas violentas, abusivas ou criminais que indiquem possíveis conflitos interpessoais. A análise tem por objetivo fornecer informações agéis e confiáveis para a proteção da mulher no combate ao feminicídio e outras práticas de violência contra a Mulher.
+                </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-2">
+                <AccordionTrigger>Quais tribunais são consultados?</AccordionTrigger>
+                <AccordionContent>
+                    Nosso sistema consulta todos os tribunais do Brasil, incluindo as esferas estadual, federal, trabalhista, militar e eleitoral. Isso garante uma análise abrangente do histórico judicial das pessoas consultadas.
+                </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-3">
+                <AccordionTrigger>A análise da IA substitui um advogado?</AccordionTrigger>
+                <AccordionContent>
+                    Não. A análise do Jusmulher é uma ferramenta de apoio com base em informações disponíveis e não substitui a consulta a um profissional de direito. Recomendamos sempre que um advogado seja consultado para questões legais complexas.
+                </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-4">
+                <AccordionTrigger>Minhas consultas estão seguras?</AccordionTrigger>
+                <AccordionContent>
+                    Sim. A segurança e a privacidade das suas consultas são nossa prioridade. Utilizamos criptografia de ponta a ponta e não compartilhamos seus dados com terceiros.
+                </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-5">
+                <AccordionTrigger>Posso consultar qualquer pessoa?</AccordionTrigger>
+                <AccordionContent>
+                    Sim. Embora a IA esteja treinada para identificação de riscos para mulheres, o sistema permite a consulta de qualquer pessoa e retornará todos os processos encontrados no CPF consultado.
+                </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-7">
+                <AccordionTrigger>E se ocorrer um erro durante a consulta?</AccordionTrigger>
+                <AccordionContent>
+                    Embora façamos o possível para garantir a precisão, erros podem ocorrer. Mas fique tranquila, seu crédito só é consumido em caso de sucesso na consulta. Se um erro ocorrer, você pode tentar novamente em alguns instantes. Se o problema persistir, entre em contato com nosso suporte para assistência.
+                </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-8">
+                <AccordionTrigger>Comprei créditos, mas não alterou o saldo</AccordionTrigger>
+                <AccordionContent>
+                    O mais provável é que você tenha utilizado um email diferente do que usou para criar sua conta no JusMulher. Para resolver isso, entre em contato com nosso suporte e informe o email usado na compra e o email da sua conta JusMulher para que possamos corrigir seu saldo.
+                </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="item-6">
+                <AccordionTrigger>Posso confiar nas informações fornecidas?</AccordionTrigger>
+                <AccordionContent>
+                    Sim. As informações fornecidas pelo JusMulher são baseadas em dados públicos dos tribunais e diários oficiais e análises são realizadas por inteligência artificial. Contamos com auditoria periódica de amostras de resultados por equipe de advogados especializados. Isso garante a qualidade e confiabilidade das informações e o aprimoramento contínuo do sistema. No entanto, é importante lembrar que esta é uma ferramenta de apoio e não substitui a consulta a um profissional de direito para casos mais complexos.
+                </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+        </div>
+      </section>
+    </div>
+  );
+}
