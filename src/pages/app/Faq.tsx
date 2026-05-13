@@ -7,27 +7,45 @@ export function Faq() {
       <h1 className="text-2xl font-bold mb-4">Perguntas Frequentes (FAQ)</h1>
       <Accordion type="single" collapsible className="w-full">
         <AccordionItem value="item-1">
-          <AccordionTrigger>O que é a Guardiã de Confiança?</AccordionTrigger>
+          <AccordionTrigger>O que é o JusMulher?</AccordionTrigger>
           <AccordionContent>
-            A Guardiã de Confiança é uma aplicação que utiliza inteligência artificial para analisar documentos jurídicos e identificar possíveis cláusulas abusivas, fornecendo uma camada extra de proteção e segurança para os usuários.
+            JusMulher é uma aplicação que utiliza inteligência artificial para encontrar e analisar processos jurídicos e identificar possíveis riscos relacionados a condutas violentas, abusivas ou criminais que indiquem possíveis conflitos interpessoais. A análise tem por objetivo fornecer informações agéis e confiáveis para a proteção da mulher no combate ao feminicídio e outras práticas de violência contra a Mulher.
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="item-2">
-          <AccordionTrigger>Como funciona a análise de documentos?</AccordionTrigger>
+          <AccordionTrigger>Quais tribunais são consultados?</AccordionTrigger>
           <AccordionContent>
-            Nossa IA foi treinada com uma vasta base de dados de documentos jurídicos e legislação. Ao submeter um documento, a IA compara o texto com padrões de cláusulas abusivas conhecidas, destacando os trechos que merecem atenção.
+            Nosso sistema consulta todos os tribunais do Brasil, incluindo as esferas estadual, federal, trabalhista, militar e eleitoral. Isso garante uma análise abrangente do histórico judicial das pessoas consultadas.
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="item-3">
           <AccordionTrigger>A análise da IA substitui um advogado?</AccordionTrigger>
           <AccordionContent>
-            Não. A análise da Guardiã de Confiança é uma ferramenta de apoio e não substitui a consulta a um profissional de direito. Recomendamos sempre que um advogado seja consultado para questões legais complexas.
+            Não. A análise do Jusmulher é uma ferramenta de apoio com base em informações disponíveis e não substitui a consulta a um profissional de direito. Recomendamos sempre que um advogado seja consultado para questões legais complexas.
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="item-4">
-          <AccordionTrigger>Meus documentos estão seguros?</AccordionTrigger>
+          <AccordionTrigger>Minhas consultas estão seguras?</AccordionTrigger>
           <AccordionContent>
-            Sim. A segurança e a privacidade dos seus documentos são nossa prioridade. Utilizamos criptografia de ponta a ponta e não compartilhamos seus dados com terceiros.
+            Sim. A segurança e a privacidade das suas consultas são nossa prioridade. Utilizamos criptografia de ponta a ponta e não compartilhamos seus dados com terceiros.
+          </AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="item-5">
+          <AccordionTrigger>Posso consultar qualquer pessoa?</AccordionTrigger>
+          <AccordionContent>
+            Sim. Embora a IA esteja treinada para identificação de riscos para mulheres, o sistema permite a consulta de qualquer pessoa e retornará todos os processos encontrados no CPF consultado.
+          </AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="item-6">
+          <AccordionTrigger>E se ocorrer um erro durante a consulta?</AccordionTrigger>
+          <AccordionContent>
+            Embora façamos o possível para garantir a precisão, erros podem ocorrer. Mas fique tranquila, seu crédito só é consumido em caso de sucesso na consulta. Se um erro ocorrer, você pode tentar novamente em alguns instantes. Se o problema persistir, entre em contato com nosso suporte para assistência.
+          </AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="item-7">
+          <AccordionTrigger>Comprei créditos, mas não alterou o saldo</AccordionTrigger>
+          <AccordionContent>
+            O mais provável é que você tenha utilizado um email diferente do que usou para criar sua conta no JusMulher. Para resolver isso, entre em contato com nosso suporte e informe o email usado na compra e o email da sua conta JusMulher para que possamos corrigir seu saldo.
           </AccordionContent>
         </AccordionItem>
       </Accordion>
