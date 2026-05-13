@@ -14,6 +14,7 @@ import ConsultaDetalhe from "./pages/app/ConsultaDetalhe";
 import Creditos from "./pages/app/Creditos";
 import { Faq } from "./pages/app/Faq";
 import NotFound from "./pages/NotFound";
+import Precos from "./pages/Precos";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/precos" element={<Precos />} />
             <Route path="/auth" element={<AuthPage />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/app" element={<AppShell><NovaConsulta /></AppShell>} />

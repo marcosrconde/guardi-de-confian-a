@@ -16,6 +16,9 @@ const Index = () => {
         </Link>
         <div className="flex items-center gap-2">
           <Button asChild variant="ghost">
+            <Link to="/precos">Preços</Link>
+          </Button>
+          <Button asChild variant="ghost">
             <Link to="/auth">Entrar</Link>
           </Button>
           <Button asChild className="rounded-full">
