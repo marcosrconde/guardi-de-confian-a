@@ -51,7 +51,7 @@ export function Faq() {
         <AccordionItem value="item-6">
           <AccordionTrigger>Posso confiar nas informações fornecidas?</AccordionTrigger>
           <AccordionContent>
-            Sim. As informações fornecidas pelo JusMulher são baseadas em dados públicos dos tribunais e diários oficiais e análises são realizadas por inteligência artificial. Contamos com auditoria de resultados por equipe de advogados especializados para garantir a qualidade e confiabilidade das informações. No entanto, é importante lembrar que a análise da IA é uma ferramenta de apoio e não substitui a consulta a um profissional de direito para casos mais complexos.
+            Sim. As informações fornecidas pelo JusMulher são baseadas em dados públicos dos tribunais e diários oficiais e análises são realizadas por inteligência artificial. Contamos com auditoria periódica de amostras de resultados por equipe de advogados especializados. Isso garante a qualidade e confiabilidade das informações e o aprimoramento contínuo do sistema. No entanto, é importante lembrar que esta é uma ferramenta de apoio e não substitui a consulta a um profissional de direito para casos mais complexos.
           </AccordionContent>
         </AccordionItem>
       </Accordion>
