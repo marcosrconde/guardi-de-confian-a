@@ -12,6 +12,7 @@ import NovaConsulta from "./pages/app/NovaConsulta";
 import Historico from "./pages/app/Historico";
 import ConsultaDetalhe from "./pages/app/ConsultaDetalhe";
 import Creditos from "./pages/app/Creditos";
+import { Faq } from "./pages/app/Faq";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="/app/historico" element={<AppShell><Historico /></AppShell>} />
             <Route path="/app/consulta/:id" element={<AppShell><ConsultaDetalhe /></AppShell>} />
             <Route path="/app/creditos" element={<AppShell><Creditos /></AppShell>} />
+            <Route path="/app/faq" element={<AppShell><Faq /></AppShell>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
