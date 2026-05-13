@@ -3,32 +3,14 @@ import { Button } from "@/components/ui/button";
 import { Sparkles, Fingerprint, Zap, BadgeCheck, HandCoins, ShieldCheck } from "lucide-react";
 import heroImg from "@/assets/hero.png";
 import { useApp } from "@/store/app-store";
-import { LogoInline } from "@/components/app/Logo";
+import PublicHeader from "@/components/app/PublicHeader";
 
 const Index = () => {
   const { user } = useApp();
 
   return (
     <div className="min-h-screen bg-warm">
-      <header className="container flex items-center justify-between py-6">
-        <Link to="/" aria-label="JusMulher">
-          <LogoInline />
-        </Link>
-        <div className="flex items-center gap-2">
-          <Button asChild variant="ghost">
-            <Link to="/precos">Preços</Link>
-          </Button>
-          <Button asChild variant="ghost">
-            <Link to="/faq">FAQ</Link>
-          </Button>
-          <Button asChild variant="ghost">
-            <Link to="/auth">Entrar</Link>
-          </Button>
-          <Button asChild className="rounded-full">
-            <Link to={user ? "/app" : "/auth?mode=signup"}>Começar agora</Link>
-          </Button>
-        </div>
-      </header>
+      <PublicHeader />
 
       <section className="container grid gap-12 py-12 md:grid-cols-2 md:items-center md:py-20">
         <div className="animate-fade-in-up">

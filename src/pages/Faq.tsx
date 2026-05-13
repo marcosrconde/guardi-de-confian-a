@@ -1,27 +1,10 @@
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { LogoInline } from "@/components/app/Logo";
-import { useApp } from "@/store/app-store";
+import PublicHeader from "@/components/app/PublicHeader";
 
 export default function Faq() {
-  const { user } = useApp();
-
   return (
     <div className="min-h-screen bg-warm">
-      <header className="container flex items-center justify-between py-6">
-        <Link to="/" aria-label="JusMulher">
-          <LogoInline />
-        </Link>
-        <div className="flex items-center gap-2">
-          <Button asChild variant="ghost">
-            <Link to="/auth">Entrar</Link>
-          </Button>
-          <Button asChild className="rounded-full">
-            <Link to={user ? "/app" : "/auth?mode=signup"}>Começar agora</Link>
-          </Button>
-        </div>
-      </header>
+      <PublicHeader />
 
       <section className="container py-12 md:py-20">
         <header className="text-center">
