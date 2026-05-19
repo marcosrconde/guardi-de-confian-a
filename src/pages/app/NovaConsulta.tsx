@@ -83,7 +83,7 @@ export default function NovaConsulta() {
           data_consulta: new Date().toISOString(),
         };
       } else {
-        webhookUrl = "https://n8n-n8n.apuc7z.easypanel.host/webhook/f0b92db3-81fa-4900-89ff-c7e5f108a0d2";
+        webhookUrl = "https://n8n-n8n.apuc7z.easypanel.host/webhook/c6beb102-7229-4b11-8e7f-e911df056024";
         body = {
           user_id: user.id,
           user_email: user.email,
@@ -172,8 +172,8 @@ export default function NovaConsulta() {
               <TabsTrigger value="cpf" className="rounded-full data-[state=active]:bg-card data-[state=active]:shadow-soft">
                 Por CPF
               </TabsTrigger>
-              <TabsTrigger value="dados" disabled className="rounded-full data-[state=active]:bg-card data-[state=active]:shadow-soft">
-                Por dados pessoais (em breve)
+              <TabsTrigger value="dados" className="rounded-full data-[state=active]:bg-card data-[state=active]:shadow-soft">
+                Por dados pessoais
               </TabsTrigger>
             </TabsList>
           </div>
@@ -212,7 +212,6 @@ export default function NovaConsulta() {
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <FieldRow label="Nome completo" full>
                   <Input
-                    disabled
                     value={form.nome}
                     onChange={(e) => setForm({ ...form, nome: e.target.value })}
                     placeholder="Nome completo da pessoa"
@@ -221,7 +220,6 @@ export default function NovaConsulta() {
                 </FieldRow>
                 <FieldRow label="Data de nascimento">
                   <Input
-                    disabled
                     value={form.nascimento}
                     onChange={(e) => setForm({ ...form, nascimento: e.target.value })}
                     placeholder="00/00/0000"
@@ -230,7 +228,6 @@ export default function NovaConsulta() {
                 </FieldRow>
                 <FieldRow label="Cidade">
                   <Input
-                    disabled
                     value={form.cidade}
                     onChange={(e) => setForm({ ...form, cidade: e.target.value })}
                     placeholder="Cidade de nascimento"
@@ -239,7 +236,6 @@ export default function NovaConsulta() {
                 </FieldRow>
                 <FieldRow label="Nome da mãe" full>
                   <Input
-                    disabled
                     value={form.nomeMae}
                     onChange={(e) => setForm({ ...form, nomeMae: e.target.value })}
                     placeholder="Nome completo da mãe"
@@ -247,14 +243,7 @@ export default function NovaConsulta() {
                   />
                 </FieldRow>
               </div>
-              <Button
-                onClick={submitForm}
-                disabled={true}
-                size="lg"
-                className="w-full rounded-full shadow-elegant sm:w-auto"
-              >
-                <Sparkles className="mr-2 h-4 w-4" /> Em breve
-              </Button>
+              <BtnConsultar onClick={submitForm} loading={loading} disabled={semCreditos} />
             </div>
           </TabsContent>
         </Tabs>

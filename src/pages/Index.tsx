@@ -18,15 +18,15 @@ const Index = () => {
             <Sparkles className="h-3.5 w-3.5" /> Para sua tranquilidade
           </span>
           <h1 className="mt-5 font-display text-4xl font-semibold leading-[1.05] tracking-tight text-balance sm:text-5xl md:text-6xl">
-            Desvende a vida
+            Informação 
             <br />
-            <span className="italic"><span className="text-primary">pregressa</span> <span className="text-rose">das pessoas com quem você se relaciona</span></span>
+            <span className="italic"><span className="text-primary"> jurídica e criminal</span> <span className="text-rose">para você se proteger em todas as suas relações</span></span>
           </h1>
           <p className="mt-6 max-w-lg text-lg text-foreground/70 text-balance">
-            Consulte o histórico judicial das pessoas que entram  na sua vida (ou que já fazem parte dela...)
+            Descubra riscos em relacionamentos com análise jurídica rápida, acessível e confiável.
           </p>
           <p className="mt-6 max-w-lg text-lg text-foreground/70 text-balance">
-            Informação essencial para sua <strong>segurança</strong>, de forma <strong>rápida</strong> e <strong>confiável</strong>. 
+            <strong>Você não precisa esperar piorar para agir. </strong> 
           <p><span className="font-semibold text-foreground/90">Porque cuidar de você é o que mais importa.</span></p>
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
