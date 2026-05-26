@@ -10,7 +10,7 @@ export function RelatorioConsulta({ consulta }: { consulta: ConsultaResultado })
 
   const maskedCpf = (cpf: string) => {
     if (query_type === "form") {
-      return cpf.replace(/^\d{3}\.\d{3}/, "xxx.xxx");
+      return cpf.replace(/^\d{3}/, "***").replace(/-\d{2}$/, "-**");
     }
     return cpf;
   };
