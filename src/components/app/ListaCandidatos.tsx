@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { User2, Calendar, MapPin } from "lucide-react";
-import { formatCPF } from "@/lib/utils";
+import { formatCPF, maskMotherName } from "@/lib/utils";
 
 type Candidate = {
   name: string;
@@ -55,7 +55,7 @@ export function ListaCandidatos({ candidates, onSelect }: Props) {
                     {candidate.age && <Info icon={Calendar} label="Idade" value={candidate.age} />}
                     {candidate.birthDate && <Info icon={Calendar} label="Nascimento" value={candidate.birthDate} />}
                     {candidate.city && <Info icon={MapPin} label="Cidade" value={candidate.city} />}
-                    {candidate.motherName && <Info icon={User2} label="Nome da mãe" value={candidate.motherName} />}
+                    {candidate.motherName && <Info icon={User2} label="Nome da mãe" value={maskMotherName(candidate.motherName)} />}
                   </div>
                 </div>
               </div>
