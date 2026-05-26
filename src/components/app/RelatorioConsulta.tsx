@@ -17,7 +17,6 @@ export function RelatorioConsulta({ consulta }: { consulta: ConsultaResultado })
               <h2 className="font-display text-2xl font-semibold sm:text-3xl">{alvo.nome}</h2>
               <p className="mt-2 max-w-xl text-sm opacity-90">{resumo}</p>
             </div>
-            <RiskBadge level={risco} className="bg-background/95 backdrop-blur" />
           </div>
         </div>
 
@@ -31,6 +30,13 @@ export function RelatorioConsulta({ consulta }: { consulta: ConsultaResultado })
             label="Consulta realizada em"
             value={new Date(criadoEm).toLocaleString("pt-BR")}
           />
+        </div>
+      </Card>
+
+      <Card className="border-border/60 p-6 sm:p-8 text-center">
+        <h3 className="font-display text-lg font-semibold">Nível de Risco</h3>
+        <div className="mt-4 flex justify-center">
+          <RiskBadge level={risco} className="scale-125" />
         </div>
       </Card>
 
