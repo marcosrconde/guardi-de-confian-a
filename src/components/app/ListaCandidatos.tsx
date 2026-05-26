@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { User2, Calendar, MapPin } from "lucide-react";
+import { formatCPF } from "@/lib/utils";
 
 type Candidate = {
   name: string;
@@ -50,7 +51,7 @@ export function ListaCandidatos({ candidates, onSelect }: Props) {
                 <div>
                   <p className="font-medium text-foreground">{candidate.name}</p>
                   <div className="grid grid-cols-1 gap-x-8 gap-y-3 p-6 text-sm sm:grid-cols-2 sm:p-8">
-                    {candidate.tax && <Info icon={User2} label="CPF" value={candidate.tax.replace(/^\d{3}/, "***").replace(/-\d{2}$/, "-**")} />}
+                    {candidate.tax && <Info icon={User2} label="CPF" value={formatCPF(candidate.tax).replace(/^\d{3}/, "***").replace(/-\d{2}$/, "-**")} />}
                     {candidate.age && <Info icon={Calendar} label="Idade" value={candidate.age} />}
                     {candidate.birthDate && <Info icon={Calendar} label="Nascimento" value={candidate.birthDate} />}
                     {candidate.city && <Info icon={MapPin} label="Cidade" value={candidate.city} />}

@@ -31,12 +31,7 @@ const riskMap: Record<string, RiskLevel> = {
   unknown: "baixo",
 };
 
-function formatCPF(cpf: string | null | undefined): string | undefined {
-  if (!cpf) return undefined;
-  const cleaned = cpf.replace(/\D/g, "");
-  if (cleaned.length !== 11) return cpf;
-  return cleaned.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
-}
+import { formatCPF } from "./utils";
 
 export function mapQueryToConsulta(row: QueryRow): ConsultaResultado {
   const input = (row.input_data ?? {}) as Record<string, any>;
