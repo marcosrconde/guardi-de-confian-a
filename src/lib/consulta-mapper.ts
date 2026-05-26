@@ -58,7 +58,7 @@ export function mapQueryToConsulta(row: QueryRow): ConsultaResultado {
       }))
     : [];
 
-  return {
+  const consulta: ConsultaResultado = {
     id: row.id,
     query_type: row.query_type,
     criadoEm: row.created_at,
@@ -75,4 +75,10 @@ export function mapQueryToConsulta(row: QueryRow): ConsultaResultado {
     processos_interesse,
     processos_outros,
   };
+
+  if (output.candidates) {
+    consulta.candidates = output.candidates;
+  }
+
+  return consulta;
 }
