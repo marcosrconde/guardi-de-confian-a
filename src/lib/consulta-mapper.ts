@@ -52,7 +52,10 @@ export function mapQueryToConsulta(row: QueryRow): ConsultaResultado {
     : [];
 
   const processos_outros: ProcessoOutro[] = Array.isArray(output.processos_outros)
-    ? output.processos_outros
+    ? output.processos_outros.map((p: any) => ({
+        ...p,
+        valor_da_causa: typeof p.valor_da_causa === "string" ? parseFloat(p.valor_da_causa.replace(",", ".")) : p.valor_da_causa,
+      }))
     : [];
 
   return {

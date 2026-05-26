@@ -24,6 +24,7 @@ export interface ProcessoOutro {
   polo_passivo: string;
   data_ultima_movimentacao: string;
   motivo_descarte: string;
+  valor_da_causa?: number;
 }
 
 export interface ConsultaResultado {
