@@ -6,7 +6,15 @@ import { AlertTriangle, FileText, Calendar, User2, MapPin, Trash2 } from "lucide
 import { cn } from "@/lib/utils";
 
 export function RelatorioConsulta({ consulta }: { consulta: ConsultaResultado }) {
-  const { alvo, processos_interesse, processos_outros, resumo, risco, criadoEm } = consulta;
+  const { alvo, processos_interesse, processos_outros, resumo, risco, criadoEm, query_type } = consulta;
+
+  const maskedCpf = (cpf: string) => {
+    if (query_type === "form") {
+      return cpf.replace(/^\d{6}/, "xxx.xxx");
+    }
+    return cpf;
+  };
+
   return (
     <div className="space-y-6 animate-fade-in-up">
       <Card className="overflow-hidden border-border/60 shadow-elegant">
@@ -21,7 +29,7 @@ export function RelatorioConsulta({ consulta }: { consulta: ConsultaResultado })
         </div>
 
         <div className="grid grid-cols-1 gap-x-8 gap-y-3 p-6 text-sm sm:grid-cols-2 sm:p-8">
-          {alvo.cpf && <Info icon={User2} label="CPF" value={alvo.cpf} />}
+          {alvo.cpf && <Info icon={User2} label="CPF" value={maskedCpf(alvo.cpf)} />}
           {alvo.nascimento && <Info icon={Calendar} label="Nascimento" value={alvo.nascimento} />}
           {alvo.cidade && <Info icon={MapPin} label="Cidade" value={alvo.cidade} />}
           {alvo.nomeMae && <Info icon={User2} label="Nome da mãe" value={alvo.nomeMae} />}

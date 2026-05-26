@@ -60,6 +60,7 @@ export function mapQueryToConsulta(row: QueryRow): ConsultaResultado {
 
   return {
     id: row.id,
+    query_type: row.query_type,
     criadoEm: row.created_at,
     alvo: {
       nome: output.nome_pesquisado || output.nome || input.nome || (input.cpf ? `CPF ${input.cpf}` : "Pessoa consultada"),

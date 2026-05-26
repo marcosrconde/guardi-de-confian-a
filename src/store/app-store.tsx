@@ -29,6 +29,7 @@ export interface ProcessoOutro {
 
 export interface ConsultaResultado {
   id: string;
+  query_type: "cpf" | "form";
   criadoEm: string;
   alvo: {
     nome: string;
