@@ -83,7 +83,7 @@ export default function NovaConsulta() {
           data_consulta: new Date().toISOString(),
         };
       } else {
-        webhookUrl = "https://n8n-n8n.apuc7z.easypanel.host/webhook/c6beb102-7229-4b11-8e7f-e911df056024";
+        webhookUrl = "https://n8n-n8n.apuc7z.easypanel.host/webhook/e07a6089-16c0-4068-a65f-dceecb5bc371";
         body = {
           user_id: user.id,
           user_email: user.email,
