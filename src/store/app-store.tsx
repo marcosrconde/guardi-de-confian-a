@@ -27,6 +27,24 @@ export interface ProcessoOutro {
   valor_da_causa?: number;
 }
 
+export type Candidate = {
+  name: string;
+  tax: string;
+  motherName: string;
+  birthDate: string;
+  age: string;
+  city: string;
+  state: string;
+  matchCount: number;
+  matchedFields: string[];
+  scores: {
+    name: number;
+    motherName: number;
+    city: number;
+    birthDate: number;
+  };
+};
+
 export interface ConsultaResultado {
   id: string;
   query_type: "cpf" | "form";
@@ -43,6 +61,7 @@ export interface ConsultaResultado {
   resumo: string;
   processos_interesse: ProcessoInteresse[];
   processos_outros: ProcessoOutro[];
+  candidates?: Candidate[];
 }
 
 export interface Profile {

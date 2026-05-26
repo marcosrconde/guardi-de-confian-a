@@ -1,11 +1,36 @@
-import { ConsultaResultado, ProcessoInteresse, ProcessoOutro } from "@/store/app-store";
+import { useState } from "react";
+import { ConsultaResultado } from "@/store/app-store";
 import { RiskBadge } from "./RiskBadge";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { AlertTriangle, FileText, Calendar, User2, MapPin, Trash2 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { FileText, Calendar, User2, MapPin, Trash2 } from "lucide-react";
+import { ListaCandidatos } from "./ListaCandidatos";
+
+type Candidate = {
+  name: string;
+  tax: string;
+  motherName: string;
+  birthDate: string;
+  age: string;
+  city: string;
+  state: string;
+  matchCount: number;
+  matchedFields: string[];
+  scores: {
+    name: number;
+    motherName: number;
+    city: number;
+    birthDate: number;
+  };
+};
 
 export function RelatorioConsulta({ consulta }: { consulta: ConsultaResultado }) {
+  const [selectedCandidate, setSelectedCandidate] = useState<Candidate | null>(null);
+
+  if (consulta.candidates && !selectedCandidate) {
+    return <ListaCandidatos candidates={consulta.candidates} onSelect={setSelectedCandidate} />;
+  }
+
   const { alvo, processos_interesse, processos_outros, resumo, risco, criadoEm, query_type } = consulta;
 
   const maskedCpf = (cpf: string) => {
@@ -15,6 +40,17 @@ export function RelatorioConsulta({ consulta }: { consulta: ConsultaResultado })
     return cpf;
   };
 
+  const displayData = selectedCandidate
+    ? {
+        nome: selectedCandidate.name,
+        cpf: selectedCandidate.tax,
+        idade: selectedCandidate.age,
+        nascimento: selectedCandidate.birthDate,
+        cidade: selectedCandidate.city,
+        nomeMae: selectedCandidate.motherName,
+      }
+    : alvo;
+
   return (
     <div className="space-y-6 animate-fade-in-up">
       <Card className="overflow-hidden border-border/60 shadow-elegant">
@@ -22,18 +58,18 @@ export function RelatorioConsulta({ consulta }: { consulta: ConsultaResultado })
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <p className="text-xs uppercase tracking-[0.2em] opacity-80">Pessoa consultada</p>
-              <h2 className="font-display text-2xl font-semibold sm:text-3xl">{alvo.nome}</h2>
+              <h2 className="font-display text-2xl font-semibold sm:text-3xl">{displayData.nome}</h2>
               <p className="mt-2 max-w-xl text-sm opacity-90">{resumo}</p>
             </div>
           </div>
         </div>
 
         <div className="grid grid-cols-1 gap-x-8 gap-y-3 p-6 text-sm sm:grid-cols-2 sm:p-8">
-          {alvo.cpf && <Info icon={User2} label="CPF" value={maskedCpf(alvo.cpf)} />}
-          {alvo.idade && <Info icon={Calendar} label="Idade" value={alvo.idade} />}
-          {alvo.nascimento && <Info icon={Calendar} label="Nascimento" value={alvo.nascimento} />}
-          {alvo.cidade && <Info icon={MapPin} label="Cidade" value={alvo.cidade} />}
-          {alvo.nomeMae && <Info icon={User2} label="Nome da mãe" value={alvo.nomeMae} />}
+          {displayData.cpf && <Info icon={User2} label="CPF" value={maskedCpf(displayData.cpf)} />}
+          {displayData.idade && <Info icon={Calendar} label="Idade" value={displayData.idade} />}
+          {displayData.nascimento && <Info icon={Calendar} label="Nascimento" value={displayData.nascimento} />}
+          {displayData.cidade && <Info icon={MapPin} label="Cidade" value={displayData.cidade} />}
+          {displayData.nomeMae && <Info icon={User2} label="Nome da mãe" value={displayData.nomeMae} />}
           <Info
             icon={Calendar}
             label="Consulta realizada em"
