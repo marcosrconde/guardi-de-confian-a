@@ -56,24 +56,27 @@ export function RelatorioConsulta({ consulta }: { consulta: ConsultaResultado })
                     <div className="mt-0.5 flex h-9 w-9 items-center justify-center rounded-full bg-primary-soft text-primary">
                       <FileText className="h-4 w-4" />
                     </div>
-                    <div>
-                      <p className="font-medium text-foreground">{p.assunto_geral}</p>
-                      <p className="text-xs text-muted-foreground">
-                        {p.tribunal} · {p.data_ultima_movimentacao} ·{" "}
-                        <span className="font-mono">{p.numero_cnj}</span>
-                      </p>
-                    </div>
-                  </div>
-                  <span className="rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium capitalize text-muted-foreground">
-                    {p.fase_processual}
-                  </span>
-                </div>
-                <div className="mt-3 space-y-1 text-sm text-foreground/75">
-                  <p><b>Polo Ativo:</b> {p.polo_ativo}</p>
-                  <p><b>Polo Passivo:</b> {p.polo_passivo}</p>
-                  {p.valor_causa && <p><b>Valor da Causa:</b> {new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(p.valor_causa)}</p>}
-                </div>
-              </li>
+                     <div>
+                       <p className="font-medium text-foreground">{p.assunto_geral || "Assunto não informado"}</p>
+                       <p className="text-xs text-muted-foreground">
+                         {p.tribunal} · {p.data_ultima_movimentacao} ·{" "}
+                         <span className="font-mono">{p.numero_cnj}</span>
+                       </p>
+                     </div>
+                   </div>
+                   {p.fase_processual &&
+                     <span className="rounded-full bg-muted px-2.5 py-0.5 text-xs font-medium capitalize text-muted-foreground">
+                       {p.fase_processual}
+                     </span>
+                   }
+                 </div>
+                 <div className="mt-3 space-y-1 text-sm text-foreground/75">
+                   <p><b>Polo Ativo:</b> {p.polo_ativo}</p>
+                   <p><b>Polo Passivo:</b> {p.polo_passivo}</p>
+                   {p.valor_causa && <p><b>Valor da Causa:</b> {new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(p.valor_causa)}</p>}
+                   {p.motivo_interesse && <p className="mt-2 text-xs text-muted-foreground"><b>Motivo de Interesse:</b> {p.motivo_interesse}</p>}
+                 </div>
+               </li>
             ))}
           </ul>
         )}
