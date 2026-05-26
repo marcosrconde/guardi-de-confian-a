@@ -75,7 +75,7 @@ export default function NovaConsulta() {
       let body: Record<string, unknown> = {};
 
       if (input.kind === "cpf") {
-        webhookUrl = "https://n8n-n8n.apuc7z.easypanel.host/webhook/e178c476-d7c3-46ee-a557-b95845491073";
+        webhookUrl = "https://n8n-n8n.apuc7z.easypanel.host/webhook/38268654-af8f-4f43-ab66-3f9f4f445516";
         body = {
           user_id: user.id,
           user_email: user.email,
