@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useApp } from "@/store/app-store";
+import { useApp, Candidate } from "@/store/app-store";
 import { supabase } from "@/integrations/supabase/client";
 import { useShell } from "@/components/app/AppShell";
 import { Card } from "@/components/ui/card";
@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Sparkles, Loader2, Wallet, ShieldCheck, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
+import { ListaCandidatos } from "@/components/app/ListaCandidatos";
 
 type Input =
   | { kind: "cpf"; cpf: string }
@@ -22,6 +23,7 @@ export default function NovaConsulta() {
   const [loading, setLoading] = useState(false);
   const [cpf, setCpf] = useState("");
   const [form, setForm] = useState({ nome: "", nascimento: "", cidade: "", nomeMae: "" });
+  const [candidates, setCandidates] = useState<Candidate[] | null>(null);
 
   // Redirect to histórico if user already has consultas (per spec)
   useEffect(() => {
@@ -107,6 +109,14 @@ export default function NovaConsulta() {
         throw new Error(errorData?.error || "Erro ao processar a consulta.");
       }
 
+      const responseData = await response.json();
+
+      if (responseData.candidates) {
+        setCandidates(responseData.candidates);
+        setLoading(false);
+        return;
+      }
+
       await refreshSaldo();
       toast.success("Consulta enviada. Em instantes seu relatório estará pronto.");
 
@@ -134,6 +144,63 @@ export default function NovaConsulta() {
       setLoading(false);
     }
   };
+
+  const handleSelectCandidate = async (candidate: Candidate) => {
+    if (!user) return;
+    setLoading(true);
+    try {
+      const webhookUrl = "https://n8n-n8n.apuc7z.easypanel.host/webhook/38268654-af8f-4f43-ab66-3f9f4f445516";
+      const body = {
+        user_id: user.id,
+        user_email: user.email,
+        cpf: candidate.tax,
+        data_consulta: new Date().toISOString(),
+      };
+
+      const response = await fetch(webhookUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData?.error || "Erro ao processar a consulta.");
+      }
+
+      await refreshSaldo();
+      toast.success("Consulta enviada. Em instantes seu relatório estará pronto.");
+
+      const { data, error } = await supabase
+        .from("queries")
+        .select("id")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .single();
+
+      if (error || !data) {
+        navigate("/app/historico");
+      } else {
+        navigate(`/app/consulta/${data.id}`);
+      }
+    } catch (error) {
+      console.error(error);
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("Não conseguimos registrar a consulta. Tente novamente.");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (candidates) {
+    return <ListaCandidatos candidates={candidates} onSelect={handleSelectCandidate} />;
+  }
 
   return (
     <div className="mx-auto max-w-3xl space-y-8 animate-fade-in-up">
