@@ -68,6 +68,7 @@ export function mapQueryToConsulta(row: QueryRow): ConsultaResultado {
       nascimento: input.nascimento,
       cidade: input.cidade,
       nomeMae: input.nomeMae,
+      idade: output.idade,
     },
     risco,
     resumo: output.resumo || (row.status === "concluído" ? "Consulta concluída." : "Consulta em processamento."),

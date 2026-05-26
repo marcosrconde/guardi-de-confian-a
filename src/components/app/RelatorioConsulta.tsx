@@ -30,6 +30,7 @@ export function RelatorioConsulta({ consulta }: { consulta: ConsultaResultado })
 
         <div className="grid grid-cols-1 gap-x-8 gap-y-3 p-6 text-sm sm:grid-cols-2 sm:p-8">
           {alvo.cpf && <Info icon={User2} label="CPF" value={maskedCpf(alvo.cpf)} />}
+          {alvo.idade && <Info icon={Calendar} label="Idade" value={alvo.idade} />}
           {alvo.nascimento && <Info icon={Calendar} label="Nascimento" value={alvo.nascimento} />}
           {alvo.cidade && <Info icon={MapPin} label="Cidade" value={alvo.cidade} />}
           {alvo.nomeMae && <Info icon={User2} label="Nome da mãe" value={alvo.nomeMae} />}

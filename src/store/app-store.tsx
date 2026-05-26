@@ -37,6 +37,7 @@ export interface ConsultaResultado {
     nascimento?: string;
     cidade?: string;
     nomeMae?: string;
+    idade?: string;
   };
   risco: RiskLevel;
   resumo: string;
