@@ -86,25 +86,64 @@ toast.error("Por favor, preencha todos os campos.", { duration: 60000 });
     setSubmitting(true);
     try {
       if (mode === "signup") {
-        const { error } = await auth.signUp({
+        // Etapa 1: Cadastrar o usuário
+        const { data: signUpData, error: signUpError } = await auth.signUp({
           email: form.email,
           password: form.senha,
           options: {
             emailRedirectTo: `${window.location.origin}/app`,
-            data: {
-              full_name: form.nome,
-              affiliate_code: localStorage.getItem("affiliate_code"),
-            },
+            // Apenas os dados básicos são necessários aqui
+            data: { full_name: form.nome },
           },
         });
 
-        if (error) {
-          if (error.message && error.message.toLowerCase().includes("already")) {
+        if (signUpError) {
+          if (signUpError.message && signUpError.message.toLowerCase().includes("already")) {
             toast.error("Este e-mail já está cadastrado. Tente entrar.", { duration: 60000 });
-          } else if (error.message) {
-            toast.error(error.message, { duration: 60000 });
+          } else {
+            toast.error(signUpError.message, { duration: 60000 });
           }
           return;
+        }
+
+        if (!signUpData.user) {
+          toast.error("Não foi possível criar o usuário. Tente novamente.", { duration: 60000 });
+          return;
+        }
+
+        const newUser = signUpData.user;
+
+        // Etapa 2: Criar o perfil do usuário manualmente
+        // Isso resolve o problema de nenhum perfil ser criado.
+        const { error: profileInsertError } = await supabase
+          .from("profiles")
+          .insert({ id: newUser.id, full_name: form.nome });
+
+        if (profileInsertError) {
+          console.error("Erro ao criar perfil:", profileInsertError);
+        }
+
+        // Etapa 3: Encontrar e associar o afiliado
+        const affiliateCode = localStorage.getItem("affiliate_code");
+        if (affiliateCode) {
+          const { data: affiliate, error: affiliateError } = await supabase
+            .from("afiliados")
+            .select("id")
+            .eq("codigo", affiliateCode)
+            .single();
+
+          if (affiliate && !affiliateError) {
+            const { error: profileUpdateError } = await supabase
+              .from("profiles")
+              .update({ afiliado_id: affiliate.id })
+              .eq("id", newUser.id);
+
+            if (profileUpdateError) {
+              console.error("Erro ao atualizar perfil com ID do afiliado:", profileUpdateError);
+            }
+          } else if (affiliateError) {
+            console.error("Erro ao encontrar afiliado:", affiliateError);
+          }
         }
 
         toast.success(
