@@ -88,14 +88,16 @@ toast.error("Por favor, preencha todos os campos.", { duration: 60000 });
       if (mode === "signup") {
         const affiliateCode = localStorage.getItem("affiliate_code");
 
-        const { error } = await supabase.functions.invoke('signup-with-affiliate', {
-          body: {
-            email: form.email,
-            password: form.senha,
-            fullName: form.nome,
-            affiliateCode: affiliateCode,
+        const { error } = await auth.signUp({
+          email: form.email,
+          password: form.senha,
+          options: {
+            data: {
+              full_name: form.nome,
+              affiliate_code: affiliateCode,
+            },
           },
-        })
+        });
 
         if (error) {
           if (error.message && error.message.toLowerCase().includes("already")) {
