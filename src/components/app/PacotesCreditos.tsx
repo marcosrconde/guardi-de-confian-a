@@ -1,21 +1,9 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Check, Sparkles, Loader2 } from "lucide-react";
+import { Check, Loader2, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useApp } from "@/store/app-store";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+import { CheckoutButton } from "./CheckoutButton";
 
 interface Pacote {
   id: string;
@@ -59,10 +47,9 @@ export default function PacotesCreditos() {
         const popular = i === popularIdx;
         const precoFmt = p.price_brl.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
         const unit = (p.price_brl / p.credits).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
-        const checkoutUrl = user ? p.checkout_url + `?client_reference_id=${user.id}` : p.checkout_url;
         return (
-          <AlertDialog key={p.id}>
-            <div
+<div
+            key={p.id}
               className={cn(
                 "relative flex flex-col overflow-hidden border-border/60 p-7 transition-smooth hover:-translate-y-1 hover:shadow-elegant rounded-2xl",
                 popular && "border-primary/40 shadow-elegant ring-1 ring-primary/20"
@@ -88,34 +75,8 @@ export default function PacotesCreditos() {
                 ))}
               </ul>
 
-              <AlertDialogTrigger asChild>
-                <Button
-                  className={cn("mt-7 w-full rounded-full", popular && "shadow-elegant")}
-                  variant={popular ? "default" : "outline"}
-                  size="lg"
-                >
-                  <Sparkles className="mr-2 h-4 w-4" />
-                  Comprar agora
-                </Button>
-              </AlertDialogTrigger>
+              <CheckoutButton pacote={p} popular={popular} />
             </div>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>Atenção</AlertDialogTitle>
-                <AlertDialogDescription>
-                  Para que os créditos sejam adicionados à sua conta, é essencial que o e-mail utilizado no checkout seja o mesmo do seu cadastro em nossa plataforma.
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                <AlertDialogAction asChild>
-                  <a href={checkoutUrl} target="_blank" rel="noopener noreferrer">
-                    Continuar
-                  </a>
-                </AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
         );
       })}
     </div>
