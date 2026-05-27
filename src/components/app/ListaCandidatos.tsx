@@ -1,8 +1,9 @@
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { User2, Calendar, MapPin } from "lucide-react";
+import { User2, Calendar, MapPin, Loader2 } from "lucide-react";
 import { formatCPF, maskMotherName } from "@/lib/utils";
+import { useState } from "react";
 
 type Candidate = {
   name: string;
@@ -28,6 +29,13 @@ type Props = {
 };
 
 export function ListaCandidatos({ candidates, onSelect }: Props) {
+  const [isSubmitting, setIsSubmitting] = useState<string | null>(null);
+
+  const handleSelect = (candidate: Candidate) => {
+    setIsSubmitting(candidate.tax);
+    onSelect(candidate);
+  };
+
   console.log("ListaCandidatos props", { candidates, onSelect });
   return (
     <div className="space-y-6 animate-fade-in-up">
@@ -60,7 +68,16 @@ export function ListaCandidatos({ candidates, onSelect }: Props) {
                   </div>
                 </div>
               </div>
-              <Button onClick={() => onSelect(candidate)}>Selecionar</Button>
+              <Button onClick={() => handleSelect(candidate)} disabled={!!isSubmitting}>
+                {isSubmitting === candidate.tax ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Selecionando...
+                  </>
+                ) : (
+                  "Selecionar"
+                )}
+              </Button>
             </div>
           </li>
         ))}
