@@ -7,15 +7,24 @@ as $$
 declare
   affiliate_id_to_set uuid;
 begin
+  -- Garante que um perfil exista. Se o Supabase já criou um (comportamento padrão), não faz nada.
+  -- Se não, insere um básico para que o update funcione.
+  insert into public.profiles (id, full_name)
+  values (new.id, new.raw_user_meta_data->>'full_name')
+  on conflict (id) do nothing;
+
   -- Busca o ID do afiliado usando o código fornecido nos metadados do usuário
   select id into affiliate_id_to_set
   from public.afiliados
   where codigo = new.raw_user_meta_data->>'affiliate_code'
   limit 1;
 
-  -- Insere um novo perfil para o usuário, incluindo o ID do afiliado se encontrado
-  insert into public.profiles (id, full_name, affiliate_id)
-  values (new.id, new.raw_user_meta_data->>'full_name', affiliate_id_to_set);
+  -- Se um afiliado foi encontrado, atualiza o perfil do usuário com o ID do afiliado
+  if affiliate_id_to_set is not null then
+    update public.profiles
+    set affiliate_id = affiliate_id_to_set
+    where id = new.id;
+  end if;
 
   return new;
 end;
