@@ -86,25 +86,48 @@ toast.error("Por favor, preencha todos os campos.", { duration: 60000 });
     setSubmitting(true);
     try {
       if (mode === "signup") {
-        const { error } = await auth.signUp({
+        const { data, error } = await auth.signUp({
           email: form.email,
           password: form.senha,
           options: {
             emailRedirectTo: `${window.location.origin}/app`,
-            data: {
-              full_name: form.nome,
-              affiliate_code: localStorage.getItem("affiliate_code"),
-            },
+            data: { full_name: form.nome },
           },
         });
+
         if (error) {
           if (error.message && error.message.toLowerCase().includes("already")) {
-toast.error("Este e-mail já está cadastrado. Tente entrar.", { duration: 60000 });
+            toast.error("Este e-mail já está cadastrado. Tente entrar.", { duration: 60000 });
           } else if (error.message) {
-toast.error(error.message, { duration: 60000 });
+            toast.error(error.message, { duration: 60000 });
           }
           return;
         }
+
+        if (data.user) {
+          const affiliateCode = localStorage.getItem("affiliate_code");
+          if (affiliateCode) {
+            const { data: affiliate, error: affiliateError } = await supabase
+              .from("afiliados")
+              .select("id")
+              .eq("codigo", affiliateCode)
+              .single();
+
+            if (affiliateError) {
+              console.error("Erro ao buscar afiliado:", affiliateError);
+            } else if (affiliate) {
+              const { error: profileError } = await supabase
+                .from("profiles")
+                .update({ afiliado_id: affiliate.id })
+                .eq("id", data.user.id);
+
+              if (profileError) {
+                console.error("Erro ao atualizar perfil com ID do afiliado:", profileError);
+              }
+            }
+          }
+        }
+
         toast.success(
           "Cadastro quase concluído! Enviamos um e-mail de confirmação para você. Por favor, verifique sua caixa de entrada."
         );
