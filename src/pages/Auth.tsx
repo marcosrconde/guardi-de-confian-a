@@ -54,7 +54,7 @@ export default function AuthPage() {
     setSubmitting(true);
     if (mode === "reset") {
       if (!form.email) {
-        toast.error("Informe o e-mail.");
+toast.error("Informe o e-mail.", { duration: 60000 });
         return;
       }
       setSubmitting(true);
@@ -63,7 +63,7 @@ export default function AuthPage() {
       });
       setSubmitting(false);
       if (error) {
-        toast.error(error.message);
+toast.error(error.message, { duration: 60000 });
         return;
       }
       toast.success("Se este e-mail existir, enviaremos instruções de recuperação.");
@@ -72,7 +72,7 @@ export default function AuthPage() {
     }
 
     if (!form.email || !form.senha || (mode === "signup" && !form.nome)) {
-      toast.error("Por favor, preencha todos os campos.");
+toast.error("Por favor, preencha todos os campos.", { duration: 60000 });
       return;
     }
 
@@ -89,9 +89,9 @@ export default function AuthPage() {
         });
         if (error) {
           if (error.message && error.message.toLowerCase().includes("already")) {
-            toast.error("Este e-mail já está cadastrado. Tente entrar.");
+toast.error("Este e-mail já está cadastrado. Tente entrar.", { duration: 60000 });
           } else if (error.message) {
-            toast.error(error.message);
+toast.error(error.message, { duration: 60000 });
           }
           return;
         }
@@ -105,7 +105,7 @@ export default function AuthPage() {
           password: form.senha,
         });
         if (error) {
-          toast.error("E-mail ou senha incorretos.");
+toast.error("E-mail ou senha incorretos.", { duration: 60000 });
           return;
         }
         toast.success("Que bom te ver de novo.");

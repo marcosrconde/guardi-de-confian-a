@@ -32,18 +32,18 @@ export default function ResetPassword() {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (senha.length < 8) {
-      toast.error("A senha precisa ter pelo menos 8 caracteres.");
+toast.error("A senha precisa ter pelo menos 8 caracteres.", { duration: 60000 });
       return;
     }
     if (senha !== confirma) {
-      toast.error("As senhas não coincidem.");
+toast.error("As senhas não coincidem.", { duration: 60000 });
       return;
     }
     setSubmitting(true);
     const { error } = await supabase.auth.updateUser({ password: senha });
     setSubmitting(false);
     if (error) {
-      toast.error(error.message);
+toast.error(error.message, { duration: 60000 });
       return;
     }
     toast.success("Senha atualizada. Você já está conectada.");

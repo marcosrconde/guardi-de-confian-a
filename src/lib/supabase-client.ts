@@ -20,7 +20,7 @@ const withErrorHandling = (fn) => async (...args) => {
 
   if (error) {
     console.error("Supabase error:", error);
-    toast.error(error.message);
+toast.error(error.message, { duration: 60000 });
     return { error, ...result };
   }
 

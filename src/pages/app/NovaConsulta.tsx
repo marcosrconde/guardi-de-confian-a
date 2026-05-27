@@ -51,7 +51,7 @@ export default function NovaConsulta() {
 
   const submitCpf = async () => {
     if (!cpf.trim() || cpf.replace(/\D/g, "").length < 11) {
-      toast.error("Informe um CPF válido (11 dígitos).");
+toast.error("Informe um CPF válido (11 dígitos).", { duration: 60000 });
       return;
     }
     await executar({ kind: "cpf", cpf });
@@ -59,7 +59,7 @@ export default function NovaConsulta() {
 
   const submitForm = async () => {
     if (!form.nome || !form.nascimento || !form.cidade || !form.nomeMae) {
-      toast.error("Preencha todos os campos para a consulta.");
+toast.error("Preencha todos os campos para a consulta.", { duration: 60000 });
       return;
     }
     await executar({ kind: "form", ...form });
@@ -68,7 +68,7 @@ export default function NovaConsulta() {
   const executar = async (input: Input) => {
     if (!user) return;
     if (semCreditos) {
-      toast.error("Você não tem créditos suficientes.");
+toast.error("Você não tem créditos suficientes.", { duration: 60000 });
       navigate("/app/creditos");
       return;
     }
@@ -139,9 +139,9 @@ export default function NovaConsulta() {
     } catch (error) {
       console.error(error);
       if (error instanceof Error) {
-        toast.error(error.message);
+toast.error(error.message, { duration: 60000 });
       } else {
-        toast.error("Não conseguimos registrar a consulta. Tente novamente.");
+toast.error("Não conseguimos registrar a consulta. Tente novamente.", { duration: 60000 });
       }
     } finally {
       setLoading(false);
@@ -191,9 +191,9 @@ export default function NovaConsulta() {
     } catch (error) {
       console.error(error);
       if (error instanceof Error) {
-        toast.error(error.message);
+toast.error(error.message, { duration: 60000 });
       } else {
-        toast.error("Não conseguimos registrar a consulta. Tente novamente.");
+toast.error("Não conseguimos registrar a consulta. Tente novamente.", { duration: 60000 });
       }
     } finally {
       setLoading(false);

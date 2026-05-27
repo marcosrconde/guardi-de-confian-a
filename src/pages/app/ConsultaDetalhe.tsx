@@ -76,7 +76,7 @@ export default function ConsultaDetalhe() {
     const { error } = await supabase.from("queries").delete().eq("id", id).eq("user_id", user.id);
 
     if (error) {
-      toast.error("Erro ao excluir a consulta. Tente novamente.");
+toast.error("Erro ao excluir a consulta. Tente novamente.", { duration: 60000 });
       console.error("Error deleting consultation:", error);
     } else {
       navigate("/app/historico");
