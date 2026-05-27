@@ -13,6 +13,10 @@ const Toaster = ({ ...props }: ToasterProps) => {
         position="bottom-center"
         closeButton
         toastOptions={{
+          duration: Infinity,
+          style: {
+            fontSize: "1rem",
+          },
           classNames: {
             toast:
               "group toast relative pr-8 group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg",
