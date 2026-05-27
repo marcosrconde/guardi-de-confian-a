@@ -24,6 +24,7 @@ export default function NovaConsulta() {
   const [cpf, setCpf] = useState("");
   const [form, setForm] = useState({ nome: "", nascimento: "", cidade: "", nomeMae: "" });
   const [candidates, setCandidates] = useState<Candidate[] | null>(null);
+  const [inputData, setInputData] = useState<any | null>(null);
 
   // Redirect to histórico if user already has consultas (per spec)
   useEffect(() => {
@@ -111,8 +112,9 @@ export default function NovaConsulta() {
 
       const responseData = await response.json();
 
-      if (responseData.candidates) {
-        setCandidates(responseData.candidates);
+      if (responseData[0]?.candidates) {
+        setCandidates(responseData[0].candidates);
+        setInputData(responseData[0].input_data);
         setLoading(false);
         return;
       }
@@ -149,12 +151,10 @@ export default function NovaConsulta() {
     if (!user) return;
     setLoading(true);
     try {
-      const webhookUrl = "https://n8n-n8n.apuc7z.easypanel.host/webhook/38268654-af8f-4f43-ab66-3f9f4f445516";
+      const webhookUrl = "https://n8n-n8n.apuc7z.easypanel.host/webhook/bdb72ad8-80bf-4a50-85f4-7e63d49aa057";
       const body = {
-        user_id: user.id,
-        user_email: user.email,
-        cpf: candidate.tax,
-        data_consulta: new Date().toISOString(),
+        input_data: inputData,
+        selected_candidate: candidate,
       };
 
       const response = await fetch(webhookUrl, {
