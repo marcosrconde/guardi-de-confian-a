@@ -113,10 +113,10 @@ export default function NovaConsulta() {
       const responseData = await response.json();
       console.log("responseData", responseData);
 
-      if (responseData[0]?.candidates) {
+      if (responseData?.candidates) {
         console.log("candidates found");
-        setCandidates(responseData[0].candidates);
-        setInputData(responseData[0].input_data);
+        setCandidates(responseData.candidates);
+        setInputData(responseData.input_data);
         return;
       }
 
@@ -148,6 +148,7 @@ export default function NovaConsulta() {
     }
   };
 
+  console.log("candidates state", candidates);
   const handleSelectCandidate = async (candidate: Candidate) => {
     if (!user) return;
     setLoading(true);

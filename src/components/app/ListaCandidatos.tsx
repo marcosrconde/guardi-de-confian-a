@@ -28,6 +28,7 @@ type Props = {
 };
 
 export function ListaCandidatos({ candidates, onSelect }: Props) {
+  console.log("ListaCandidatos props", { candidates, onSelect });
   return (
     <div className="space-y-6 animate-fade-in-up">
       <Card className="border-border/60 p-6 sm:p-8">
