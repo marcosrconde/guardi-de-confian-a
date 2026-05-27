@@ -14,9 +14,9 @@ export function formatCPF(cpf: string | null | undefined): string {
 
 export function maskMotherName(name: string | null | undefined): string {
   if (!name) return "";
-  const parts = name.split(" ");
-  if (parts.length > 1) {
-    return `${parts[0]} **********`;
+  const names = name.split(" ");
+  if (names.length > 1) {
+    return names[0] + " " + names.slice(1).map(n => n[0]).join(". ").toUpperCase() + ".";
   }
   return name;
 }

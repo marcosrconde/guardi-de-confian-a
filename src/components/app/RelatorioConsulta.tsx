@@ -1,9 +1,10 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { ConsultaResultado } from "@/store/app-store";
 import { RiskBadge } from "./RiskBadge";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { FileText, Calendar, User2, MapPin, Trash2 } from "lucide-react";
+import { maskMotherName } from "@/lib/utils";
 import { ListaCandidatos } from "./ListaCandidatos";
 
 type Candidate = {
@@ -69,7 +70,7 @@ export function RelatorioConsulta({ consulta }: { consulta: ConsultaResultado })
           {displayData.idade && <Info icon={Calendar} label="Idade" value={displayData.idade} />}
           {displayData.nascimento && <Info icon={Calendar} label="Nascimento" value={displayData.nascimento} />}
           {displayData.cidade && <Info icon={MapPin} label="Cidade" value={displayData.cidade} />}
-          {displayData.nomeMae && <Info icon={User2} label="Nome da mãe" value={displayData.nomeMae} />}
+          {displayData.nomeMae && <Info icon={User2} label="Nome da mãe" value={maskMotherName(displayData.nomeMae)} />}
           <Info
             icon={Calendar}
             label="Consulta realizada em"
