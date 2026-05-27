@@ -58,8 +58,12 @@ toast.error("Informe um CPF válido (11 dígitos).", { duration: 60000 });
   };
 
   const submitForm = async () => {
-    if (!form.nome || !form.nascimento || !form.cidade || !form.nomeMae) {
-toast.error("Preencha todos os campos para a consulta.", { duration: 60000 });
+    if (!form.nome.trim()) {
+      toast.error("O campo 'Nome completo' é obrigatório.", { duration: 60000 });
+      return;
+    }
+    if (!form.nascimento.trim() && !form.nomeMae.trim()) {
+      toast.error("Preencha a 'Data de nascimento' ou o 'Nome da mãe'.", { duration: 60000 });
       return;
     }
     await executar({ kind: "form", ...form });
@@ -290,7 +294,17 @@ toast.error("Não conseguimos registrar a consulta. Tente novamente.", { duratio
                 <FieldRow label="Data de nascimento">
                   <Input
                     value={form.nascimento}
-                    onChange={(e) => setForm({ ...form, nascimento: e.target.value })}
+                    onChange={(e) => {
+                      const { value } = e.target;
+                      let formattedValue = value.replace(/\D/g, "");
+                      if (formattedValue.length > 2) {
+                        formattedValue = `${formattedValue.slice(0, 2)}/${formattedValue.slice(2)}`;
+                      }
+                      if (formattedValue.length > 5) {
+                        formattedValue = `${formattedValue.slice(0, 5)}/${formattedValue.slice(5, 9)}`;
+                      }
+                      setForm({ ...form, nascimento: formattedValue });
+                    }}
                     placeholder="00/00/0000"
                     className="h-12 rounded-2xl text-base"
                   />
