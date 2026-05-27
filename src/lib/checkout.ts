@@ -30,7 +30,7 @@ export async function getCheckoutUrl(pacote: any, user: Profile | null) {
         }
       }
     }
-    return checkoutUrl + `?client_reference_id=${user.id}`;
+    return checkoutUrl;
   }
 
   return checkoutUrl;
