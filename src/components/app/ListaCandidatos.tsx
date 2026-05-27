@@ -72,7 +72,7 @@ export function ListaCandidatos({ candidates, onSelect }: Props) {
                 {isSubmitting === candidate.tax ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Selecionando...
+                    Realizando consulta...
                   </>
                 ) : (
                   "Selecionar"
