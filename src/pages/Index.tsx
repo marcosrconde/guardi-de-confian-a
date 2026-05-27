@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sparkles, Fingerprint, Zap, BadgeCheck, HandCoins, ShieldCheck } from "lucide-react";
 import heroImg from "@/assets/hero.png";
@@ -7,6 +8,20 @@ import PublicHeader from "@/components/app/PublicHeader";
 
 const Index = () => {
   const { user } = useApp();
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    const ref = searchParams.get("ref");
+    if (ref) {
+      localStorage.setItem("affiliate_code", ref);
+    }
+  }, [searchParams]);
+
+  const affiliateCode = localStorage.getItem("affiliate_code");
+  const authLink = affiliateCode ? `/auth?ref=${affiliateCode}` : "/auth";
+  const signupLink = affiliateCode
+    ? `/auth?mode=signup&ref=${affiliateCode}`
+    : "/auth?mode=signup";
 
   return (
     <div className="min-h-screen bg-warm">
@@ -31,12 +46,12 @@ const Index = () => {
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Button asChild size="lg" className="rounded-full px-7 shadow-elegant">
-              <Link to={user ? "/app" : "/auth?mode=signup"}>
+              <Link to={user ? "/app" : signupLink}>
                 Fazer minha primeira consulta
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="rounded-full px-7">
-              <Link to="/auth">Já tenho conta</Link>
+              <Link to={authLink}>Já tenho conta</Link>
             </Button>
           </div>
           <div className="mt-10 grid grid-cols-4 gap-4 max-w-md">

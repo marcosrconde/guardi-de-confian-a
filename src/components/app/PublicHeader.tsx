@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
@@ -7,6 +8,20 @@ import { useApp } from "@/store/app-store";
 
 export default function PublicHeader() {
   const { user } = useApp();
+  const [searchParams] = useSearchParams();
+
+  useEffect(() => {
+    const ref = searchParams.get("ref");
+    if (ref) {
+      localStorage.setItem("affiliate_code", ref);
+    }
+  }, [searchParams]);
+
+  const affiliateCode = localStorage.getItem("affiliate_code");
+  const authLink = affiliateCode ? `/auth?ref=${affiliateCode}` : "/auth";
+  const signupLink = affiliateCode
+    ? `/auth?mode=signup&ref=${affiliateCode}`
+    : "/auth?mode=signup";
 
   return (
     <header className="container flex items-center justify-between py-6">
@@ -21,10 +36,10 @@ export default function PublicHeader() {
           <Link to="/faq">FAQ</Link>
         </Button>
         <Button asChild variant="ghost">
-          <Link to="/auth">Entrar</Link>
+          <Link to={authLink}>Entrar</Link>
         </Button>
         <Button asChild className="rounded-full">
-          <Link to={user ? "/app" : "/auth?mode=signup"}>Começar agora</Link>
+          <Link to={user ? "/app" : signupLink}>Começar agora</Link>
         </Button>
       </div>
       <div className="md:hidden">
@@ -44,10 +59,10 @@ export default function PublicHeader() {
               </Link>
               <hr />
               <Button asChild variant="ghost">
-                <Link to="/auth">Entrar</Link>
+                <Link to={authLink}>Entrar</Link>
               </Button>
               <Button asChild>
-                <Link to={user ? "/app" : "/auth?mode=signup"}>
+                <Link to={user ? "/app" : signupLink}>
                   Começar agora
                 </Link>
               </Button>
