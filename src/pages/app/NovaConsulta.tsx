@@ -111,11 +111,12 @@ export default function NovaConsulta() {
       }
 
       const responseData = await response.json();
+      console.log("responseData", responseData);
 
       if (responseData[0]?.candidates) {
+        console.log("candidates found");
         setCandidates(responseData[0].candidates);
         setInputData(responseData[0].input_data);
-        setLoading(false);
         return;
       }
 
