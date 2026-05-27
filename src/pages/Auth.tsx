@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import { useApp } from "@/store/app-store";
 import { supabase } from "@/integrations/supabase/client";
@@ -45,6 +45,13 @@ export default function AuthPage() {
   const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({ nome: "", email: "", senha: "" });
 
+  useEffect(() => {
+    const affiliateCode = params.get("ref");
+    if (affiliateCode) {
+      localStorage.setItem("affiliate_code", affiliateCode);
+    }
+  }, [params]);
+
   if (!loading && user) return <Navigate to="/app" replace />;
 
   const submit = async (e: React.FormEvent) => {
@@ -84,7 +91,10 @@ toast.error("Por favor, preencha todos os campos.", { duration: 60000 });
           password: form.senha,
           options: {
             emailRedirectTo: `${window.location.origin}/app`,
-            data: { full_name: form.nome },
+            data: {
+              full_name: form.nome,
+              affiliate_code: localStorage.getItem("affiliate_code"),
+            },
           },
         });
         if (error) {
