@@ -60,7 +60,7 @@ export function mapQueryToConsulta(row: QueryRow): ConsultaResultado {
     alvo: {
       nome: output.nome_pesquisado || output.nome || input.nome || (input.cpf ? `CPF ${input.cpf}` : "Pessoa consultada"),
       cpf: formatCPF(output.cpf_pesquisado || input.cpf),
-      nascimento: input.nascimento,
+      nascimento: output.data_nascimento || input.nascimento,
       cidade: input.cidade,
       nomeMae: output.nome_mae || input.nomeMae,
       idade: output.idade,
