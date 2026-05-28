@@ -63,7 +63,7 @@ toast.error("Informe um CPF válido (11 dígitos).", { duration: 60000 });
       return;
     }
     if (!form.nascimento.trim() && !form.nomeMae.trim()) {
-      toast.error("Preencha a 'Data de nascimento' ou o 'Nome da mãe'.", { duration: 60000 });
+      toast.error("Para realizar a pesquisa, informe ao menos 2 dados: nome completo e nome da mãe, ou nome completo e data de nascimento.", { duration: 60000 });
       return;
     }
     await executar({ kind: "form", ...form });
@@ -291,7 +291,7 @@ toast.error("Não conseguimos registrar a consulta. Tente novamente.", { duratio
                     className="h-12 rounded-2xl text-base"
                   />
                   <p className="mt-1.5 text-xs text-muted-foreground">
-                    O sistema busca pelo nome exato, portanto, é sensível a nome de casado(a) ou solteiro(a). Se não encontrar o nome de casado(a), tente pesquisar pelo nome de solteiro(a) e vice-versa.
+                    O sistema busca pelo nome exato. Caso não encontre pelo nome de casado(a), tente pesquisar pelo nome de solteiro(a), e vice versa.
                   </p>
                 </FieldRow>
                 <FieldRow label="Data de nascimento">
@@ -327,6 +327,9 @@ toast.error("Não conseguimos registrar a consulta. Tente novamente.", { duratio
                     placeholder="Nome completo da mãe"
                     className="h-12 rounded-2xl text-base"
                   />
+                  <p className="mt-1.5 text-xs text-muted-foreground">
+                    Caso não possua o nome completo, informe ao menos o primeiro nome, pois já pode ajudar na pesquisa.
+                  </p>
                 </FieldRow>
               </div>
               <BtnConsultar onClick={submitForm} loading={loading} disabled={semCreditos} />
