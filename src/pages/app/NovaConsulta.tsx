@@ -290,6 +290,9 @@ toast.error("Não conseguimos registrar a consulta. Tente novamente.", { duratio
                     placeholder="Nome completo da pessoa"
                     className="h-12 rounded-2xl text-base"
                   />
+                  <p className="mt-1.5 text-xs text-muted-foreground">
+                    O sistema busca pelo nome exato, portanto, é sensível a nome de casado(a) ou solteiro(a). Se não encontrar o nome de casado(a), tente pesquisar pelo nome de solteiro(a) e vice-versa.
+                  </p>
                 </FieldRow>
                 <FieldRow label="Data de nascimento">
                   <Input
