@@ -35,10 +35,7 @@ export function RelatorioConsulta({ consulta }: { consulta: ConsultaResultado })
   const { alvo, processos_interesse, processos_outros, resumo, risco, criadoEm, query_type } = consulta;
 
   const maskedCpf = (cpf: string) => {
-    if (query_type === "form") {
-      return cpf.replace(/^\d{3}/, "***").replace(/-\d{2}$/, "-**");
-    }
-    return cpf;
+    return cpf.replace(/^\d{3}/, "***").replace(/-\d{2}$/, "-**");
   };
 
   const displayData = selectedCandidate
