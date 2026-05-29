@@ -1,4 +1,4 @@
- mos
+
 import { useEffect, useState } from "react";
 import { useApp } from "@/store/app-store";
 import { supabase } from "@/integrations/supabase/client";
@@ -83,12 +83,9 @@ export default function RedeDeConfianca() {
     }
 
     try {
-      const phoneDigits = newContact.phone.replace(/\D/g, "");
-      const phoneToSend = `+55${phoneDigits}`;
-
       const { data, error } = await supabase
         .from("emergency_contacts")
-        .insert([{ name: newContact.name, phone: phoneToSend, user_id: user.id }])
+        .insert([{ ...newContact, user_id: user.id }])
         .select();
 
       if (error) throw error;
@@ -101,17 +98,6 @@ export default function RedeDeConfianca() {
       console.error("Error adding contact:", error);
       toast.error("Erro ao adicionar contato.");
     }
-  };
-
-  const formatPhoneForDisplay = (phone: string) => {
-    const phoneDigits = phone.replace(/\D/g, "").substring(2); // remove +55
-    if (phoneDigits.length === 11) {
-      return `(${phoneDigits.substring(0, 2)}) ${phoneDigits.substring(
-        2,
-        7
-      )}-${phoneDigits.substring(7)}`;
-    }
-    return phone;
   };
 
   const handleDeleteContact = async (id: number) => {
@@ -181,7 +167,7 @@ export default function RedeDeConfianca() {
               <li key={contact.id} className="flex items-center justify-between rounded-lg border p-4">
                 <div>
                   <p className="font-semibold">{contact.name}</p>
-                  <p className="text-sm text-muted-foreground">{formatPhoneForDisplay(contact.phone)}</p>
+                  <p className="text-sm text-muted-foreground">{contact.phone}</p>
                 </div>
                 <Button variant="ghost" size="icon" onClick={() => handleDeleteContact(contact.id)}>
                   <Trash2 className="h-5 w-5 text-destructive" />
