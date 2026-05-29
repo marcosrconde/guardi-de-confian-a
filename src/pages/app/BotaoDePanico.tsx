@@ -1,0 +1,129 @@
+
+import { useState } from "react";
+import { useApp } from "@/store/app-store";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
+import { Loader2, ShieldAlert } from "lucide-react";
+import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
+
+const predefinedMessages = [
+  "Estou em uma situação de perigo, por favor, me ajude.",
+  "Preciso de ajuda urgente, minha segurança está em risco.",
+  "Estou em um lugar perigoso e preciso de assistência.",
+];
+
+export default function BotaoDePanico() {
+  const { user } = useApp();
+  const [selectedMessage, setSelectedMessage] = useState(predefinedMessages[0]);
+  const [customMessage, setCustomMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handlePanic = async () => {
+    if (!user) return;
+
+    const message = customMessage.trim() || selectedMessage;
+    if (!message) {
+      toast.error("Selecione ou digite uma mensagem.");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      // 1. Get Geolocation
+      const position = await new Promise<GeolocationPosition>((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+      });
+      const { latitude, longitude } = position.coords;
+      const googleMapsLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
+
+      // 2. Get User Profile
+      const { data: profile, error: profileError } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("id", user.id)
+        .single();
+
+      if (profileError) throw profileError;
+
+      // 3. Send Webhook
+      const webhookUrl = "https://n8n-n8n.apuc7z.easypanel.host/webhook/c18b10e5-b920-4094-bc02-b2356d49d0d3";
+      const response = await fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user_info: profile,
+          location_link: googleMapsLink,
+          message: message,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Erro ao acionar o botão de pânico.");
+      }
+
+      toast.success("Alerta de pânico enviado para sua rede de confiança!");
+    } catch (error) {
+      console.error("Error handling panic button:", error);
+      toast.error("Não foi possível acionar o botão de pânico. Verifique sua conexão e permissões de localização.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="mx-auto max-w-3xl space-y-8 animate-fade-in-up">
+      <header>
+        <h1 className="mt-1 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
+          Botão de Pânico
+        </h1>
+        <p className="mt-2 max-w-xl text-foreground/70">
+          Em caso de emergência, pressione o botão abaixo para notificar sua rede de confiança.
+        </p>
+      </header>
+
+      <Card className="p-6 shadow-soft">
+        <div className="space-y-4">
+          <h2 className="text-lg font-semibold">Escolha uma Mensagem</h2>
+          <RadioGroup value={selectedMessage} onValueChange={setSelectedMessage}>
+            {predefinedMessages.map((msg, index) => (
+              <div key={index} className="flex items-center space-x-2">
+                <RadioGroupItem value={msg} id={`msg-${index}`} />
+                <Label htmlFor={`msg-${index}`}>{msg}</Label>
+              </div>
+            ))}
+          </RadioGroup>
+
+          <h2 className="text-lg font-semibold pt-4">Ou digite sua mensagem</h2>
+          <Textarea
+            value={customMessage}
+            onChange={(e) => setCustomMessage(e.target.value)}
+            placeholder="Digite sua mensagem personalizada aqui..."
+            className="rounded-2xl"
+          />
+        </div>
+      </Card>
+
+      <div className="text-center">
+        <Button
+          onClick={handlePanic}
+          disabled={loading}
+          size="lg"
+          className="h-20 rounded-full bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-lg text-xl"
+        >
+          {loading ? (
+            <Loader2 className="h-8 w-8 animate-spin" />
+          ) : (
+            <>
+              <ShieldAlert className="mr-4 h-8 w-8" />
+              ACIONAR PÂNICO
+            </>
+          )}
+        </Button>
+      </div>
+    </div>
+  );
+}

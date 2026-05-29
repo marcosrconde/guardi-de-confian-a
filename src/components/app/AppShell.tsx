@@ -2,7 +2,7 @@ import { ReactNode, useEffect, useState, useCallback } from "react";
 import { Link, NavLink, Navigate, useLocation } from "react-router-dom";
 import { useApp } from "@/store/app-store";
 import { Button } from "@/components/ui/button";
-import { Sparkles, History, Wallet, LogOut, Menu, Loader2, HelpCircle, ShieldCheck } from "lucide-react";
+import { Sparkles, History, Wallet, LogOut, Menu, Loader2, HelpCircle, ShieldCheck, ShieldAlert } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { LogoInline } from "./Logo";
@@ -13,6 +13,7 @@ const nav = [
   { to: "/app", label: "Nova consulta", icon: Sparkles, end: true },
   { to: "/app/historico", label: "Histórico", icon: History },
   { to: "/app/rede-de-confianca", label: "Rede de Confiança", icon: ShieldCheck },
+  { to: "/app/botao-de-panico", label: "Botão de Pânico", icon: ShieldAlert },
   { to: "/app/creditos", label: "Créditos", icon: Wallet },
   { to: "/faq", label: "F.A.Q", icon: HelpCircle },
 ];

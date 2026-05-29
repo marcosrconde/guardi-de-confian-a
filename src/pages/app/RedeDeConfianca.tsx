@@ -83,9 +83,10 @@ export default function RedeDeConfianca() {
     }
 
     try {
+      const formattedPhone = `+55${phoneDigits}`;
       const { data, error } = await supabase
         .from("emergency_contacts")
-        .insert([{ ...newContact, user_id: user.id }])
+        .insert([{ name: newContact.name, phone: formattedPhone, user_id: user.id }])
         .select();
 
       if (error) throw error;
@@ -167,7 +168,7 @@ export default function RedeDeConfianca() {
               <li key={contact.id} className="flex items-center justify-between rounded-lg border p-4">
                 <div>
                   <p className="font-semibold">{contact.name}</p>
-                  <p className="text-sm text-muted-foreground">{contact.phone}</p>
+                  <p className="text-sm text-muted-foreground">{formatPhoneForDisplay(contact.phone)}</p>
                 </div>
                 <Button variant="ghost" size="icon" onClick={() => handleDeleteContact(contact.id)}>
                   <Trash2 className="h-5 w-5 text-destructive" />
@@ -183,4 +184,21 @@ export default function RedeDeConfianca() {
       </Card>
     </div>
   );
+}
+
+function formatPhoneForDisplay(phone: string) {
+    const phoneDigits = phone.replace(/\D/g, "");
+    if (phoneDigits.length === 13) { // +55XXXXXXXXXXX
+        const ddd = phoneDigits.substring(2, 4);
+        const firstPart = phoneDigits.substring(4, 9);
+        const secondPart = phoneDigits.substring(9);
+        return `(${ddd}) ${firstPart}-${secondPart}`;
+    }
+    if (phoneDigits.length === 11) {
+        const ddd = phoneDigits.substring(0, 2);
+        const firstPart = phoneDigits.substring(2, 7);
+        const secondPart = phoneDigits.substring(7);
+        return `(${ddd}) ${firstPart}-${secondPart}`;
+    }
+    return phone;
 }
