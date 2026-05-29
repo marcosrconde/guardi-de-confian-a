@@ -13,7 +13,6 @@ const nav = [
   { to: "/app", label: "Nova consulta", icon: Sparkles, end: true },
   { to: "/app/historico", label: "Histórico", icon: History },
   { to: "/app/rede-de-confianca", label: "Rede de Confiança", icon: ShieldCheck },
-  { to: "/app/botao-de-panico", label: "Botão de Pânico", icon: ShieldAlert },
   { to: "/app/creditos", label: "Créditos", icon: Wallet },
   { to: "/faq", label: "F.A.Q", icon: HelpCircle },
 ];
@@ -159,6 +158,14 @@ export function AppShell({ children }: { children: ReactNode }) {
       <footer className="container pb-10 pt-6 text-center text-xs text-muted-foreground">
         JusMulher · feito com cuidado para a sua segurança.
       </footer>
+
+      <Link
+        to="/app/botao-de-panico"
+        className="fixed bottom-8 right-8 z-50 flex h-16 w-16 items-center justify-center rounded-full bg-destructive text-destructive-foreground shadow-lg transition-transform hover:scale-110"
+        title="Botão de Pânico"
+      >
+        <ShieldAlert className="h-8 w-8" />
+      </Link>
     </div>
   );
 }
