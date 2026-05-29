@@ -2,6 +2,7 @@ import { ReactNode, useEffect, useState, useCallback } from "react";
 import { Link, NavLink, Navigate, useLocation } from "react-router-dom";
 import { useApp } from "@/store/app-store";
 import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Sparkles, History, Wallet, LogOut, Menu, Loader2, HelpCircle, ShieldCheck, ShieldAlert } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
@@ -159,13 +160,19 @@ export function AppShell({ children }: { children: ReactNode }) {
         JusMulher · feito com cuidado para a sua segurança.
       </footer>
 
-      <Link
-        to="/app/botao-de-panico"
-        className="fixed bottom-8 right-8 z-50 flex h-16 w-16 items-center justify-center rounded-full bg-destructive text-destructive-foreground shadow-lg transition-transform hover:scale-110"
-        title="Botão de Pânico"
-      >
-        <ShieldAlert className="h-8 w-8" />
-      </Link>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Link
+            to="/app/botao-de-panico"
+            className="fixed bottom-8 right-8 z-50 flex h-16 w-16 items-center justify-center rounded-full bg-destructive text-destructive-foreground shadow-lg transition-transform hover:scale-110"
+          >
+            <ShieldAlert className="h-8 w-8" />
+          </Link>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Acionar alerta para minha rede de confiança</p>
+        </TooltipContent>
+      </Tooltip>
     </div>
   );
 }
