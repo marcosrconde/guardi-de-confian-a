@@ -109,7 +109,7 @@ export default function BotaoDePanico() {
         <Info className="h-4 w-4" />
         <AlertTitle>Em breve!</AlertTitle>
         <AlertDescription>
-          Esta funcionalidade estará disponível em breve. Estamos trabalhando para finalizar a automação que notificará sua rede de confiança.
+          Esta funcionalidade estará disponível em breve. Entendemos a importância dessa ferramenta e estamos trabalhando para finalizar o mais rápido possível.
         </AlertDescription>
       </Alert>
 
