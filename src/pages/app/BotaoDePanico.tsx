@@ -12,8 +12,12 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 
 const predefinedMessages = [
-  "Estou em uma situação de perigo, por favor, me ajude.",
   "Preciso de ajuda urgente, minha segurança está em risco.",
+  "Meu ex está me ameaçando, por favor, entre em contato comigo o mais rápido possível.",
+  "Meu marido está me agredindo, por favor, me ajude a sair dessa situação.",
+  "Estou sendo vítima de violência doméstica, por favor, me ajude.",
+  "Sinto que estou sendo seguida, por favor, me ajude.",
+  "Estou em um local desconhecido e me sinto insegura, por favor, me ajude.",
   "Estou em um lugar perigoso e preciso de assistência.",
 ];
 
