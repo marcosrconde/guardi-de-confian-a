@@ -245,6 +245,16 @@ toast.error("Não conseguimos registrar a consulta. Tente novamente.", { duratio
             <p className="font-medium text-foreground">Sua localização</p>
             {latitude && <p>Latitude: {latitude}</p>}
             {longitude && <p>Longitude: {longitude}</p>}
+            {latitude && longitude && (
+                <a
+                    href={`https://www.google.com/maps?q=${latitude},${longitude}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline"
+                >
+                    Ver no Google Maps
+                </a>
+            )}
         </div>
       </Card>
 
