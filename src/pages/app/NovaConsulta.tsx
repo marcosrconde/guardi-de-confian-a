@@ -25,6 +25,8 @@ export default function NovaConsulta() {
   const [form, setForm] = useState({ nome: "", nascimento: "", cidade: "", nomeMae: "" });
   const [candidates, setCandidates] = useState<Candidate[] | null>(null);
   const [inputData, setInputData] = useState<any | null>(null);
+  const [latitude, setLatitude] = useState<number | null>(null);
+  const [longitude, setLongitude] = useState<number | null>(null);
 
   // Redirect to histórico if user already has consultas (per spec)
   useEffect(() => {
@@ -46,6 +48,23 @@ export default function NovaConsulta() {
       cancelled = true;
     };
   }, [user, navigate]);
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLatitude(position.coords.latitude);
+          setLongitude(position.coords.longitude);
+        },
+        (error) => {
+          console.error("Error getting geolocation:", error);
+          toast.error("Não foi possível obter a sua geolocalização.");
+        }
+      );
+    } else {
+      toast.error("Geolocalização não é suportada neste navegador.");
+    }
+  }, []);
 
   const semCreditos = saldo <= 0;
 
@@ -220,6 +239,14 @@ toast.error("Não conseguimos registrar a consulta. Tente novamente.", { duratio
           claro sobre o histórico judicial dessa pessoa.
         </p>
       </header>
+
+      <Card className="flex items-start gap-4 border-border/60 bg-primary-soft/40 p-5">
+        <div className="text-sm text-foreground/80">
+            <p className="font-medium text-foreground">Sua localização</p>
+            {latitude && <p>Latitude: {latitude}</p>}
+            {longitude && <p>Longitude: {longitude}</p>}
+        </div>
+      </Card>
 
       {semCreditos && (
         <Card className="flex flex-wrap items-center justify-between gap-4 border-warning/30 bg-warning/5 p-5">
