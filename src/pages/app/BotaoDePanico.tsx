@@ -1,12 +1,13 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useApp } from "@/store/app-store";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { Loader2, ShieldAlert } from "lucide-react";
+import { Loader2, ShieldAlert, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -21,6 +22,20 @@ export default function BotaoDePanico() {
   const [selectedMessage, setSelectedMessage] = useState(predefinedMessages[0]);
   const [customMessage, setCustomMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [contactCount, setContactCount] = useState(0);
+
+  useEffect(() => {
+    if (user) {
+      const fetchContactCount = async () => {
+        const { count } = await supabase
+          .from("emergency_contacts")
+          .select("id", { count: "exact", head: true })
+          .eq("user_id", user.id);
+        setContactCount(count || 0);
+      };
+      fetchContactCount();
+    }
+  }, [user]);
 
   const handlePanic = async () => {
     if (!user) return;
@@ -85,6 +100,24 @@ export default function BotaoDePanico() {
         </p>
       </header>
 
+      {contactCount === 0 && (
+        <Card className="border-warning/30 bg-warning/5 p-5 text-warning">
+            <div className="flex items-start gap-3">
+                <AlertCircle className="mt-0.5 h-5 w-5" />
+                <div>
+                    <p className="font-medium">Você não possui contatos de emergência.</p>
+                    <p className="text-sm">
+                        Para usar o botão de pânico, você precisa primeiro cadastrar sua{" "}
+                        <Link to="/app/rede-de-confianca" className="underline">
+                            rede de confiança
+                        </Link>
+                        .
+                    </p>
+                </div>
+            </div>
+        </Card>
+      )}
+
       <Card className="p-6 shadow-soft">
         <div className="space-y-4">
           <h2 className="text-lg font-semibold">Escolha uma Mensagem</h2>
@@ -110,7 +143,7 @@ export default function BotaoDePanico() {
       <div className="text-center">
         <Button
           onClick={handlePanic}
-          disabled={loading}
+          disabled={loading || contactCount === 0}
           size="lg"
           className="h-20 rounded-full bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-lg text-xl"
         >
