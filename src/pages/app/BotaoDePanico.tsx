@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { Loader2, ShieldAlert, AlertCircle } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Loader2, ShieldAlert, AlertCircle, Info } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -104,6 +105,14 @@ export default function BotaoDePanico() {
         </p>
       </header>
 
+      <Alert>
+        <Info className="h-4 w-4" />
+        <AlertTitle>Em breve!</AlertTitle>
+        <AlertDescription>
+          Esta funcionalidade estará disponível em breve. Estamos trabalhando para finalizar a automação que notificará sua rede de confiança.
+        </AlertDescription>
+      </Alert>
+
       {contactCount === 0 && (
         <Card className="border-warning/30 bg-warning/5 p-5 text-warning">
             <div className="flex items-start gap-3">
@@ -147,9 +156,9 @@ export default function BotaoDePanico() {
       <div className="text-center">
         <Button
           onClick={handlePanic}
-          disabled={loading || contactCount === 0}
+          disabled={true}
           size="lg"
-          className="h-20 rounded-full bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-lg text-xl"
+          className="h-20 rounded-full bg-gray-400 text-white shadow-lg text-xl"
         >
           {loading ? (
             <Loader2 className="h-8 w-8 animate-spin" />
