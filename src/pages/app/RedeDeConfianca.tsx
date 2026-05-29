@@ -1,4 +1,4 @@
-
+ mos
 import { useEffect, useState } from "react";
 import { useApp } from "@/store/app-store";
 import { supabase } from "@/integrations/supabase/client";
@@ -47,6 +47,28 @@ export default function RedeDeConfianca() {
     }
   };
 
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.replace(/\D/g, "");
+    if (value.length > 11) {
+      value = value.substring(0, 11);
+    }
+
+    let formattedValue = "";
+    if (value.length > 0) {
+      formattedValue = "(";
+      formattedValue += value.substring(0, 2);
+    }
+    if (value.length >= 3) {
+      formattedValue += ") ";
+      formattedValue += value.substring(2, 7);
+    }
+    if (value.length > 7) {
+      formattedValue += "-";
+      formattedValue += value.substring(7, 11);
+    }
+    setNewContact({ ...newContact, phone: formattedValue });
+  };
+
   const handleAddContact = async () => {
     if (!user) return;
     if (!newContact.name.trim() || !newContact.phone.trim()) {
@@ -54,10 +76,19 @@ export default function RedeDeConfianca() {
       return;
     }
 
+    const phoneDigits = newContact.phone.replace(/\D/g, "");
+    if (phoneDigits.length !== 11 || !phoneDigits.startsWith("9", 2)) {
+      toast.error("O telefone deve estar no formato (XX) 9XXXX-XXXX.");
+      return;
+    }
+
     try {
+      const phoneDigits = newContact.phone.replace(/\D/g, "");
+      const phoneToSend = `+55${phoneDigits}`;
+
       const { data, error } = await supabase
         .from("emergency_contacts")
-        .insert([{ ...newContact, user_id: user.id }])
+        .insert([{ name: newContact.name, phone: phoneToSend, user_id: user.id }])
         .select();
 
       if (error) throw error;
@@ -70,6 +101,17 @@ export default function RedeDeConfianca() {
       console.error("Error adding contact:", error);
       toast.error("Erro ao adicionar contato.");
     }
+  };
+
+  const formatPhoneForDisplay = (phone: string) => {
+    const phoneDigits = phone.replace(/\D/g, "").substring(2); // remove +55
+    if (phoneDigits.length === 11) {
+      return `(${phoneDigits.substring(0, 2)}) ${phoneDigits.substring(
+        2,
+        7
+      )}-${phoneDigits.substring(7)}`;
+    }
+    return phone;
   };
 
   const handleDeleteContact = async (id: number) => {
@@ -114,9 +156,10 @@ export default function RedeDeConfianca() {
               <Input
                 id="phone"
                 value={newContact.phone}
-                onChange={(e) => setNewContact({ ...newContact, phone: e.target.value })}
-                placeholder="Telefone do contato"
+                onChange={handlePhoneChange}
+                placeholder="(XX) 9XXXX-XXXX"
                 className="h-12 rounded-2xl text-base"
+                maxLength={15}
               />
             </div>
           </div>
@@ -138,7 +181,7 @@ export default function RedeDeConfianca() {
               <li key={contact.id} className="flex items-center justify-between rounded-lg border p-4">
                 <div>
                   <p className="font-semibold">{contact.name}</p>
-                  <p className="text-sm text-muted-foreground">{contact.phone}</p>
+                  <p className="text-sm text-muted-foreground">{formatPhoneForDisplay(contact.phone)}</p>
                 </div>
                 <Button variant="ghost" size="icon" onClick={() => handleDeleteContact(contact.id)}>
                   <Trash2 className="h-5 w-5 text-destructive" />
