@@ -1,0 +1,157 @@
+
+import { useEffect, useState } from "react";
+import { useApp } from "@/store/app-store";
+import { supabase } from "@/integrations/supabase/client";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Loader2, Trash2 } from "lucide-react";
+import { toast } from "sonner";
+
+interface EmergencyContact {
+  id: number;
+  name: string;
+  phone: string;
+}
+
+export default function RedeDeConfianca() {
+  const { user } = useApp();
+  const [contacts, setContacts] = useState<EmergencyContact[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [newContact, setNewContact] = useState({ name: "", phone: "" });
+
+  useEffect(() => {
+    if (user) {
+      fetchContacts();
+    }
+  }, [user]);
+
+  const fetchContacts = async () => {
+    if (!user) return;
+    try {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from("emergency_contacts")
+        .select("*")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+      setContacts(data || []);
+    } catch (error) {
+      console.error("Error fetching contacts:", error);
+      toast.error("Erro ao buscar contatos de emergência.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleAddContact = async () => {
+    if (!user) return;
+    if (!newContact.name.trim() || !newContact.phone.trim()) {
+      toast.error("Preencha o nome e o telefone do contato.");
+      return;
+    }
+
+    try {
+      const { data, error } = await supabase
+        .from("emergency_contacts")
+        .insert([{ ...newContact, user_id: user.id }])
+        .select();
+
+      if (error) throw error;
+      if (data) {
+        setContacts([data[0], ...contacts]);
+        setNewContact({ name: "", phone: "" });
+        toast.success("Contato adicionado com sucesso!");
+      }
+    } catch (error) {
+      console.error("Error adding contact:", error);
+      toast.error("Erro ao adicionar contato.");
+    }
+  };
+
+  const handleDeleteContact = async (id: number) => {
+    try {
+      const { error } = await supabase.from("emergency_contacts").delete().eq("id", id);
+      if (error) throw error;
+      setContacts(contacts.filter((contact) => contact.id !== id));
+      toast.success("Contato removido com sucesso!");
+    } catch (error) {
+      console.error("Error deleting contact:", error);
+      toast.error("Erro ao remover contato.");
+    }
+  };
+
+  return (
+    <div className="mx-auto max-w-3xl space-y-8 animate-fade-in-up">
+      <header>
+        <h1 className="mt-1 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
+          Rede de Confiança
+        </h1>
+        <p className="mt-2 max-w-xl text-foreground/70">
+          Cadastre aqui os contatos que você deseja acionar em caso de emergência.
+        </p>
+      </header>
+
+      <Card className="p-6 shadow-soft">
+        <div className="space-y-4">
+          <h2 className="text-lg font-semibold">Adicionar Novo Contato</h2>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <Label htmlFor="name">Nome</Label>
+              <Input
+                id="name"
+                value={newContact.name}
+                onChange={(e) => setNewContact({ ...newContact, name: e.target.value })}
+                placeholder="Nome do contato"
+                className="h-12 rounded-2xl text-base"
+              />
+            </div>
+            <div>
+              <Label htmlFor="phone">Telefone</Label>
+              <Input
+                id="phone"
+                value={newContact.phone}
+                onChange={(e) => setNewContact({ ...newContact, phone: e.target.value })}
+                placeholder="Telefone do contato"
+                className="h-12 rounded-2xl text-base"
+              />
+            </div>
+          </div>
+          <Button onClick={handleAddContact} className="w-full rounded-full sm:w-auto">
+            Adicionar Contato
+          </Button>
+        </div>
+      </Card>
+
+      <Card className="p-6 shadow-soft">
+        <h2 className="text-lg font-semibold">Sua Rede de Contatos</h2>
+        {loading ? (
+          <div className="flex justify-center p-8">
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          </div>
+        ) : contacts.length > 0 ? (
+          <ul className="mt-4 space-y-4">
+            {contacts.map((contact) => (
+              <li key={contact.id} className="flex items-center justify-between rounded-lg border p-4">
+                <div>
+                  <p className="font-semibold">{contact.name}</p>
+                  <p className="text-sm text-muted-foreground">{contact.phone}</p>
+                </div>
+                <Button variant="ghost" size="icon" onClick={() => handleDeleteContact(contact.id)}>
+                  <Trash2 className="h-5 w-5 text-destructive" />
+                </Button>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="mt-4 text-center text-muted-foreground">
+            Você ainda não cadastrou nenhum contato de emergência.
+          </p>
+        )}
+      </Card>
+    </div>
+  );
+}

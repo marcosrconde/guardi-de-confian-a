@@ -14,6 +14,7 @@ import ConsultaDetalhe from "./pages/app/ConsultaDetalhe";
 import Creditos from "./pages/app/Creditos";
 import { Faq } from "./pages/app/Faq";
 import NotFound from "./pages/NotFound";
+import RedeDeConfianca from "./pages/app/RedeDeConfianca";
 import Precos from "./pages/Precos";
 import FaqPage from "./pages/Faq";
 
@@ -35,6 +36,7 @@ const App = () => (
             <Route path="/app/historico" element={<AppShell><Historico /></AppShell>} />
             <Route path="/app/consulta/:id" element={<AppShell><ConsultaDetalhe /></AppShell>} />
             <Route path="/app/creditos" element={<AppShell><Creditos /></AppShell>} />
+            <Route path="/app/rede-de-confianca" element={<AppShell><RedeDeConfianca /></AppShell>} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
