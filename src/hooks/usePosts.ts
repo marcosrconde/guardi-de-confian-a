@@ -50,37 +50,16 @@ export function usePosts() {
   return { posts, loading };
 }
 
-export function usePost(slug: string) {
-    const [post, setPost] = useState<Post | null>(null);
-    const [loading, setLoading] = useState(true);
-  
-    useEffect(() => {
-      const fetchPost = async () => {
-        try {
-          const postModule = await import(`../posts/${slug}.md?raw`);
-          const rawContent = postModule.default;
-          const { data, content } = matter(rawContent);
-          setPost({
-            slug,
-            title: data.title,
-            author: data.author,
-            date: data.date,
-            description: data.description,
-            content,
-          });
-        } catch (error) {
-          console.error(`Failed to fetch post: ${slug}`, error);
-        } finally {
-          setLoading(false);
-        }
-      };
-  
-      if (slug) {
-        fetchPost();
-      } else {
-          setLoading(false);
-      }
-    }, [slug]);
-  
-    return { post, loading };
-  }
+export function usePost(slug?: string) {
+  const { posts, loading } = usePosts();
+  const [post, setPost] = useState<Post | null>(null);
+
+  useEffect(() => {
+    if (!loading && posts.length > 0 && slug) {
+      const foundPost = posts.find((p) => p.slug === slug);
+      setPost(foundPost || null);
+    }
+  }, [loading, posts, slug]);
+
+  return { post, loading };
+}
