@@ -1,14 +1,7 @@
-import matter from "gray-matter";
 import { useEffect, useState } from "react";
+import { posts as allPosts, Post } from "@/lib/posts";
 
-export interface Post {
-  slug: string;
-  title: string;
-  author: string;
-  date: string;
-  description: string;
-  content: string;
-}
+export { type Post };
 
 export function usePosts() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -17,26 +10,8 @@ export function usePosts() {
   useEffect(() => {
     const fetchPosts = () => {
       try {
-        const postModules = import.meta.glob("../posts/**/*.md", {
-          as: "raw",
-          eager: true,
-        });
-        const fetchedPosts = Object.entries(postModules).map(
-          ([path, rawContent]) => {
-            const { data, content } = matter(rawContent);
-            const slug = path.split("/").pop()?.replace(".md", "") ?? "";
-            return {
-              slug,
-              title: data.title,
-              author: data.author,
-              date: data.date,
-              description: data.description,
-              content,
-            };
-          }
-        );
-        fetchedPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-        setPosts(fetchedPosts);
+        const sortedPosts = [...allPosts].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        setPosts(sortedPosts);
       } catch (error) {
         console.error("Failed to fetch posts:", error);
       } finally {
