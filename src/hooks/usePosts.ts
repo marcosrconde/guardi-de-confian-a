@@ -15,13 +15,13 @@ export function usePosts() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchPosts = async () => {
+    const fetchPosts = () => {
       try {
         const postModules = import.meta.glob("../posts/**/*.md", {
           as: "raw",
           eager: true,
         });
-        const postPromises = Object.entries(postModules).map(
+        const fetchedPosts = Object.entries(postModules).map(
           ([path, rawContent]) => {
             const { data, content } = matter(rawContent);
             const slug = path.split("/").pop()?.replace(".md", "") ?? "";
@@ -35,8 +35,6 @@ export function usePosts() {
             };
           }
         );
-
-        const fetchedPosts = postPromises;
         fetchedPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
         setPosts(fetchedPosts);
       } catch (error) {
