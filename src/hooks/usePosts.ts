@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { posts as allPosts, type Post } from "@/lib/posts";
+import allPosts, { type Post } from "@/lib/posts";
 
 export type { Post };
 
@@ -11,7 +11,6 @@ export function usePosts() {
     const fetchPosts = () => {
       try {
         const sortedPosts = [...allPosts].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-        console.log("Sorted posts:", sortedPosts);
         setPosts(sortedPosts);
       } catch (error) {
         console.error("Failed to fetch posts:", error);

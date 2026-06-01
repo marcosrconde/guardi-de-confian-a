@@ -17,7 +17,7 @@ const postsRaw = [
   },
 ];
 
-export const posts: Post[] = postsRaw.map((post) => {
+const posts: Post[] = postsRaw.map((post) => {
   const { data, content } = matter(post.content);
   return {
     slug: post.slug,
@@ -28,3 +28,5 @@ export const posts: Post[] = postsRaw.map((post) => {
     content: content,
   };
 });
+
+export default posts;
