@@ -17,10 +17,12 @@ export function usePosts() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const postModules = import.meta.glob("/src/posts/**/*.md", { as: "raw" });
+        const postModules = import.meta.glob("../posts/**/*.md", {
+          as: "raw",
+          eager: true,
+        });
         const postPromises = Object.entries(postModules).map(
-          async ([path, getPost]) => {
-            const rawContent = await getPost();
+          ([path, rawContent]) => {
             const { data, content } = matter(rawContent);
             const slug = path.split("/").pop()?.replace(".md", "") ?? "";
             return {
@@ -34,7 +36,7 @@ export function usePosts() {
           }
         );
 
-        const fetchedPosts = await Promise.all(postPromises);
+        const fetchedPosts = postPromises;
         fetchedPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
         setPosts(fetchedPosts);
       } catch (error) {
