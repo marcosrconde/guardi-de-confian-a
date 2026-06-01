@@ -18,6 +18,8 @@ import RedeDeConfianca from "./pages/app/RedeDeConfianca";
 import BotaoDePanico from "./pages/app/BotaoDePanico";
 import Precos from "./pages/Precos";
 import FaqPage from "./pages/Faq";
+import BlogPage from "./pages/blog/BlogPage";
+import PostPage from "./pages/blog/PostPage";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +41,8 @@ const App = () => (
             <Route path="/app/creditos" element={<AppShell><Creditos /></AppShell>} />
             <Route path="/app/rede-de-confianca" element={<AppShell><RedeDeConfianca /></AppShell>} />
             <Route path="/app/botao-de-panico" element={<AppShell><BotaoDePanico /></AppShell>} />
+            <Route path="/blog" element={<BlogPage />} />
+            <Route path="/blog/:slug" element={<PostPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

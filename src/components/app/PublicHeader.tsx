@@ -36,6 +36,9 @@ export default function PublicHeader() {
           <Link to="/faq">FAQ</Link>
         </Button>
         <Button asChild variant="ghost">
+          <Link to="/blog">Blog</Link>
+        </Button>
+        <Button asChild variant="ghost">
           <Link to={authLink}>Entrar</Link>
         </Button>
         <Button asChild className="rounded-full">
@@ -56,6 +59,9 @@ export default function PublicHeader() {
               </Link>
               <Link to="/faq" className="text-lg font-medium">
                 FAQ
+              </Link>
+              <Link to="/blog" className="text-lg font-medium">
+                Blog
               </Link>
               <hr />
               <Button asChild variant="ghost">

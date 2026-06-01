@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Sparkles, Fingerprint, Zap, BadgeCheck, HandCoins, ShieldCheck } from "lucide-react";
 import heroImg from "@/assets/hero.png";
 import { useApp } from "@/store/app-store";
+import LatestPosts from "@/components/app/LatestPosts";
 import PublicHeader from "@/components/app/PublicHeader";
 
 const Index = () => {
@@ -88,6 +89,7 @@ const Index = () => {
           </div>
         </div>
       </section>
+      <LatestPosts />
     </div>
   );
 };
