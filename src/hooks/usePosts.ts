@@ -17,7 +17,7 @@ export function usePosts() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const postModules = import.meta.glob("/src/posts/**/*.md", { as: "raw" });
+        const postModules = import.meta.glob("../posts/**/*.md", { as: "raw" });
         const postPromises = Object.entries(postModules).map(
           async ([path, getPost]) => {
             const rawContent = await getPost();
