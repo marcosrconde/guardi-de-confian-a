@@ -26,11 +26,9 @@ const PostPage = () => {
           <p className="text-muted-foreground">
             {new Date(post.date).toLocaleDateString()} por {post.author}
           </p>
-          <div className="prose prose-lg max-w-none">
-            <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
-              {post.body}
-            </ReactMarkdown>
-          </div>
+          <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
+            {post.body}
+          </ReactMarkdown>
         </article>
       </div>
     </div>
