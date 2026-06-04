@@ -4,7 +4,7 @@ date: "2026-06-01"
 author: "Jusmulher"
 description: "A violência contra a mulher continua sendo um dos maiores desafios sociais do Brasil. Os números revelam uma realidade alarmante e demonstram a importância da prevenção."
 slug: "violencia-contra-mulher-no-brasil-numeros-preocupantes"
-image: "/placeholder.svg"
+image: ""
 tags: ["violencia", "mulher", "brasil", "numeros"]
 ---
 
