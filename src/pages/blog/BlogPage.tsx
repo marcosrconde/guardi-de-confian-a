@@ -26,14 +26,14 @@ const BlogPage = () => {
                 <CardDescription>{post.description}</CardDescription>
               </CardHeader>
               <CardContent>
-                <img
-                  src={post.image}
-                  alt={post.title}
-                  className="rounded-lg mb-4"
-                />
                 <div className="flex gap-2">
                   {post.tags.map((tag) => (
-                    <Badge key={tag}>{tag}</Badge>
+                    <div
+                      key={tag}
+                      className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground hover:bg-primary/80"
+                    >
+                      {tag}
+                    </div>
                   ))}
                 </div>
               </CardContent>
