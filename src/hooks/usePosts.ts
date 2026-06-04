@@ -8,9 +8,9 @@ export const usePosts = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const postModules = import.meta.glob("../posts/**/*.md");
+      const postModules = import.meta.glob("../posts/**/*.md", { as: "url" });
       const postPromises = Object.entries(postModules).map(async ([path, getPost]) => {
-        const postUrl = (await getPost()).default;
+        const postUrl = (await getPost());
         const response = await fetch(postUrl);
         const rawContent = await response.text();
         const { attributes, body } = fm(rawContent);
