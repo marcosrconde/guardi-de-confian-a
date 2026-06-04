@@ -3,6 +3,9 @@ title: "Violência Contra a Mulher no Brasil: Os Números Que Mostram Uma Realid
 date: "2026-06-01"
 author: "Jusmulher"
 description: "A violência contra a mulher continua sendo um dos maiores desafios sociais do Brasil. Os números revelam uma realidade alarmante e demonstram a importância da prevenção."
+slug: "violencia-contra-mulher-no-brasil-numeros-preocupantes"
+image: "/placeholder.svg"
+tags: ["violencia", "mulher", "brasil", "numeros"]
 ---
 
 A violência contra a mulher continua sendo um dos maiores desafios sociais do Brasil. Apesar dos avanços na conscientização e no fortalecimento das leis de proteção, milhares de mulheres ainda enfrentam situações de agressão, ameaças, perseguições e violência psicológica diariamente.
