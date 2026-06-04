@@ -1,44 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!-- created with Gemini -->
-<url>
-  <loc>https://jusmulher.com.br/</loc>
-  <lastmod>2024-05-13T11:09:15+00:00</lastmod>
-  <priority>1.00</priority>
-</url>
-<url>
-  <loc>https://jusmulher.com.br/auth</loc>
-  <lastmod>2024-05-13T11:09:15+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://jusmulher.com.br/reset-password</loc>
-  <lastmod>2024-05-13T11:09:15+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://jusmulher.com.br/app</loc>
-  <lastmod>2024-05-13T11:09:15+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://jusmulher.com.br/app/historico</loc>
-  <lastmod>2024-05-13T11:09:15+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://jusmulher.com.br/app/creditos</loc>
-  <lastmod>2024-05-13T11:09:15+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://jusmulher.com.br/app/faq</loc>
-  <lastmod>2024-05-13T11:09:15+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://jusmulher.com.br/</loc>
+    <lastmod>2026-06-04T00:00:00.000Z</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://jusmulher.com.br/auth</loc>
+    <lastmod>2026-06-04T00:00:00.000Z</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://jusmulher.com.br/reset-password</loc>
+    <lastmod>2026-06-04T00:00:00.000Z</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://jusmulher.com.br/app</loc>
+    <lastmod>2026-06-04T00:00:00.000Z</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://jusmulher.com.br/app/historico</loc>
+    <lastmod>2026-06-04T00:00:00.000Z</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://jusmulher.com.br/app/creditos</loc>
+    <lastmod>2026-06-04T00:00:00.000Z</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://jusmulher.com.br/app/faq</loc>
+    <lastmod>2026-06-04T00:00:00.000Z</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://jusmulher.com.br/blog</loc>
+    <lastmod>2026-06-04T00:00:00.000Z</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://jusmulher.com.br/blog/antes-de-confiar-conheca</loc>
+    <lastmod>2026-06-04T00:00:00.000Z</lastmod>
+    <priority>1.00</priority>
+  </url>
+  <url>
+    <loc>https://jusmulher.com.br/blog/golpes-amorosos-na-internet</loc>
+    <lastmod>2026-06-04T00:00:00.000Z</lastmod>
+    <priority>1.00</priority>
+  </url>
+  <url>
+    <loc>https://jusmulher.com.br/blog/linha-do-tempo-do-feminicidio-no-brasil</loc>
+    <lastmod>2026-06-04T00:00:00.000Z</lastmod>
+    <priority>1.00</priority>
+  </url>
+  <url>
+    <loc>https://jusmulher.com.br/blog/relacionamento-abusivo-10-sinais-que-muitas-mulheres-percebem-tarde-demais</loc>
+    <lastmod>2026-06-04T00:00:00.000Z</lastmod>
+    <priority>1.00</priority>
+  </url>
+  <url>
+    <loc>https://jusmulher.com.br/blog/violencia-contra-mulher-no-brasil-numeros-preocupantes</loc>
+    <lastmod>2026-06-01T00:00:00.000Z</lastmod>
+    <priority>1.00</priority>
+  </url>
+  <url>
+    <loc>https://jusmulher.com.br/blog/voce-conhece-realmente-a-pessoa-com-quem-esta-se-relacionando</loc>
+    <lastmod>2026-06-04T00:00:00.000Z</lastmod>
+    <priority>1.00</priority>
+  </url>
 </urlset>
