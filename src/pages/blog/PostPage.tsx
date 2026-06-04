@@ -4,6 +4,7 @@ import { usePost } from "@/hooks/usePosts";
 import PublicHeader from "@/components/app/PublicHeader";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
+import { Helmet } from "react-helmet-async";
 
 const PostPage = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -19,6 +20,10 @@ const PostPage = () => {
 
   return (
     <div className="min-h-screen bg-warm">
+      <Helmet>
+        <title>{post.title} · Jusmulher</title>
+        <meta name="description" content={post.description} />
+      </Helmet>
       <PublicHeader />
       <div className="container py-12">
         <article className="prose lg:prose-xl mx-auto">
