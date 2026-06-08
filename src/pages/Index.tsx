@@ -227,7 +227,7 @@ const Index = () => {
           </div>
           <div className="rounded-3xl border border-border/60 bg-card/60 p-8 shadow-soft backdrop-blur-sm md:col-span-2 lg:col-span-1">
             <p className="text-foreground/80">
-              “Achei incrível ter as ferramentas de segurança gratuitas. O botão de pânico é algo que toda mulher deveria ter no celular.”
+              “Achei incrível ter as ferramentas de segurança gratuitas. O botão de pânico é algo que toda mulher deveria ter a disposição.”
             </p>
             <div className="mt-5 flex items-center gap-3">
               <div className="h-10 w-10 rounded-full bg-primary-soft" />
