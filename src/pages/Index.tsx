@@ -196,14 +196,14 @@ const Index = () => {
             O que nossas usuárias dizem
           </h2>
           <p className="mt-4 text-lg text-foreground/70 text-balance">
-            Histórias de quem usou a Guardiã de Confiança para tomar decisões mais seguras.
+            Histórias de quem usou a JusMulher para tomar decisões mais seguras.
           </p>
         </div>
 
         <div className="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           <div className="rounded-3xl border border-border/60 bg-card/60 p-8 shadow-soft backdrop-blur-sm">
             <p className="text-foreground/80">
-              “Eu estava insegura sobre um novo relacionamento e a Guardiã de Confiança me deu a clareza que eu precisava. Me sinto muito mais segura agora.”
+              “Eu estava insegura sobre um novo relacionamento e a JusMulher me deu a clareza que eu precisava. Me sinto muito mais segura agora.”
             </p>
             <div className="mt-5 flex items-center gap-3">
               <div className="h-10 w-10 rounded-full bg-primary-soft" />
