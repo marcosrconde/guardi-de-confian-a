@@ -155,3 +155,9 @@ Os dados mostram que a violência contra a mulher permanece presente em todas as
 Conhecer os sinais de risco, compreender seus direitos e buscar informações relevantes são atitudes que podem contribuir para relacionamentos mais seguros e para a proteção de milhares de mulheres.
 
 A informação, muitas vezes, pode ser o primeiro passo para evitar que uma estatística se transforme em uma tragédia pessoal.
+
+<div style="text-align: center; margin: 2rem 0;">
+  <a href="/auth" style="background-color: hsl(var(--primary)); color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600;">
+    Cadastre-se
+  </a>
+</div>

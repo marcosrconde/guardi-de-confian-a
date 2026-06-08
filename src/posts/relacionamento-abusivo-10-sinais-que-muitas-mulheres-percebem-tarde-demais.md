@@ -44,16 +44,7 @@ Piadas que machucam, críticas constantes, comparações humilhantes e comentár
 
 A violência psicológica muitas vezes começa com pequenas ofensas e evolui para agressões emocionais mais graves.
 
-### 5.<ctrl95>Muitos relacionamentos abusivos não começam com agressões físicas, mas com sinais sutis que evoluem para controle e violência. É crucial reconhecer esses indícios a tempo de agir e proteger sua segurança e bem-estar. Sinais como ciúmes excessivos, controle sobre sua vida, afastamento de amigos e familiares, humilhações e controle financeiro são alertas importantes.
-
-O JusMulher pode ajudar, permitindo a verificação de processos judiciais públicos que podem revelar históricos de violência, ameaças ou outros comportamentos de risco. Conhecer o histórico de uma pessoa é uma medida de prevenção que contribui para decisões mais conscientes e seguras. A informação é uma ferramenta poderosa para evitar sofrimento e construir relacionamentos saudáveis, baseados em respeito e confiança, e não em medo e controle. Lembre-se, prevenir é sempre a melhor opção para garantir sua segurança.
-
-Relacionamentos saudáveis devem proporcionar segurança e tranquilidade. Reconhecer os sinais de um relacionamento abusivo é essencial para se proteger. A informação não só ajuda a construir relações mais transparentes e seguras, mas também é um direito que pode evitar o sofrimento futuro. Quando se trata da sua segurança, a prevenção é a melhor forma de se proteger. O JusMulher está aqui para auxiliar nesse processo.
-
-Os sinais de um relacionamento abusivo podem ser sutis, mas ignorá-los pode levar a consequências graves. Ciúmes excessivos, controle sobre sua vida, afastamento de amigos e familiares, humilhações e controle financeiro são alguns dos alertas. Conhecer o histórico de uma pessoa através de processos judiciais públicos pode fornecer informações importantes. A plataforma JusMulher oferece essa consulta, além de conteúdos sobre prevenção e direitos, ajudando a tomar decisões mais seguras e conscientes. Relacionamentos saudáveis são baseados em respeito e confiança, não em medo. A prevenção é a melhor forma de garantir sua segurança.
-
-Em um relacionamento abusivo, os sinais podem ser sutis no início, mas evoluem para um padrão de controle e violência. Ciúmes excessivos, controle sobre sua vida, afastamento de amigos e familiares, humilhações e controle financeiro são alguns dos alertas. Conhecer o histórico de uma pessoa através de processos judiciais públicos pode ser crucial para sua segurança. O JusMulher oferece uma plataforma para essa consulta, além de conteúdos sobre prevenção e direitos, auxiliando na tomada de decisões mais seguras. A informação é uma ferramenta poderosa para construir relacionamentos saudáveis, baseados em respeito, não em medo. A prevenção é a melhor forma de se proteger.
- Mudanças Bruscas de Comportamento
+### 5. Mudanças Bruscas de Comportamento
 
 Alguns agressores alternam momentos de carinho intenso com explosões de raiva.
 
@@ -139,3 +130,9 @@ Conhecer os sinais de um relacionamento abusivo é uma forma de proteção e pod
 Informação não destrói relacionamentos saudáveis. Pelo contrário: ela ajuda a construir relações mais transparentes, conscientes e seguras.
 
 E quando o assunto é sua segurança, prevenir sempre será melhor do que remediar.
+
+<div style="text-align: center; margin: 2rem 0;">
+  <a href="/app" style="background-color: hsl(var(--primary)); color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600;">
+    Pesquisar uma pessoa
+  </a>
+</div>

@@ -104,3 +104,9 @@ Mas confiança não significa ignorar sinais de alerta ou abrir mão de informa�
 Buscar conhecimento antes de tomar decisões que podem impactar sua vida emocional, financeira e familiar é uma demonstração de responsabilidade consigo mesma.
 
 Afinal, quando se trata da sua segurança e do seu futuro, informação não é excesso de cuidado. É inteligência, prevenção e proteção.
+
+<div style="text-align: center; margin: 2rem 0;">
+  <a href="/app" style="background-color: hsl(var(--primary)); color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600;">
+    Pesquisar uma pessoa
+  </a>
+</div>

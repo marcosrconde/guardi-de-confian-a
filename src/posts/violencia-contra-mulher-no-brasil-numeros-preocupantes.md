@@ -99,3 +99,9 @@ A informação, a conscientização e a prevenção são ferramentas fundamentai
 Conhecer os sinais de alerta, entender seus direitos e buscar informações relevantes sobre a pessoa com quem você se relaciona são atitudes que podem fazer toda a diferença.
 
 Afinal, informação não é desconfiança. Informação é proteção. E proteger-se é um direito de toda mulher.
+
+<div style="text-align: center; margin: 2rem 0;">
+  <a href="/app" style="background-color: hsl(var(--primary)); color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600;">
+    Pesquisar uma pessoa
+  </a>
+</div>

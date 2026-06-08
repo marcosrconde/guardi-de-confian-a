@@ -149,3 +149,9 @@ Construir relacionamentos exige confiança, mas a confiança verdadeira deve cam
 Antes de investir emocionalmente, financeiramente ou compartilhar informações sensíveis, vale a pena conhecer melhor quem está do outro lado da tela.
 
 Afinal, quando se trata da sua segurança, informação nunca é excesso de cuidado. É proteção.
+
+<div style="text-align: center; margin: 2rem 0;">
+  <a href="/app" style="background-color: hsl(var(--primary)); color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600;">
+    Pesquisar uma pessoa
+  </a>
+</div>

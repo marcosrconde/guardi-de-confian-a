@@ -119,3 +119,9 @@ Conhecer melhor a pessoa com quem você se relaciona é uma atitude de cuidado c
 A informação não substitui o diálogo, a convivência ou o julgamento pessoal, mas pode ser uma ferramenta valiosa para evitar sofrimentos futuros.
 
 Afinal, quando o assunto é sua segurança, conhecer antes pode fazer toda a diferença depois.
+
+<div style="text-align: center; margin: 2rem 0;">
+  <a href="/app" style="background-color: hsl(var(--primary)); color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600;">
+    Pesquisar uma pessoa
+  </a>
+</div>
