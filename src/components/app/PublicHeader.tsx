@@ -36,6 +36,9 @@ export default function PublicHeader() {
           <Link to="/faq">FAQ</Link>
         </Button>
         <Button asChild variant="ghost">
+          <Link to="/quem-somos">Quem Somos</Link>
+        </Button>
+        <Button asChild variant="ghost">
           <Link to="/blog">Blog</Link>
         </Button>
         <Button asChild variant="ghost">
@@ -59,6 +62,9 @@ export default function PublicHeader() {
               </Link>
               <Link to="/faq" className="text-lg font-medium">
                 FAQ
+              </Link>
+              <Link to="/quem-somos" className="text-lg font-medium">
+                Quem Somos
               </Link>
               <Link to="/blog" className="text-lg font-medium">
                 Blog

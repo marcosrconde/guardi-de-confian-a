@@ -20,6 +20,7 @@ import Precos from "./pages/Precos";
 import FaqPage from "./pages/Faq";
 import BlogPage from "./pages/blog/BlogPage";
 import PostPage from "./pages/blog/PostPage";
+import QuemSomos from "./pages/QuemSomos";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/precos" element={<Precos />} />
             <Route path="/faq" element={<FaqPage />} />
+            <Route path="/quem-somos" element={<QuemSomos />} />
             <Route path="/auth" element={<AuthPage />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/app" element={<AppShell><NovaConsulta /></AppShell>} />
