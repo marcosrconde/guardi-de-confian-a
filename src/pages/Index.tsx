@@ -36,7 +36,7 @@ const Index = () => {
           <h1 className="mt-5 font-display text-4xl font-semibold leading-[1.05] tracking-tight text-balance sm:text-5xl md:text-6xl">
             Conheça o histórico de qualquer pessoa e previna-se contra 
             <br />
-            <span className="italic"><span className="text-primary">relacionamentos abusivos</span> <span className="text-rose">e golpes</span></span>
+            <span className="italic"><span className="text-primary">relacionamentos abusivos</span> <span className="text-rose">e violência</span></span>
           </h1>
           <p className="mt-6 max-w-lg text-lg text-foreground/70 text-balance">
             Nossa IA analisa informações de processos judiciais e criminais para que você possa tomar decisões mais seguras em seus relacionamentos.
