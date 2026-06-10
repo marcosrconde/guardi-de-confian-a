@@ -1,4 +1,5 @@
 import PublicHeader from "@/components/app/PublicHeader";
+import { FaWhatsapp } from "react-icons/fa";
 
 export default function QuemSomos() {
   return (
@@ -24,6 +25,28 @@ export default function QuemSomos() {
           Com a nossa ajuda, você pode tomar decisões mais informadas e
           proteger-se de possíveis riscos.
         </p>
+
+        <div className="mt-8">
+          <h2 className="text-2xl font-bold">Informações da Empresa</h2>
+          <p className="mt-2 text-lg">
+            <strong>Nome da Empresa:</strong> Jusbot Tecnológica Ltda.
+          </p>
+          <p className="mt-2 text-lg">
+            <strong>CNPJ:</strong> 59.707.336/0001-31
+          </p>
+          <p className="mt-2 text-lg">
+            <strong>Telefone de contato:</strong>{" "}
+            <a
+              href="https://wa.me/5535910238956"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center"
+            >
+              <FaWhatsapp className="mr-2" />
+              (35) 91023-8956
+            </a>
+          </p>
+        </div>
       </main>
     </>
   );
