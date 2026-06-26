@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2, Trash2 } from "lucide-react";
 import { toast } from "sonner";
+import { GiftModal } from "@/components/app/GiftModal";
 
 interface EmergencyContact {
   id: number;
@@ -20,6 +21,7 @@ export default function RedeDeConfianca() {
   const [contacts, setContacts] = useState<EmergencyContact[]>([]);
   const [loading, setLoading] = useState(true);
   const [newContact, setNewContact] = useState({ name: "", phone: "" });
+  const [showGiftModal, setShowGiftModal] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -83,6 +85,8 @@ export default function RedeDeConfianca() {
     }
 
     try {
+      const wasFirstContact = contacts.length === 0;
+
       const formattedPhone = `+55${phoneDigits}`;
       const { data, error } = await supabase
         .from("emergency_contacts")
@@ -94,6 +98,22 @@ export default function RedeDeConfianca() {
         setContacts([data[0], ...contacts]);
         setNewContact({ name: "", phone: "" });
         toast.success("Contato adicionado com sucesso!");
+
+        if (wasFirstContact) {
+          const { data: queries, error: queriesError } = await supabase
+            .from("queries")
+            .select("id")
+            .eq("user_id", user.id);
+
+          if (queriesError) {
+            console.error("Error fetching queries:", queriesError);
+            return;
+          }
+
+          if (queries.length === 0) {
+            setShowGiftModal(true);
+          }
+        }
       }
     } catch (error) {
       console.error("Error adding contact:", error);
@@ -114,8 +134,14 @@ export default function RedeDeConfianca() {
   };
 
   return (
-    <div className="mx-auto max-w-3xl space-y-8 animate-fade-in-up">
-      <header>
+    <>
+      <GiftModal
+        open={showGiftModal}
+        onOpenChange={setShowGiftModal}
+        checkoutUrl="https://payment-link-v3.pagar.me/pl_pD4P1el5WJ8RaaoTECq4RvoGVAmnE972"
+      />
+      <div className="mx-auto max-w-3xl space-y-8 animate-fade-in-up">
+        <header>
         <h1 className="mt-1 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
           Rede de Confiança
         </h1>
@@ -181,8 +207,9 @@ export default function RedeDeConfianca() {
             Você ainda não cadastrou nenhum contato de emergência.
           </p>
         )}
-      </Card>
-    </div>
+        </Card>
+      </div>
+    </>
   );
 }
 
