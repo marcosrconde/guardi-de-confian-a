@@ -103,17 +103,17 @@ export default function RedeDeConfianca() {
         toast.success("Contato adicionado com sucesso!");
 
         if (wasFirstContact) {
-          const { data: queries, error: queriesError } = await supabase
+          const { count, error } = await supabase
             .from("queries")
-            .select("id")
+            .select("id", { count: "exact", head: true })
             .eq("user_id", user.id);
 
-          if (queriesError) {
-            console.error("Error fetching queries:", queriesError);
+          if (error) {
+            console.error("Error fetching queries:", error);
             return;
           }
 
-          if (queries.length === 0) {
+          if (count === 0) {
             setShowGiftModal(true);
           }
         }

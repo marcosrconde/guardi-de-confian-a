@@ -27,6 +27,8 @@ export function GiftModal({ open, onOpenChange, checkoutUrl }: GiftModalProps) {
           <DialogTitle className="text-center text-2xl font-bold">Você ganhou um presente! 🎁</DialogTitle>
           <DialogDescription className="text-center">
             Por ter cadastrado seu primeiro contato na Rede de Confiança, você ganhou um desconto especial para fazer sua primeira consulta.
+            <br />
+            <strong>Aproveite, esta é uma oferta única e não aparecerá novamente!</strong>
           </DialogDescription>
         </DialogHeader>
         <div className="py-4">

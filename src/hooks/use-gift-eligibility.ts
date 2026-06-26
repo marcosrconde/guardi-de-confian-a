@@ -16,16 +16,25 @@ export function useGiftEligibility() {
 
     const checkEligibility = async () => {
       try {
-        const { count, error } = await supabase
+        const { count: queriesCount, error: queriesError } = await supabase
           .from("queries")
           .select("id", { count: "exact", head: true })
           .eq("user_id", user.id);
 
-        if (error) {
-          throw error;
+        if (queriesError) {
+          throw queriesError;
         }
 
-        setIsEligible(count === 0);
+        const { count: contactsCount, error: contactsError } = await supabase
+          .from("emergency_contacts")
+          .select("id", { count: "exact", head: true })
+          .eq("user_id", user.id);
+
+        if (contactsError) {
+          throw contactsError;
+        }
+
+        setIsEligible(queriesCount === 0 && contactsCount === 0);
       } catch (error) {
         console.error("Error checking gift eligibility:", error);
         setIsEligible(false);
