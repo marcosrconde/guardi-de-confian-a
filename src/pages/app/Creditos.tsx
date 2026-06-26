@@ -3,6 +3,8 @@ import { useApp } from "@/store/app-store";
 import { useShell } from "@/components/app/AppShell";
 import { supabase } from "@/integrations/supabase/client";
 import { Card } from "@/components/ui/card";
+import { GiftAlert } from "@/components/app/GiftAlert";
+import { useGiftEligibility } from "@/hooks/use-gift-eligibility";
 import { Button } from "@/components/ui/button";
 import { Check, Sparkles, Wallet, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -38,6 +40,7 @@ export default function Creditos() {
   const { saldo } = useShell();
   const [transacoes, setTransacoes] = useState<GatewayTransaction[]>([]);
   const [loading, setLoading] = useState(true);
+  const { isEligible: isEligibleForGift } = useGiftEligibility();
 
   useEffect(() => {
     if (!user) return;
@@ -68,6 +71,7 @@ export default function Creditos() {
 
   return (
     <div className="mx-auto max-w-5xl space-y-12 animate-fade-in-up">
+      {isEligibleForGift && <GiftAlert />}
       <header className="text-center">
         <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-primary shadow-soft">
           <Wallet className="h-3.5 w-3.5" /> Seus créditos

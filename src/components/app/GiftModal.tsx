@@ -31,7 +31,7 @@ export function GiftModal({ open, onOpenChange, checkoutUrl }: GiftModalProps) {
         </DialogHeader>
         <div className="py-4">
           <p className="text-center text-lg">
-            De <span className="line-through">R$25,00</span> por apenas <span className="font-bold text-primary">R$5,00</span>
+            De <span className="line-through">R$30,00</span> por apenas <span className="font-bold text-primary">R$5,00</span>
           </p>
         </div>
         <DialogFooter>

@@ -4,6 +4,8 @@ import { useApp } from "@/store/app-store";
 import { supabase } from "@/integrations/supabase/client";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { GiftAlert } from "@/components/app/GiftAlert";
+import { useGiftEligibility } from "@/hooks/use-gift-eligibility";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2, Trash2 } from "lucide-react";
@@ -22,6 +24,7 @@ export default function RedeDeConfianca() {
   const [loading, setLoading] = useState(true);
   const [newContact, setNewContact] = useState({ name: "", phone: "" });
   const [showGiftModal, setShowGiftModal] = useState(false);
+  const { isEligible: isEligibleForGift } = useGiftEligibility();
 
   useEffect(() => {
     if (user) {
@@ -149,6 +152,8 @@ export default function RedeDeConfianca() {
           Cadastre aqui os contatos que você deseja acionar em caso de emergência.
         </p>
       </header>
+
+      {isEligibleForGift && <GiftAlert />}
 
       <Card className="p-6 shadow-soft">
         <div className="space-y-4">

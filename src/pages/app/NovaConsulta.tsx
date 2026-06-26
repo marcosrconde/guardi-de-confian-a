@@ -4,6 +4,8 @@ import { useApp, Candidate } from "@/store/app-store";
 import { supabase } from "@/integrations/supabase/client";
 import { useShell } from "@/components/app/AppShell";
 import { Card } from "@/components/ui/card";
+import { GiftAlert } from "@/components/app/GiftAlert";
+import { useGiftEligibility } from "@/hooks/use-gift-eligibility";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,6 +23,7 @@ export default function NovaConsulta() {
   const { saldo, refreshSaldo } = useShell();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const { isEligible: isEligibleForGift } = useGiftEligibility();
   const [cpf, setCpf] = useState("");
   const [form, setForm] = useState({ nome: "", nascimento: "", cidade: "", nomeMae: "" });
   const [candidates, setCandidates] = useState<Candidate[] | null>(null);
@@ -220,6 +223,8 @@ toast.error("Não conseguimos registrar a consulta. Tente novamente.", { duratio
           claro sobre o histórico judicial dessa pessoa.
         </p>
       </header>
+
+      {isEligibleForGift && <GiftAlert />}
 
       {semCreditos && (
         <Card className="flex flex-wrap items-center justify-between gap-4 border-warning/30 bg-warning/5 p-5">
