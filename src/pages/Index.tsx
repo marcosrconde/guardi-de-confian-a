@@ -90,6 +90,34 @@ const Index = () => {
         </div>
       </section>
 
+      <section className="bg-white py-12 md:py-20">
+        <div className="container">
+          <div className="mx-auto max-w-3xl text-center mb-10">
+            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-primary shadow-soft">
+              <Sparkles className="h-3.5 w-3.5" /> Conheça a JusMulher
+            </span>
+            <h2 className="mt-5 font-display text-3xl font-semibold tracking-tight text-balance sm:text-4xl">
+              Assista ao vídeo e veja como funciona
+            </h2>
+            <p className="mt-4 text-lg text-foreground/70 text-balance">
+              Entenda como a JusMulher ajuda a proteger você e quem você ama.
+            </p>
+          </div>
+          
+          <div className="aspect-video w-full max-w-3xl mx-auto rounded-3xl overflow-hidden shadow-elegant border border-border/40">
+            <iframe
+              className="w-full h-full"
+              src="https://www.youtube.com/embed/No_n5L1KgBg?si=rm-zPdPSaB4b7TsO"
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </div>
+      </section>
+
       <section className="container py-12 md:py-20">
         <div className="mx-auto max-w-3xl text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-primary shadow-soft">
