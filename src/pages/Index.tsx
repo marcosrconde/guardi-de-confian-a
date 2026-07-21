@@ -34,16 +34,16 @@ const Index = () => {
             <Sparkles className="h-3.5 w-3.5" /> Relacionamentos seguros começam com informação
           </span>
           <h1 className="mt-5 font-display text-4xl font-semibold leading-[1.05] tracking-tight text-balance sm:text-5xl md:text-6xl">
-            Conheça o histórico de qualquer pessoa e previna-se contra 
+            Previna-se contra relacionamentos abusivos e violência. 
             <br />
-            <span className="text-rose">relacionamentos abusivos e violência</span>
+            <span className="text-rose">Pesquise o histórico criminal de qualquer pessoa em menos de 1 minuto.</span>
           </h1>
           <p className="mt-6 max-w-lg text-lg text-foreground/70 text-balance">
             Nossa IA analisa informações de processos judiciais e criminais para que você possa tomar decisões mais seguras em seus relacionamentos.
           </p>
           <p className="mt-6 max-w-lg text-lg text-foreground/70 text-balance">
             <strong>A informação é a sua maior aliada.</strong> 
-            <p><span className="font-semibold text-foreground/90">Tome as rédeas da sua segurança e bem-estar.</span></p>
+            <p><span className="font-semibold text-foreground/90">Não deixe para depois algo que pode te custar a vida.</span></p>
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Button asChild size="lg" className="rounded-full px-7 shadow-elegant">
