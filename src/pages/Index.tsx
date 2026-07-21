@@ -50,7 +50,7 @@ const Index = () => {
           <div className="mt-8 flex flex-wrap gap-3">
             <Button asChild size="lg" className="rounded-full px-7 shadow-elegant">
               <Link to={user ? "/app" : signupLink}>
-                Começar consulta gratuita
+                Começar consulta
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="rounded-full px-7">
