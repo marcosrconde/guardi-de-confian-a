@@ -36,6 +36,7 @@ const Index = () => {
           <h1 className="mt-5 font-display text-4xl font-semibold leading-[1.05] tracking-tight text-balance sm:text-5xl md:text-6xl">
             Previna-se da violência contra a mulher. 
             <br />
+            <span className="text-primary font-bold">Antecipe-se.</span>{" "}
             <span className="text-rose">Pesquise a ficha criminal de qualquer pessoa em segundos.</span>
           </h1>
           <p className="mt-6 max-w-lg text-lg text-foreground/70 text-balance">
