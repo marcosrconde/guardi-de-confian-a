@@ -34,8 +34,9 @@ const Index = () => {
             <Sparkles className="h-3.5 w-3.5" /> Relacionamentos seguros começam com informação
           </span>
           <h1 className="mt-5 font-display text-4xl font-semibold leading-[1.05] tracking-tight text-balance sm:text-5xl md:text-6xl">
-            Previna-se da violência contra a mulher. 
-            <br />
+            <span className="text-foreground/60 text-2xl sm:text-3xl font-normal block mb-2">
+              Previna-se da violência contra a mulher.
+            </span>
             <span className="text-primary font-bold">Antecipe-se.</span>{" "}
             <span className="text-rose">Pesquise a ficha criminal de qualquer pessoa em segundos.</span>
           </h1>
