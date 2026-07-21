@@ -38,7 +38,7 @@ const Index = () => {
               Previna-se da violência contra a mulher.
             </span>
             <span className="text-primary font-bold">Antecipe-se.</span>{" "}
-            <span className="text-rose">Pesquise a ficha criminal de qualquer pessoa em segundos.</span>
+            <span className="text-rose-700 font-semibold">Pesquise a ficha criminal de qualquer pessoa em segundos.</span>
           </h1>
           <p className="mt-6 max-w-lg text-lg text-foreground/70 text-balance">
             Nossa IA analisa informações de processos judiciais e criminais para que você possa tomar decisões mais seguras em seus relacionamentos.
