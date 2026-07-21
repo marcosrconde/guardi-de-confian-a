@@ -50,18 +50,21 @@ const Index = () => {
           <div className="mt-8 flex flex-wrap gap-3">
             <Button asChild size="lg" className="rounded-full px-7 shadow-elegant">
               <Link to={user ? "/app" : signupLink}>
-                Criar minha conta gratuita
+                Começar consulta gratuita
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="rounded-full px-7">
               <Link to={authLink}>Já tenho conta</Link>
             </Button>
           </div>
+          <p className="mt-3 text-xs text-foreground/50">
+            🔒 Consulta 100% anônima e sigilosa. A pessoa consultada nunca saberá.
+          </p>
           <div className="mt-10 grid grid-cols-4 gap-4 max-w-md">
-            <Feature icon={Fingerprint} title="Sigiloso" />
-            <Feature icon={Zap} title="Prático" />
-            <Feature icon={BadgeCheck} title="Seguro" />
-            <Feature icon={HandCoins} title="Acessível" />
+            <Feature icon={Fingerprint} title="100% Anônimo" />
+            <Feature icon={Zap} title="Instantâneo" />
+            <Feature icon={BadgeCheck} title="Dados Oficiais" />
+            <Feature icon={HandCoins} title="Grátis p/ iniciar" />
           </div>
         </div>
 
@@ -190,27 +193,27 @@ const Index = () => {
               <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-primary-soft text-primary">
                 <Search className="h-8 w-8" />
               </div>
-              <h3 className="mt-5 text-xl font-semibold">1. Faça a consulta</h3>
+              <h3 className="mt-5 text-xl font-semibold">1. Dados Básicos</h3>
               <p className="mt-2 text-foreground/70">
-                Informe os dados da pessoa que você deseja consultar.
+                Digite o nome ou CPF de forma segura, privada e 100% confidencial.
               </p>
             </div>
             <div className="text-center">
               <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-primary-soft text-primary">
                 <FileText className="h-8 w-8" />
               </div>
-              <h3 className="mt-5 text-xl font-semibold">2. Análise com IA</h3>
+              <h3 className="mt-5 text-xl font-semibold">2. Varredura com IA</h3>
               <p className="mt-2 text-foreground/70">
-                Nossa inteligência artificial analisa os dados e gera um relatório completo.
+                Nossa inteligência artificial faz uma busca minuciosa em registros públicos judiciais e criminais.
               </p>
             </div>
             <div className="text-center">
               <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-primary-soft text-primary">
                 <Shield className="h-8 w-8" />
               </div>
-              <h3 className="mt-5 text-xl font-semibold">3. Tome sua decisão</h3>
+              <h3 className="mt-5 text-xl font-semibold">3. Decisão Segura</h3>
               <p className="mt-2 text-foreground/70">
-                Com o relatório em mãos, você tem mais segurança para tomar suas decisões.
+                Receba um dossiê simples e direto para tomar a melhor decisão para sua vida.
               </p>
             </div>
           </div>
