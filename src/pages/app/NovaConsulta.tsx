@@ -28,6 +28,7 @@ export default function NovaConsulta() {
   const [form, setForm] = useState({ nome: "", nascimento: "", cidade: "", nomeMae: "" });
   const [candidates, setCandidates] = useState<Candidate[] | null>(null);
   const [inputData, setInputData] = useState<any | null>(null);
+  const [tab, setTab] = useState<"cpf" | "dados">("cpf");
 
   // Redirect to histórico if user already has consultas (per spec)
   useEffect(() => {
@@ -35,6 +36,8 @@ export default function NovaConsulta() {
     if (!user) return;
     const params = new URLSearchParams(window.location.search);
     if (params.get("redirected") === "1") return;
+    // Se viemos da landing com prefill, não redirecionar para histórico
+    if (localStorage.getItem("prefill_consulta")) return;
     supabase
       .from("queries")
       .select("id", { count: "exact", head: true })
@@ -51,6 +54,33 @@ export default function NovaConsulta() {
   }, [user, navigate]);
 
   const semCreditos = saldo <= 0;
+
+  // Prefill from landing page if available
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("prefill_consulta");
+      if (!raw) return;
+      const data = JSON.parse(raw) as
+        | { kind: "cpf"; cpf: string }
+        | { kind: "form"; nome: string; nascimento: string; cidade: string; nomeMae: string };
+      if (data.kind === "cpf") {
+        setTab("cpf");
+        setCpf(data.cpf ?? "");
+      } else if (data.kind === "form") {
+        setTab("dados");
+        setForm({
+          nome: data.nome ?? "",
+          nascimento: data.nascimento ?? "",
+          cidade: data.cidade ?? "",
+          nomeMae: data.nomeMae ?? "",
+        });
+      }
+    } catch (e) {
+      // ignore parse errors
+    } finally {
+      localStorage.removeItem("prefill_consulta");
+    }
+  }, []);
 
   const submitCpf = async () => {
     if (!cpf.trim() || cpf.replace(/\D/g, "").length < 11) {
@@ -244,7 +274,7 @@ toast.error("Não conseguimos registrar a consulta. Tente novamente.", { duratio
       )}
 
       <Card className="overflow-hidden border-border/60 shadow-soft">
-        <Tabs defaultValue="cpf" className="w-full">
+        <Tabs value={tab} onValueChange={(v) => setTab(v as typeof tab)} className="w-full">
           <div className="border-b border-border/60 bg-secondary/40 p-2">
             <TabsList className="grid w-full grid-cols-2 bg-transparent">
               <TabsTrigger value="cpf" className="rounded-full data-[state=active]:bg-card data-[state=active]:shadow-soft">

@@ -1,15 +1,24 @@
-import { useEffect } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sparkles, Fingerprint, Zap, BadgeCheck, HandCoins, ShieldCheck, Users, AlertTriangle, HeartHandshake, Search, FileText, Shield } from "lucide-react";
 import heroImg from "@/assets/hero.png";
 import { useApp } from "@/store/app-store";
 import LatestPosts from "@/components/app/LatestPosts";
 import PublicHeader from "@/components/app/PublicHeader";
+import { Card } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
 
 const Index = () => {
   const { user } = useApp();
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const [tab, setTab] = useState<"cpf" | "dados">("cpf");
+  const [cpf, setCpf] = useState("");
+  const [form, setForm] = useState({ nome: "", nascimento: "", cidade: "", nomeMae: "" });
 
   useEffect(() => {
     const ref = searchParams.get("ref");
@@ -23,6 +32,44 @@ const Index = () => {
   const signupLink = affiliateCode
     ? `/auth?mode=signup&ref=${affiliateCode}`
     : "/auth?mode=signup";
+
+  const handleSubmitCpf = () => {
+    const digits = cpf.replace(/\D/g, "");
+    if (!digits || digits.length !== 11) {
+      toast.error("Informe um CPF válido (11 dígitos).", { duration: 60000 });
+      return;
+    }
+    const payload = { kind: "cpf" as const, cpf };
+    localStorage.setItem("prefill_consulta", JSON.stringify(payload));
+    if (!user) {
+      toast("Para prosseguir, faça login ou crie sua conta.");
+      navigate(authLink);
+      return;
+    }
+    navigate("/app");
+  };
+
+  const handleSubmitDados = () => {
+    if (!form.nome.trim()) {
+      toast.error("O campo 'Nome completo' é obrigatório.", { duration: 60000 });
+      return;
+    }
+    if (!form.nascimento.trim() && !form.nomeMae.trim()) {
+      toast.error(
+        "Para realizar a pesquisa, informe ao menos 2 dados: nome completo e nome da mãe, ou nome completo e data de nascimento.",
+        { duration: 60000 }
+      );
+      return;
+    }
+    const payload = { kind: "form" as const, ...form };
+    localStorage.setItem("prefill_consulta", JSON.stringify(payload));
+    if (!user) {
+      toast("Para prosseguir, faça login ou crie sua conta.");
+      navigate(authLink);
+      return;
+    }
+    navigate("/app");
+  };
 
   return (
     <div className="min-h-screen bg-warm">
@@ -44,10 +91,103 @@ const Index = () => {
             Nossa IA analisa informações de processos judiciais e criminais para que você possa tomar decisões mais seguras em seus relacionamentos.
           </p>
           <p className="mt-6 max-w-lg text-lg text-foreground/70 text-balance">
-            <strong>A informação é a sua maior aliada.</strong> 
+            <strong>A informação é a sua maior aliada.</strong>
             <p><span className="font-semibold text-foreground/90">Não deixe para depois algo que pode te custar a vida.</span></p>
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
+
+          {/* Formulário rápido de consulta */}
+          <Card className="mt-8 max-w-xl border-border/60 shadow-soft">
+            <Tabs value={tab} onValueChange={(v) => setTab(v as typeof tab)} className="w-full">
+              <div className="border-b border-border/60 bg-secondary/40 p-2">
+                <TabsList className="grid w-full grid-cols-2 bg-transparent">
+                  <TabsTrigger value="cpf" className="rounded-full data-[state=active]:bg-card data-[state=active]:shadow-soft">
+                    Por CPF
+                  </TabsTrigger>
+                  <TabsTrigger value="dados" className="rounded-full data-[state=active]:bg-card data-[state=active]:shadow-soft">
+                    Por dados pessoais
+                  </TabsTrigger>
+                </TabsList>
+              </div>
+
+              <TabsContent value="cpf" className="p-6 sm:p-8">
+                <div className="space-y-4">
+                  <div className="space-y-1.5">
+                    <Label htmlFor="cpf_lp">CPF da pessoa</Label>
+                    <Input
+                      id="cpf_lp"
+                      inputMode="numeric"
+                      value={cpf}
+                      onChange={(e) => setCpf(e.target.value)}
+                      placeholder="000.000.000-00"
+                      className="h-12 rounded-2xl text-base"
+                    />
+                    <p className="text-xs text-muted-foreground">A consulta por CPF é mais rápida e precisa.</p>
+                  </div>
+                  <Button onClick={handleSubmitCpf} size="lg" className="w-full rounded-full shadow-elegant sm:w-auto">
+                    <Sparkles className="mr-2 h-4 w-4" /> Iniciar consulta
+                  </Button>
+                </div>
+              </TabsContent>
+
+              <TabsContent value="dados" className="p-6 sm:p-8">
+                <div className="space-y-4">
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    <div className="space-y-1.5 sm:col-span-2">
+                      <Label>Nome completo</Label>
+                      <Input
+                        value={form.nome}
+                        onChange={(e) => setForm({ ...form, nome: e.target.value })}
+                        placeholder="Nome completo da pessoa"
+                        className="h-12 rounded-2xl text-base"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <Label>Data de nascimento</Label>
+                      <Input
+                        value={form.nascimento}
+                        onChange={(e) => {
+                          const { value } = e.target;
+                          let formattedValue = value.replace(/\D/g, "");
+                          if (formattedValue.length > 2) {
+                            formattedValue = `${formattedValue.slice(0, 2)}/${formattedValue.slice(2)}`;
+                          }
+                          if (formattedValue.length > 5) {
+                            formattedValue = `${formattedValue.slice(0, 5)}/${formattedValue.slice(5, 9)}`;
+                          }
+                          setForm({ ...form, nascimento: formattedValue });
+                        }}
+                        placeholder="00/00/0000"
+                        className="h-12 rounded-2xl text-base"
+                      />
+                    </div>
+                    <div className="space-y-1.5">
+                      <Label>Cidade</Label>
+                      <Input
+                        value={form.cidade}
+                        onChange={(e) => setForm({ ...form, cidade: e.target.value })}
+                        placeholder="Cidade de nascimento"
+                        className="h-12 rounded-2xl text-base"
+                      />
+                    </div>
+                    <div className="space-y-1.5 sm:col-span-2">
+                      <Label>Nome da mãe</Label>
+                      <Input
+                        value={form.nomeMae}
+                        onChange={(e) => setForm({ ...form, nomeMae: e.target.value })}
+                        placeholder="Nome completo da mãe"
+                        className="h-12 rounded-2xl text-base"
+                      />
+                    </div>
+                  </div>
+                  <Button onClick={handleSubmitDados} size="lg" className="w-full rounded-full shadow-elegant sm:w-auto">
+                    <Sparkles className="mr-2 h-4 w-4" /> Iniciar consulta
+                  </Button>
+                </div>
+              </TabsContent>
+            </Tabs>
+          </Card>
+
+          <div className="mt-6 flex flex-wrap gap-3">
             <Button asChild size="lg" className="rounded-full px-7 shadow-elegant">
               <Link to={user ? "/app" : signupLink}>
                 Começar consulta
