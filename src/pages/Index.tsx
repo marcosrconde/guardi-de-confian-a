@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Sparkles, Fingerprint, Zap, BadgeCheck, HandCoins, ShieldCheck, Users, AlertTriangle, HeartHandshake, Search, FileText, Shield } from "lucide-react";
-import heroImg from "@/assets/hero.png";
+import { Sparkles, Fingerprint, Zap, BadgeCheck, HandCoins, Users, AlertTriangle, HeartHandshake, Search, FileText, Shield } from "lucide-react";
 import { useApp } from "@/store/app-store";
 import LatestPosts from "@/components/app/LatestPosts";
 import PublicHeader from "@/components/app/PublicHeader";
@@ -95,8 +94,21 @@ const Index = () => {
             <p><span className="font-semibold text-foreground/90">Não deixe para depois algo que pode te custar a vida.</span></p>
           </p>
 
-          {/* Formulário rápido de consulta */}
-          <Card className="mt-8 max-w-xl border-border/60 shadow-soft">
+          
+          <p className="mt-3 text-xs text-foreground/50">
+            🔒 Consulta 100% anônima e sigilosa. A pessoa consultada nunca saberá.
+          </p>
+          <div className="mt-10 grid grid-cols-4 gap-4 max-w-md">
+            <Feature icon={Fingerprint} title="100% Anônimo" />
+            <Feature icon={Zap} title="Instantâneo" />
+            <Feature icon={BadgeCheck} title="Dados Oficiais" />
+            <Feature icon={HandCoins} title="Grátis p/ iniciar" />
+          </div>
+        </div>
+
+        <div className="relative">
+          {/* Formulário rápido de consulta (lado direito do herói) */}
+          <Card className="max-w-xl border-border/60 shadow-elegant">
             <Tabs value={tab} onValueChange={(v) => setTab(v as typeof tab)} className="w-full">
               <div className="border-b border-border/60 bg-secondary/40 p-2">
                 <TabsList className="grid w-full grid-cols-2 bg-transparent">
@@ -186,52 +198,6 @@ const Index = () => {
               </TabsContent>
             </Tabs>
           </Card>
-
-          <div className="mt-6 flex flex-wrap gap-3">
-            <Button asChild size="lg" className="rounded-full px-7 shadow-elegant">
-              <Link to={user ? "/app" : signupLink}>
-                Começar consulta
-              </Link>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="rounded-full px-7">
-              <Link to={authLink}>Já tenho conta</Link>
-            </Button>
-          </div>
-          <p className="mt-3 text-xs text-foreground/50">
-            🔒 Consulta 100% anônima e sigilosa. A pessoa consultada nunca saberá.
-          </p>
-          <div className="mt-10 grid grid-cols-4 gap-4 max-w-md">
-            <Feature icon={Fingerprint} title="100% Anônimo" />
-            <Feature icon={Zap} title="Instantâneo" />
-            <Feature icon={BadgeCheck} title="Dados Oficiais" />
-            <Feature icon={HandCoins} title="Grátis p/ iniciar" />
-          </div>
-        </div>
-
-        <div className="relative">
-          <div className="absolute -inset-6 rounded-[3rem] bg-primary-soft/40 blur-2xl" />
-          <div className="relative overflow-hidden rounded-[2.5rem] shadow-elegant">
-            <img
-              src={heroImg}
-              alt="Ilustração suave em tons rosé"
-              width={1536}
-              height={1152}
-              className="h-full w-full object-cover"
-            />
-            <div className="absolute bottom-6 left-6 right-6 rounded-2xl bg-background/90 p-5 backdrop-blur shadow-soft">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-success/15 text-success">
-                  <ShieldCheck className="h-5 w-5" />
-                </div>
-                <div>
-                  <p className="text-xs uppercase tracking-wide text-muted-foreground">
-                    Risco baixo
-                  </p>
-                  <p className="text-sm font-medium">Nada preocupante encontrado.</p>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
