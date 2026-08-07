@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Sparkles, History, Wallet, LogOut, Menu, Loader2, HelpCircle, ShieldCheck, ShieldAlert } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { PromoBar } from "@/components/app/PromoBar";
 import { cn } from "@/lib/utils";
 import { LogoInline } from "./Logo";
 import { getSaldoCreditos } from "@/lib/credits";
@@ -101,6 +102,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
   return (
     <div className="min-h-screen bg-warm">
+      <PromoBar />
       <header className="sticky top-0 z-40 border-b border-border/60 bg-background/80 backdrop-blur-xl">
         <div className="container flex h-16 items-center justify-between gap-4">
           <Link to="/app" aria-label="JusMulher">

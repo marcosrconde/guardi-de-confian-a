@@ -6,6 +6,8 @@ import { Card } from "@/components/ui/card";
 import { GiftAlert } from "@/components/app/GiftAlert";
 import { useGiftEligibility } from "@/hooks/use-gift-eligibility";
 import { Button } from "@/components/ui/button";
+import { usePromo } from "@/hooks/use-promo";
+import { Link } from "react-router-dom";
 import { Check, Sparkles, Wallet, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import PacotesCreditos from "@/components/app/PacotesCreditos";
@@ -41,6 +43,7 @@ export default function Creditos() {
   const [transacoes, setTransacoes] = useState<GatewayTransaction[]>([]);
   const [loading, setLoading] = useState(true);
   const { isEligible: isEligibleForGift } = useGiftEligibility();
+  const { isActive, name, endLabel } = usePromo();
 
   useEffect(() => {
     if (!user) return;
@@ -71,6 +74,17 @@ export default function Creditos() {
 
   return (
     <div className="mx-auto max-w-5xl space-y-12 animate-fade-in-up">
+      {isActive && (
+        <div className="rounded-2xl border border-primary/20 bg-primary-soft p-3 text-sm flex items-center justify-between">
+          <span>
+            Agosto/2026: preços promocionais — {name}
+            {endLabel ? ` · válido até ${endLabel}` : null}
+          </span>
+          <Button asChild variant="secondary" className="rounded-full px-3 py-1 text-xs">
+            <Link to="/precos">Ver preços</Link>
+          </Button>
+        </div>
+      )}
       {isEligibleForGift && <GiftAlert />}
       <header className="text-center">
         <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-primary shadow-soft">

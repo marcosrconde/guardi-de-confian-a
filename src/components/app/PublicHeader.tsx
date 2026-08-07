@@ -5,6 +5,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { LogoInline } from "@/components/app/Logo";
 import { useApp } from "@/store/app-store";
+import { PromoBar } from "@/components/app/PromoBar";
 
 export default function PublicHeader() {
   const { user } = useApp();
@@ -24,11 +25,13 @@ export default function PublicHeader() {
     : "/auth?mode=signup";
 
   return (
-    <header className="container flex items-center justify-between py-6">
-      <Link to="/" aria-label="JusMulher">
-        <LogoInline />
-      </Link>
-      <div className="hidden items-center gap-2 md:flex">
+    <>
+      <PromoBar />
+      <header className="container flex items-center justify-between py-6">
+        <Link to="/" aria-label="JusMulher">
+          <LogoInline />
+        </Link>
+        <div className="hidden items-center gap-2 md:flex">
         <Button asChild variant="ghost">
           <Link to="/precos">Preços</Link>
         </Button>
@@ -47,8 +50,8 @@ export default function PublicHeader() {
         <Button asChild className="rounded-full">
           <Link to={user ? "/app" : signupLink}>Começar agora</Link>
         </Button>
-      </div>
-      <div className="md:hidden">
+        </div>
+        <div className="md:hidden">
         <Sheet>
           <SheetTrigger asChild>
             <Button variant="ghost" size="icon">
@@ -81,7 +84,8 @@ export default function PublicHeader() {
             </div>
           </SheetContent>
         </Sheet>
-      </div>
-    </header>
+        </div>
+      </header>
+    </>
   );
 }

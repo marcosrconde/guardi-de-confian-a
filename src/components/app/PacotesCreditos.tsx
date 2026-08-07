@@ -4,6 +4,7 @@ import { Check, Loader2, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useApp } from "@/store/app-store";
 import { CheckoutButton } from "./CheckoutButton";
+import { usePromo } from "@/hooks/use-promo";
 
 interface Pacote {
   id: string;
@@ -18,6 +19,7 @@ export default function PacotesCreditos() {
   const { user } = useApp();
   const [pacotes, setPacotes] = useState<Pacote[]>([]);
   const [loading, setLoading] = useState(true);
+  const { isActive } = usePromo();
 
   useEffect(() => {
     supabase
@@ -65,7 +67,14 @@ export default function PacotesCreditos() {
                 {p.credits} <span className="text-base font-normal text-muted-foreground">consultas</span>
               </p>
               <p className="mt-4 font-display text-3xl font-semibold text-primary">{precoFmt}</p>
-              <p className="text-xs text-muted-foreground">{unit} por consulta</p>
+              <div className="mt-1 flex items-center gap-2">
+                <p className="text-xs text-muted-foreground">{unit} por consulta</p>
+                {isActive && (
+                  <span className="rounded-full bg-primary-soft px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-primary">
+                    Preço promocional
+                  </span>
+                )}
+              </div>
 
               <ul className="mt-6 space-y-2 text-sm">
                 {[p.description ?? "Relatórios completos", "Histórico salvo", "Sem prazo de validade"].map((b) => (

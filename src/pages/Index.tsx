@@ -5,6 +5,7 @@ import { Sparkles, Fingerprint, Zap, BadgeCheck, HandCoins, Users, AlertTriangle
 import { useApp } from "@/store/app-store";
 import LatestPosts from "@/components/app/LatestPosts";
 import PublicHeader from "@/components/app/PublicHeader";
+import { usePromo } from "@/hooks/use-promo";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
@@ -13,6 +14,7 @@ import { toast } from "sonner";
 
 const Index = () => {
   const { user } = useApp();
+  const { isActive: promoActive } = usePromo();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [tab, setTab] = useState<"cpf" | "dados">("cpf");
@@ -79,6 +81,11 @@ const Index = () => {
           <span className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-1 text-xs font-medium text-primary shadow-soft">
             <Sparkles className="h-3.5 w-3.5" /> Relacionamentos seguros começam com informação
           </span>
+          {promoActive && (
+            <Link to="/precos" className="ml-2 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary-soft px-3 py-1 text-xs font-medium text-primary shadow-soft hover:bg-primary/10">
+              <Sparkles className="h-3.5 w-3.5" /> Agosto/2026: preços promocionais
+            </Link>
+          )}
           <h1 className="mt-5 font-display text-4xl font-semibold leading-[1.05] tracking-tight text-balance sm:text-5xl md:text-6xl">
             <span className="text-foreground/60 text-2xl sm:text-3xl font-normal block mb-2">
               Previna-se da violência contra a mulher.
