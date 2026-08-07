@@ -82,7 +82,7 @@ const Index = () => {
             <Sparkles className="h-3.5 w-3.5" /> Relacionamentos seguros começam com informação
           </span>
           {promoActive && (
-            <Link to="/precos" className="ml-2 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary-soft px-3 py-1 text-xs font-medium text-primary shadow-soft hover:bg-primary/10">
+            <Link to="/precos" className="ml-2 inline-flex items-center gap-2 rounded-full bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground shadow-soft hover:opacity-90">
               <Sparkles className="h-3.5 w-3.5" /> Agosto/2026: preços promocionais
             </Link>
           )}

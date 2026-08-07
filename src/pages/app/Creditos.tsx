@@ -75,12 +75,12 @@ export default function Creditos() {
   return (
     <div className="mx-auto max-w-5xl space-y-12 animate-fade-in-up">
       {isActive && (
-        <div className="rounded-2xl border border-primary/20 bg-primary-soft p-3 text-sm flex items-center justify-between">
+        <div className="rounded-2xl border border-primary/40 bg-primary p-3 text-sm text-primary-foreground flex items-center justify-between">
           <span>
             Agosto/2026: preços promocionais — {name}
             {endLabel ? ` · válido até ${endLabel}` : null}
           </span>
-          <Button asChild variant="secondary" className="rounded-full px-3 py-1 text-xs">
+          <Button asChild className="rounded-full px-3 py-1 text-xs bg-primary-foreground text-primary hover:bg-primary-foreground/90">
             <Link to="/precos">Ver preços</Link>
           </Button>
         </div>

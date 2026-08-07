@@ -20,6 +20,15 @@ export default function PacotesCreditos() {
   const [pacotes, setPacotes] = useState<Pacote[]>([]);
   const [loading, setLoading] = useState(true);
   const { isActive } = usePromo();
+  const getOriginalPrice = (credits: number): number | null => {
+    // Preços normais fornecidos: 1=R$30, 5=R$125, 10=R$200
+    const map: Record<number, number> = {
+      1: 30,
+      5: 125,
+      10: 200,
+    };
+    return map[credits] ?? null;
+  };
 
   useEffect(() => {
     supabase
@@ -48,6 +57,9 @@ export default function PacotesCreditos() {
       {pacotes.map((p, i) => {
         const popular = i === popularIdx;
         const precoFmt = p.price_brl.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+        const original = isActive ? getOriginalPrice(p.credits) : null;
+        const showOriginal = original != null && original > p.price_brl;
+        const originalFmt = showOriginal ? original!.toLocaleString("pt-BR", { style: "currency", currency: "BRL" }) : null;
         const unit = (p.price_brl / p.credits).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
         return (
 <div
@@ -66,11 +78,16 @@ export default function PacotesCreditos() {
               <p className="font-display text-4xl font-semibold">
                 {p.credits} <span className="text-base font-normal text-muted-foreground">consultas</span>
               </p>
-              <p className="mt-4 font-display text-3xl font-semibold text-primary">{precoFmt}</p>
+              <p className="mt-4 font-display text-3xl font-semibold text-primary">
+                {originalFmt && (
+                  <span className="mr-2 align-middle text-lg font-normal text-muted-foreground line-through">{originalFmt}</span>
+                )}
+                <span className="align-middle">{precoFmt}</span>
+              </p>
               <div className="mt-1 flex items-center gap-2">
                 <p className="text-xs text-muted-foreground">{unit} por consulta</p>
                 {isActive && (
-                  <span className="rounded-full bg-primary-soft px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-primary">
+                  <span className="rounded-full bg-primary px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-primary-foreground">
                     Preço promocional
                   </span>
                 )}

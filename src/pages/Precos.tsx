@@ -18,8 +18,8 @@ export default function Precos() {
             </p>
             {isActive && (
               <div className="mt-4 flex items-center justify-center gap-2 text-sm">
-                <span className="rounded-full bg-primary-soft px-3 py-1 font-medium text-primary">Preço promocional</span>
-                <span className="text-muted-foreground">
+                <span className="rounded-full bg-primary px-3 py-1 font-semibold text-primary-foreground">Preço promocional</span>
+                <span className="text-foreground/80">
                   {name}
                   {endLabel ? ` · válido até ${endLabel}` : null}
                 </span>
