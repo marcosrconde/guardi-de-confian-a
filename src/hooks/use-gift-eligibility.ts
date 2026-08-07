@@ -9,6 +9,16 @@ export function useGiftEligibility() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Feature flag: allow disabling the gift/promo globally
+    const enableGift = import.meta.env.VITE_ENABLE_GIFT !== "false";
+
+    if (!enableGift) {
+      // When disabled, never eligible; avoid unnecessary requests
+      setIsEligible(false);
+      setLoading(false);
+      return;
+    }
+
     if (!user) {
       setLoading(false);
       return;

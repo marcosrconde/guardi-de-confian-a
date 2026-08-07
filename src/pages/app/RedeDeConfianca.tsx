@@ -25,6 +25,8 @@ export default function RedeDeConfianca() {
   const [newContact, setNewContact] = useState({ name: "", phone: "" });
   const [showGiftModal, setShowGiftModal] = useState(false);
   const { isEligible: isEligibleForGift } = useGiftEligibility();
+  // Feature flag: disable gift/promo globally when set to "false"
+  const enableGift = import.meta.env.VITE_ENABLE_GIFT !== "false";
 
   useEffect(() => {
     if (user) {
@@ -114,7 +116,8 @@ export default function RedeDeConfianca() {
           }
 
           if (count === 0) {
-            setShowGiftModal(true);
+            // Only show modal if feature flag is enabled
+            if (enableGift) setShowGiftModal(true);
           }
         }
       }
@@ -138,11 +141,13 @@ export default function RedeDeConfianca() {
 
   return (
     <>
-      <GiftModal
-        open={showGiftModal}
-        onOpenChange={setShowGiftModal}
-        checkoutUrl="https://payment-link-v3.pagar.me/pl_pD4P1el5WJ8RaaoTECq4RvoGVAmnE972"
-      />
+      {enableGift && (
+        <GiftModal
+          open={showGiftModal}
+          onOpenChange={setShowGiftModal}
+          checkoutUrl="https://payment-link-v3.pagar.me/pl_pD4P1el5WJ8RaaoTECq4RvoGVAmnE972"
+        />
+      )}
       <div className="mx-auto max-w-3xl space-y-8 animate-fade-in-up">
         <header>
         <h1 className="mt-1 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
